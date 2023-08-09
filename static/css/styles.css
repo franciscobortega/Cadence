@@ -1,0 +1,23 @@
+/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+  height: 80%;
+  margin: 0;
+  padding: 0;
+}
+
+#map {
+  width: 800px;
+  height: 600px;
+}
+
+.marker {
+  background-image: url("/static/images/mapbox-icon.png");
+  background-size: cover;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+}
