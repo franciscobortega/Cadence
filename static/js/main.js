@@ -31,11 +31,7 @@ const map = new mapboxgl.Map({
   center: [SHERMAN_LONG, SHERMAN_LAT],
 });
 
-map.on("click", async (e) => {
-  // add coordinates of clicked point to waypoints array
-  const { lng, lat } = e.lngLat;
-  waypoints.push([lat, lng]);
-
+async function createRoute() {
   // Add marker to map
   const el = document.createElement("div");
   el.className = "marker";
@@ -47,8 +43,9 @@ map.on("click", async (e) => {
       .join("&point=");
     console.log(waypoints);
     console.log(waypointsQuery);
+
     // Construct the GraphHopper API request URL
-    const apiUrl = `https://graphhopper.com/api/1/route?point=${waypointsQuery}&profile=foot&locale=en&points_encoded=false&key=${GRAPHHOPPER_API_KEY}`;
+    const apiUrl = `https://graphhopper.com/api/1/route?point=${waypointsQuery}&profile=foot&locale=en&points_encoded=false&elevation=true&key=${GRAPHHOPPER_API_KEY}`;
 
     try {
       const response = await fetch(apiUrl);
@@ -56,12 +53,13 @@ map.on("click", async (e) => {
 
       console.log(data);
 
+      // routeCoordinates and routeWaypoints return 3-point array where the 3 value is the elevation
       const routeCoordinates = data.paths[0].points.coordinates;
       const routeDistance = data.paths[0].distance;
       const routeWaypoints = data.paths[0].snapped_waypoints.coordinates;
 
       routeWaypoints.forEach(([lng, lat]) => {
-        new mapboxgl.Marker(el).setLngLat([[lng, lat]]).addTo(map);
+        new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
       });
 
       document.querySelector("#total-distance").textContent = `Distance: ${(
@@ -79,6 +77,21 @@ map.on("click", async (e) => {
     } catch (error) {
       console.error("Error fetching route:", error);
     }
+  }
+}
+
+map.on("click", async (e) => {
+  // add coordinates of clicked point to waypoints array
+  const { lng, lat } = e.lngLat;
+  waypoints.push([lat, lng]);
+
+  createRoute();
+});
+
+addEventListener("keydown", function (event) {
+  if (event.ctrlKey && event.key === "z") {
+    waypoints.pop();
+    createRoute();
   }
 });
 
