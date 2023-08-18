@@ -3,9 +3,6 @@
 // Access the configuration values
 // const MAPBOX_TOKEN = config.MAPBOX_TOKEN;
 // const GRAPHHOPPER_API_KEY = config.GRAPHHOPPER_API_KEY;
-const MAPBOX_TOKEN =
-  "pk.eyJ1IjoiZnJhbmNpc2Nvb3J0ZWdhIiwiYSI6ImNsa2NwNDE0dDBodGozcHBqdzg5aDdlMjYifQ.MMIa5DKId3ssT6lJwYou1A";
-const GRAPHHOPPER_API_KEY = "4901a266-6d5b-4f52-89f8-63db590896f8";
 
 const SHERMAN_LAT = 33.65457;
 const SHERMAN_LONG = -96.62558;
