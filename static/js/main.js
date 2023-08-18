@@ -21,7 +21,10 @@ const SHERMAN_LONG = -96.62558;
 // 3. Function that updates the polyline between points
 //      -
 
+// TODO: update markers when added or removed from route
+
 let waypoints = [];
+// let markers = [];
 
 mapboxgl.accessToken = MAPBOX_TOKEN;
 const map = new mapboxgl.Map({
@@ -32,6 +35,10 @@ const map = new mapboxgl.Map({
 });
 
 async function createRoute() {
+  // Clear previous markers from the map
+  // markers.forEach((marker) => marker.remove());
+  // markers = [];
+
   // Add marker to map
   const el = document.createElement("div");
   el.className = "marker";
@@ -60,6 +67,7 @@ async function createRoute() {
 
       routeWaypoints.forEach(([lng, lat]) => {
         new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
+        // markers.push(marker); // Add the marker to the markers array
       });
 
       document.querySelector("#total-distance").textContent = `Distance: ${(
