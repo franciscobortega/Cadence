@@ -1,8 +1,6 @@
 "use strict";
 
-// Access the configuration values
-// const MAPBOX_TOKEN = config.MAPBOX_TOKEN;
-// const GRAPHHOPPER_API_KEY = config.GRAPHHOPPER_API_KEY;
+import { MAPBOX_API_KEY, GRAPHHOPPER_API_KEY } from "./secrets.js";
 
 const SHERMAN_LAT = 33.65457;
 const SHERMAN_LONG = -96.62558;
@@ -21,7 +19,7 @@ const SHERMAN_LONG = -96.62558;
 let waypoints = [];
 // let markers = [];
 
-mapboxgl.accessToken = MAPBOX_TOKEN;
+mapboxgl.accessToken = MAPBOX_API_KEY;
 const map = new mapboxgl.Map({
   container: "map",
   style: "mapbox://styles/mapbox/streets-v11",
@@ -45,8 +43,6 @@ async function createRoute() {
   // Clear previous markers from the map
   // markers.forEach((marker) => marker.remove());
   // markers = [];
-
-  // new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
 
   if (waypoints.length >= 2) {
     const waypointsQuery = waypoints
