@@ -1,13 +1,11 @@
 "use strict";
-// const fs = require("fs");
-
-// Read the configuration file
-// const configFile = fs.readFileSync("config.json", "utf8");
-// const config = JSON.parse(configFile);
 
 // Access the configuration values
 // const MAPBOX_TOKEN = config.MAPBOX_TOKEN;
 // const GRAPHHOPPER_API_KEY = config.GRAPHHOPPER_API_KEY;
+const MAPBOX_TOKEN =
+  "pk.eyJ1IjoiZnJhbmNpc2Nvb3J0ZWdhIiwiYSI6ImNsa2NwNDE0dDBodGozcHBqdzg5aDdlMjYifQ.MMIa5DKId3ssT6lJwYou1A";
+const GRAPHHOPPER_API_KEY = "4901a266-6d5b-4f52-89f8-63db590896f8";
 
 const SHERMAN_LAT = 33.65457;
 const SHERMAN_LONG = -96.62558;
@@ -34,22 +32,30 @@ const map = new mapboxgl.Map({
   center: [SHERMAN_LONG, SHERMAN_LAT],
 });
 
+function drawMarkers(waypoints) {
+  // Add marker to map
+  const el = document.createElement("div");
+  el.className = "marker";
+
+  waypoints.forEach(([lng, lat]) => {
+    new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
+    // markers.push(marker); // Add the marker to the markers array
+  });
+}
+
 async function createRoute() {
   // Clear previous markers from the map
   // markers.forEach((marker) => marker.remove());
   // markers = [];
 
-  // Add marker to map
-  const el = document.createElement("div");
-  el.className = "marker";
   // new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
 
   if (waypoints.length >= 2) {
     const waypointsQuery = waypoints
       .map((point) => point.join(","))
       .join("&point=");
-    console.log(waypoints);
-    console.log(waypointsQuery);
+    // console.log(waypoints);
+    // console.log(waypointsQuery);
 
     // Construct the GraphHopper API request URL
     const apiUrl = `https://graphhopper.com/api/1/route?point=${waypointsQuery}&profile=foot&locale=en&points_encoded=false&elevation=true&key=${GRAPHHOPPER_API_KEY}`;
@@ -58,18 +64,20 @@ async function createRoute() {
       const response = await fetch(apiUrl);
       const data = await response.json();
 
-      console.log(data);
+      // console.log(data);
 
       // routeCoordinates and routeWaypoints return 3-point array where the 3 value is the elevation
       const routeCoordinates = data.paths[0].points.coordinates;
       const routeDistance = data.paths[0].distance;
       const routeWaypoints = data.paths[0].snapped_waypoints.coordinates;
 
-      routeWaypoints.forEach(([lng, lat]) => {
-        new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
-        // markers.push(marker); // Add the marker to the markers array
-      });
+      // routeWaypoints.forEach(([lng, lat]) => {
+      //   drawMarker(lng, lat);
+      //   // markers.push(marker); // Add the marker to the markers array
+      // });
+      drawMarkers(routeWaypoints);
 
+      // Display the distance of the route
       document.querySelector("#total-distance").textContent = `Distance: ${(
         routeDistance / 1000
       ).toFixed(2)} km`;
