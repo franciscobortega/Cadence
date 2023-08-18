@@ -29,13 +29,14 @@ const map = new mapboxgl.Map({
   center: [SHERMAN_LONG, SHERMAN_LAT],
 });
 
-function drawMarkers(waypoints) {
+function drawMarkers(snappedWaypoints) {
   // Add marker to map
-  const el = document.createElement("div");
-  el.className = "marker";
 
-  waypoints.forEach(([lng, lat]) => {
+  snappedWaypoints.forEach(([lng, lat]) => {
+    const el = document.createElement("div");
+    el.className = "marker";
     new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
+    // console.log(lng, lat);
     // markers.push(marker); // Add the marker to the markers array
   });
 }
@@ -71,7 +72,8 @@ async function createRoute() {
       // routeWaypoints.forEach(([lng, lat]) => {
       //   drawMarker(lng, lat);
       //   // markers.push(marker); // Add the marker to the markers array
-      // });
+      // });\
+      console.log(routeWaypoints);
       drawMarkers(routeWaypoints);
 
       // Display the distance of the route
