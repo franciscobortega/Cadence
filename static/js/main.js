@@ -14,10 +14,12 @@ const SHERMAN_LONG = -96.62558;
 // 3. Function that updates the polyline between points
 //      -
 
-// TODO: update markers when added or removed from route
+// TODO: fix bug of excess marker instances when marker is added to markers array
 
 let waypoints = [];
-// let markers = [];
+let markers = [];
+
+let distanceText = document.querySelector("#total-distance");
 
 mapboxgl.accessToken = MAPBOX_API_KEY;
 const map = new mapboxgl.Map({
@@ -27,29 +29,49 @@ const map = new mapboxgl.Map({
   center: [SHERMAN_LONG, SHERMAN_LAT],
 });
 
-function drawMarkers(snappedWaypoints) {
-  // Add marker to map
-
-  snappedWaypoints.forEach(([lng, lat]) => {
-    const el = document.createElement("div");
-    el.className = "marker";
-    new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
-    // console.log(lng, lat);
-    // markers.push(marker); // Add the marker to the markers array
+function routePolyline(coords) {
+  map.getSource("route").setData({
+    type: "Feature",
+    geometry: {
+      type: "LineString",
+      coordinates: coords,
+    },
   });
 }
 
-async function createRoute() {
-  // Clear previous markers from the map
-  // markers.forEach((marker) => marker.remove());
-  // markers = [];
+function drawMarkers(snappedWaypoints) {
+  // Add marker to map
+  snappedWaypoints.forEach(([lng, lat]) => {
+    const el = document.createElement("div");
+    el.className = "marker";
+    const marker = new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
+    // console.log(lng, lat);
+    markers.push(marker); // Add the marker to the markers array
+  });
 
+  console.log(markers);
+}
+
+function clearRoute() {
+  // Remove markers from the map
+  markers.forEach((marker) => marker.remove());
+  markers = [];
+
+  // Clear the waypoints array
+  waypoints = [];
+
+  // Clear the polyline from the map
+  routePolyline([]);
+
+  // Reset total distance text
+  distanceText.textContent = "Distance: 0 km";
+}
+
+async function createRoute() {
   if (waypoints.length >= 2) {
     const waypointsQuery = waypoints
       .map((point) => point.join(","))
       .join("&point=");
-    // console.log(waypoints);
-    // console.log(waypointsQuery);
 
     // Construct the GraphHopper API request URL
     const apiUrl = `https://graphhopper.com/api/1/route?point=${waypointsQuery}&profile=foot&locale=en&points_encoded=false&elevation=true&key=${GRAPHHOPPER_API_KEY}`;
@@ -58,33 +80,20 @@ async function createRoute() {
       const response = await fetch(apiUrl);
       const data = await response.json();
 
-      // console.log(data);
-
       // routeCoordinates and routeWaypoints return 3-point array where the 3 value is the elevation
       const routeCoordinates = data.paths[0].points.coordinates;
       const routeDistance = data.paths[0].distance;
       const routeWaypoints = data.paths[0].snapped_waypoints.coordinates;
 
-      // routeWaypoints.forEach(([lng, lat]) => {
-      //   drawMarker(lng, lat);
-      //   // markers.push(marker); // Add the marker to the markers array
-      // });\
-      console.log(routeWaypoints);
       drawMarkers(routeWaypoints);
 
       // Display the distance of the route
-      document.querySelector("#total-distance").textContent = `Distance: ${(
-        routeDistance / 1000
-      ).toFixed(2)} km`;
+      distanceText.textContent = `Distance: ${(routeDistance / 1000).toFixed(
+        2
+      )} km`;
 
-      // Display the route on the map
-      map.getSource("route").setData({
-        type: "Feature",
-        geometry: {
-          type: "LineString",
-          coordinates: routeCoordinates,
-        },
-      });
+      // Display the route polyline on the map
+      routePolyline(routeCoordinates);
     } catch (error) {
       console.error("Error fetching route:", error);
     }
@@ -105,6 +114,8 @@ addEventListener("keydown", function (event) {
     createRoute();
   }
 });
+
+document.querySelector("#clearRoute").addEventListener("click", clearRoute);
 
 map.on("load", () => {
   map.addSource("route", { type: "geojson", data: null });
