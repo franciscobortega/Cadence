@@ -14,10 +14,11 @@ body {
 }
 
 .marker {
-  background-image: url("/static/images/mapbox-icon.png");
+  background-image: url("/static/images/waypoint.png");
   background-size: cover;
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   cursor: pointer;
+  border: 1px solid black;
 }
