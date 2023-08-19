@@ -1,42 +1,14 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cadence</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
-  </head>
-  <body>
-
-    <h1>Cadence</h1>
-
-  </body>
-</html> -->
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Cadence Map</title>
-    <meta name="viewport" content="initial-scale=1.0" />
-    <meta charset="utf-8" />
-    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script> -->
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js"></script>
-    <link
-      href="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css"
-      rel="stylesheet"
-    />
-
-    <title>Cadence</title>
-    <link rel="stylesheet" href="/static/css/styles.css" />
-  </head>
-  <body>
-    <div id="map"></div>
-    <h1 id="total-distance">Distance:</h1>
-    <button id="addWaypointBtn">Add Waypoint</button>
-    <button id="removeWayPoint">Remove Waypoint</button>
-    <script type="module" src="/static/js/main.js" async defer></script>
-    <!-- <script src="https://maps.googleapis.com/maps/api/elevation/json?key=AIzaSyBlD9VNM3FRDerY2ACfP_kxiivWtnTdULs&callback=initMap" async defer></script> -->
-  </body>
-</html>
+{% extends 'base.html' %} {% block title %}Cadence{% endblock %} {% block head%}
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js"></script>
+<link
+  href="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="/static/css/styles.css" />
+{% endblock %} {% block body %}
+<div id="map"></div>
+<h1 id="total-distance">Distance:</h1>
+<button id="addWaypointBtn">Add Waypoint</button>
+<button id="removeWayPoint">Remove Waypoint</button>
+<script type="module" src="/static/js/main.js" async defer></script>
+{% endblock %}
