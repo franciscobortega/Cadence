@@ -1,9 +1,6 @@
 """Script to seed database."""
 
 import os
-import json
-from random import choice, randint
-from datetime import datetime
 
 import crud
 import model
@@ -14,6 +11,12 @@ os.system('createdb cadence')
 
 model.connect_to_db(server.app)
 model.db.create_all()
+
+
+# --------------- Seed route --------------- #
+
+
+# --------------- Seed user --------------- #
 
 username = 'bryanortega'
 email = 'bryanortega@email.com'

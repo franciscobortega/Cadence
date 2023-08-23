@@ -1,0 +1,27 @@
+[
+  {
+    "title": "Test Run",
+    "distance": 2116.703,
+    "elevation_gain": 0.11150360107,
+    "created_by": 1,
+    "waypoints": [
+      { "longitude": -96.627969, "latitude": 33.652082, "elevation": 225.53 },
+      { "longitude": -96.629598, "latitude": 33.651737, "elevation": 224.72 },
+      { "longitude": -96.629045, "latitude": 33.653073, "elevation": 227.06 },
+      { "longitude": -96.629074, "latitude": 33.654252, "elevation": 227.72 },
+      { "longitude": -96.627678, "latitude": 33.656152, "elevation": 228.81 },
+      { "longitude": -96.625393, "latitude": 33.655707, "elevation": 232.36 },
+      { "longitude": -96.623473, "latitude": 33.655121, "elevation": 232.32 },
+      { "longitude": -96.623126, "latitude": 33.654101, "elevation": 230.65 },
+      { "longitude": -96.624472, "latitude": 33.652831, "elevation": 228.15 },
+      { "longitude": -96.627726, "latitude": 33.652134, "elevation": 225.64 }
+    ]
+  },
+  {
+    "title": "San Francisco Marathon",
+    "distance": 0,
+    "elevation_gain": 0,
+    "created_by": 1,
+    "waypoints": []
+  }
+]
