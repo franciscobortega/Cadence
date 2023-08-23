@@ -37,6 +37,7 @@ class Route(db.Model):
     elevation_gain = db.Column(db.Float)
     created_by = db.Column(db.Integer, db.ForeignKey("users.user_id"))
 
+    user = db.relationship("User", back_populates="routes")
     waypoints = db.relationship("Waypoint", back_populates="route")
 
     def __repr__(self):
