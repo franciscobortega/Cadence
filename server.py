@@ -39,6 +39,23 @@ def register_user():
 
     return redirect("/auth")
 
+@app.route('/login', methods=["POST"])
+def display_login():
+    """log in user."""
+
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    user_exists = crud.get_user_by_email(email)
+
+    if user_exists and user_exists.password == password:
+        session['user_id'] = user_exists.user_id
+        flash('Logged in!')
+    else:
+        flash('Wrong email or password!')
+    
+    return redirect('/auth')
+
 @app.route('/demo')
 def display_demo():
     return render_template("demo.html")
