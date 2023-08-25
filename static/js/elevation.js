@@ -84,13 +84,22 @@ const ctx = document.getElementById("myChart");
 let chart;
 
 function drawChart(elevationData) {
-  console.log(elevationData);
   if (chart) {
     chart.data.datasets[0].data = elevationData.map((row) => row.elevation);
-    console.log(chart.data.datasets[0].data);
-    // chart.destroy();
+    chart.data.labels = elevationData.map((_, index) => index + 1);
+
+    // Recalculate min and max elevation
+    const minElevation = Math.min(...chart.data.datasets[0].data);
+    const minRounded = Math.floor(minElevation / 10) * 10;
+
+    const maxElevation = Math.max(...chart.data.datasets[0].data);
+    const maxRounded = Math.ceil(maxElevation / 10) * 10;
+
+    // Update the y-axis scales
+    chart.options.scales.y.min = minRounded;
+    chart.options.scales.y.max = maxRounded;
+
     chart.update();
-    console.log("updated");
   } else {
     const minElevation = Math.min(...elevationData.map((row) => row.elevation));
     const minRounded = Math.floor(minElevation / 10) * 10;
@@ -116,7 +125,7 @@ function drawChart(elevationData) {
         ],
       },
       options: {
-        // responsive: true,
+        responsive: true,
         maintainAspectRatio: false,
         scales: {
           x: {
@@ -147,9 +156,5 @@ document.querySelector("form").addEventListener("submit", (e) => {
 
   elevationData.push({ longtitude: 1, latitude: 2, elevation: newValue });
 
-  //   console.log(elevationData);
-
   drawChart(elevationData);
-
-  console.log(newValue);
 });
