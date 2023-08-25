@@ -156,5 +156,15 @@ document.querySelector("form").addEventListener("submit", (e) => {
 
   elevationData.push({ longtitude: 1, latitude: 2, elevation: newValue });
 
+  console.log(elevationData);
+
+  drawChart(elevationData);
+});
+
+document.querySelector("#delete-elevation").addEventListener("click", () => {
+  elevationData.pop();
+
+  console.log(elevationData);
+
   drawChart(elevationData);
 });
