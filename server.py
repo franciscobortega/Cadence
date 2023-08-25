@@ -14,6 +14,10 @@ app.jinja_env.undefined = StrictUndefined
 def display_home():
     return render_template("homepage.html")
 
+@app.route('/elevation')
+def display_elevation():
+    return render_template("test-elevation.html")
+
 @app.route('/auth')
 def display_auth():
     return render_template("auth.html")
