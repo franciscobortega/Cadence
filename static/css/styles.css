@@ -22,3 +22,15 @@ body {
   cursor: pointer;
   border: 1px solid black;
 }
+
+.first-marker {
+  /* replace with properly designed image
+  background-image: url("/static/images/waypoint.png"); */
+  background-color: white;
+}
+
+.last-marker {
+  /* replace with properly designed image
+  background-image: url("/static/images/waypoint.png"); */
+  background-color: white;
+}

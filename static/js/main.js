@@ -34,9 +34,18 @@ function drawMarkers(snappedWaypoints) {
   markers.forEach((marker) => marker.remove());
   markers = [];
 
-  snappedWaypoints.forEach(([lng, lat]) => {
+  snappedWaypoints.forEach(([lng, lat], index, arr) => {
     const el = document.createElement("div");
     el.className = "marker";
+
+    if (index === 0) {
+      el.classList.add("first-marker");
+    }
+
+    if (index === arr.length - 1) {
+      el.classList.add("last-marker");
+    }
+
     const marker = new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
     markers.push(marker);
   });
@@ -99,7 +108,7 @@ async function createRoute() {
     // Draw the first waypoint marker without snapping
     const [lat, lng] = waypoints[0];
     const el = document.createElement("div");
-    el.className = "marker";
+    el.classList.add("marker", "first-marker");
     const marker = new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
     markers.push(marker);
 
