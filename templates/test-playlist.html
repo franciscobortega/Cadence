@@ -1,0 +1,16 @@
+{% extends 'base.html' %} {% block title %}Cadence{% endblock %} {% block head%}
+<link rel="stylesheet" href="/static/css/styles.css" />
+{% endblock %} {% block body %}
+<p>Playlist</p>
+<form id="new-elevation">
+  <p>
+    new elevation
+    <input type="number" id="elevation-input" name="new-elevation" />
+  </p>
+
+  <p>
+    <input type="submit" />
+  </p>
+</form>
+<script type="module" src="/static/js/playlist.js" async defer></script>
+{% endblock %}

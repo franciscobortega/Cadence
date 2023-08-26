@@ -18,6 +18,10 @@ def display_home():
 def display_elevation():
     return render_template("test-elevation.html")
 
+@app.route('/playlist')
+def display_playlist():
+    return render_template("test-playlist.html")
+
 @app.route('/auth')
 def display_auth():
     return render_template("auth.html")
