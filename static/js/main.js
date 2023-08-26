@@ -7,8 +7,6 @@ const TEST_LONG = -96.62558;
 
 // --------------- MAP --------------- //
 
-// TODO: fix bug of excess marker instances when marker is added to markers array
-
 let waypoints = [];
 let markers = [];
 
@@ -33,6 +31,9 @@ function routePolyline(coords) {
 }
 
 function drawMarkers(snappedWaypoints) {
+  markers.forEach((marker) => marker.remove());
+  markers = [];
+
   snappedWaypoints.forEach(([lng, lat]) => {
     const el = document.createElement("div");
     el.className = "marker";
@@ -64,10 +65,10 @@ async function createRoute() {
       .join("&point=");
 
     // Construct the GraphHopper API request URL
-    const apiUrl = `https://graphhopper.com/api/1/route?point=${waypointsQuery}&profile=foot&locale=en&points_encoded=false&elevation=true&key=${GRAPHHOPPER_API_KEY}`;
+    const DIRECTIONS_API_URL = `https://graphhopper.com/api/1/route?point=${waypointsQuery}&profile=foot&locale=en&points_encoded=false&elevation=true&key=${GRAPHHOPPER_API_KEY}`;
 
     try {
-      const response = await fetch(apiUrl);
+      const response = await fetch(DIRECTIONS_API_URL);
       const data = await response.json();
 
       // routeCoordinates and routeWaypoints return 3-point array where the 3 value is the elevation
@@ -87,6 +88,25 @@ async function createRoute() {
     } catch (error) {
       console.error("Error fetching route:", error);
     }
+  } else if (waypoints.length === 1) {
+    // Remove markers from the map and clear the markers array
+    markers.forEach((marker) => marker.remove());
+    markers = [];
+
+    // Clear the polyline from the map
+    routePolyline([]);
+
+    // Draw the first waypoint marker without snapping
+    const [lat, lng] = waypoints[0];
+    const el = document.createElement("div");
+    el.className = "marker";
+    const marker = new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
+    markers.push(marker);
+
+    // Display the distance of the route as 0 km
+    distanceText.textContent = "Distance: 0 km";
+  } else {
+    clearRoute();
   }
 }
 
