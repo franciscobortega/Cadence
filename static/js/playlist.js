@@ -1,13 +1,13 @@
 "use strict";
 
-import { SPOTIFY_API_KEY } from "./secrets.js";
+import { SPOTIFY_CLIENT_ID } from "./secrets.js";
 
 // --------------- ROUTE DISTANCE --------------- //
 let routeDistance = 2116.703; // meters
 let targetPace = 5.0; // minutes per km
 
-let expectedFinishTime = (routeDistance * targetPace) / 1000; // minutes
-// 2116.703 * 5.0 / 1000 = 10.583515 minutes
+let expectedFinishTime = ((routeDistance * targetPace) / 1000) * 60; // seconds
+// (2116.703 * 5.0 / 1000) * 60 = 635.0109 seconds or 10.5835 minutes
 
 // --------------- ROUTE ELEVATION --------------- //
 let elevationCategories = {
@@ -37,8 +37,8 @@ const { min: minTempo, max: maxTempo } = tempoMappings[targetIntensity]; // will
 // TODO: fetch from Get Recommendations endpoint: up to 5 genres, popularity 0-100, min/max tempo
 let testGenres = "pop,rock,hip-hop";
 let testPopularity = 60;
-let testMinTempo = minTempo;
-let testMaxTempo = maxTempo;
+let testMinTempo = 100;
+let testMaxTempo = 120;
 
 let playlistRecommendationsSampleResponse = [
   {
@@ -376,9 +376,202 @@ let audioAnalysisSampleResponse = [
     duration_ms: 216013,
     time_signature: 4,
   },
+  {
+    danceability: 0.402,
+    energy: 0.923,
+    key: 5,
+    loudness: -3.763,
+    mode: 1,
+    speechiness: 0.044,
+    acousticness: 0.0098,
+    instrumentalness: 0,
+    liveness: 0.0561,
+    valence: 0.765,
+    tempo: 136.01,
+    type: "audio_features",
+    id: "1yjY7rpaAQvKwpdUliHx0d",
+    uri: "spotify:track:1yjY7rpaAQvKwpdUliHx0d",
+    track_href: "https://api.spotify.com/v1/tracks/1yjY7rpaAQvKwpdUliHx0d",
+    analysis_url:
+      "https://api.spotify.com/v1/audio-analysis/1yjY7rpaAQvKwpdUliHx0d",
+    duration_ms: 116013,
+    time_signature: 4,
+  },
+  {
+    danceability: 0.902,
+    energy: 0.923,
+    key: 5,
+    loudness: -3.763,
+    mode: 1,
+    speechiness: 0.044,
+    acousticness: 0.0098,
+    instrumentalness: 0,
+    liveness: 0.0561,
+    valence: 0.765,
+    tempo: 136.01,
+    type: "audio_features",
+    id: "1yjY7rpaAQvKwpdUliHx0d",
+    uri: "spotify:track:1yjY7rpaAQvKwpdUliHx0d",
+    track_href: "https://api.spotify.com/v1/tracks/1yjY7rpaAQvKwpdUliHx0d",
+    analysis_url:
+      "https://api.spotify.com/v1/audio-analysis/1yjY7rpaAQvKwpdUliHx0d",
+    duration_ms: 305013,
+    time_signature: 4,
+  },
 ];
 
-// 4.
+// --------------- PLAYLIST GENERATION V1 --------------- //
+const clientId = SPOTIFY_CLIENT_ID; // Replace with your client ID
+const params = new URLSearchParams(window.location.search);
+const code = params.get("code");
+
+const queryParams = {
+  limit: 100,
+  market: "US",
+  seed_genres: "pop%2Crock%2Chip-hop",
+  min_tempo: 100,
+  max_tempo: 120,
+};
+
+if (!code) {
+  redirectToAuthCodeFlow(clientId);
+} else {
+  const accessToken = await getAccessToken(clientId, code);
+  const recommendaitons = await fetchRecommendations(accessToken, queryParams);
+  console.log(recommendaitons);
+  // populateUI(profile);
+}
+
+export async function redirectToAuthCodeFlow(clientId) {
+  const verifier = generateCodeVerifier(128);
+  const challenge = await generateCodeChallenge(verifier);
+
+  localStorage.setItem("verifier", verifier);
+
+  const params = new URLSearchParams();
+  params.append("client_id", clientId);
+  params.append("response_type", "code");
+  params.append("redirect_uri", "http://localhost:5000/playlist");
+  params.append("scope", "user-read-private user-read-email");
+  params.append("code_challenge_method", "S256");
+  params.append("code_challenge", challenge);
+
+  document.location = `https://accounts.spotify.com/authorize?${params.toString()}`;
+}
+
+function generateCodeVerifier(length) {
+  let text = "";
+  let possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (let i = 0; i < length; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+}
+
+async function generateCodeChallenge(codeVerifier) {
+  const data = new TextEncoder().encode(codeVerifier);
+  const digest = await window.crypto.subtle.digest("SHA-256", data);
+  return btoa(String.fromCharCode.apply(null, [...new Uint8Array(digest)]))
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
+}
+
+export async function getAccessToken(clientId, code) {
+  const verifier = localStorage.getItem("verifier");
+
+  const params = new URLSearchParams();
+  params.append("client_id", clientId);
+  params.append("grant_type", "authorization_code");
+  params.append("code", code);
+  params.append("redirect_uri", "http://localhost:5000/playlist");
+  params.append("code_verifier", verifier);
+
+  const result = await fetch("https://accounts.spotify.com/api/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: params,
+  });
+
+  const { access_token } = await result.json();
+  return access_token;
+}
+
+async function fetchRecommendations(token, params) {
+  // Construct the URL with query parameters
+  const baseUrl = "https://api.spotify.com/v1/recommendations";
+  const url = new URL(baseUrl);
+
+  // Add query parameters to the URL
+  Object.keys(params).forEach((key) => {
+    url.searchParams.append(key, params[key]);
+  });
+
+  const result = await fetch(url.toString(), {
+    method: "GET",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return await result.json();
+}
+
+// console.log(fetchRecommendations());
+
+function populateUI(profile) {
+  // TODO: Update UI with profile data
+}
+
+function getRandomTrack() {
+  // Check if there are tracks remaining
+  if (audioAnalysisSampleResponse.length === 0) {
+    return null; // No tracks left
+  }
+
+  // Randomly select a track
+  const randomIndex = Math.floor(
+    Math.random() * audioAnalysisSampleResponse.length
+  );
+  const randomTrack = audioAnalysisSampleResponse[randomIndex];
+
+  // Remove the selected track from the array
+  audioAnalysisSampleResponse.splice(randomIndex, 1);
+
+  // console.log(randomTrack);
+  return randomTrack;
+}
+
+// const track1 = getRandomTrack();
+// console.log(track1);
+// console.log(audioAnalysisSampleResponse);
+
+// const track2 = getRandomTrack();
+// console.log(track2);
+// console.log(audioAnalysisSampleResponse);
+
+function generatePlaylist() {
+  const playlist = [];
+  let remainingTime = expectedFinishTime;
+
+  while (remainingTime > 0) {
+    // Select a track from the Get Recommendations response
+    const selectedTrack = getRandomTrack();
+
+    console.log(remainingTime);
+
+    // Add the track to the playlist
+    playlist.push(selectedTrack);
+
+    // Subtract the track's duration from the remaining time
+    remainingTime -= selectedTrack.duration_ms / 1000;
+  }
+
+  console.log(playlist);
+  return playlist;
+}
+
+// --------------- PLAYLIST GENERATION V2 --------------- //
 
 function splitRouteIntoSegments(elevationData, elevationThreshold) {
   const segments = [];
@@ -413,4 +606,4 @@ let testElevationData = [
   229.98, 228.15, 226.32, 226.15, 225.96, 225.64,
 ];
 
-console.log(splitRouteIntoSegments(testElevationData, 1.3));
+// console.log(splitRouteIntoSegments(testElevationData, 1.3));
