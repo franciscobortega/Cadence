@@ -435,8 +435,7 @@ if (!code) {
   // If error with access token, uncomment following lines and update testAccessToken with new token
   // const accessToken = await getAccessToken(clientId, code);
   // console.log(accessToken);
-  let testAccessToken =
-    "BQA1zdBptMvA5mYGHA0_6ORy4ldBZpjAuj3XtSnggraRShIito-BGwZ6dRUQBK7S_X50W8DftUAOUusUfckbxfPZ4ilmoh_o79qnnRH4EzT6oHA8DtWNJyZMVmcwryB_mz4o_FAwwwAXvMeWmwMDYHS16tkbF4i2NxwrkNhTJvZpTe1LpevNxAqavAhUefjnI_ncP7Lp";
+  let testAccessToken = "";
 
   // 1. Fetch from Get Recommendations endpoint
   const playlistRecommendations = await fetchRecommendations(
@@ -450,9 +449,13 @@ if (!code) {
   )["audio_features"];
 
   // 3. Generate playlist
-  generatePlaylist(expectedFinishTime, listOfTrackDetails);
+  const generatedPlaylist = generatePlaylist(
+    expectedFinishTime,
+    listOfTrackDetails
+  );
 
   // 4. Display playlist
+  displayPlaylist(generatedPlaylist, playlistRecommendations);
 }
 
 export async function redirectToAuthCodeFlow(clientId) {
@@ -592,6 +595,17 @@ function generatePlaylist(remainingTime, tracks) {
   console.log(expectedFinishTime);
   console.log(durationOfPlaylist);
   return playlist;
+}
+
+function displayPlaylist(playlist, recommendations) {
+  // Find the song title and artist name for each track in the playlist based on the ID
+  playlist.forEach((track) => {
+    const song = recommendations.tracks.find(
+      (recommendation) => recommendation.id === track.id
+    );
+    console.log(song);
+    console.log(`${song["name"]} by ${song["artists"][0]["name"]}`);
+  });
 }
 
 // --------------- PLAYLIST GENERATION V2 --------------- //
