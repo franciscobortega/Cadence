@@ -432,26 +432,27 @@ let audioAnaylysisQueryString = "";
 if (!code) {
   redirectToAuthCodeFlow(clientId);
 } else {
+  // If error with access token, uncomment following lines and update testAccessToken with new token
   // const accessToken = await getAccessToken(clientId, code);
-  // If error with access token, uncomment previous line and update testAccessToken with new token
   // console.log(accessToken);
-  let testAccessToken = "";
+  let testAccessToken =
+    "BQA1zdBptMvA5mYGHA0_6ORy4ldBZpjAuj3XtSnggraRShIito-BGwZ6dRUQBK7S_X50W8DftUAOUusUfckbxfPZ4ilmoh_o79qnnRH4EzT6oHA8DtWNJyZMVmcwryB_mz4o_FAwwwAXvMeWmwMDYHS16tkbF4i2NxwrkNhTJvZpTe1LpevNxAqavAhUefjnI_ncP7Lp";
+
   // 1. Fetch from Get Recommendations endpoint
   const playlistRecommendations = await fetchRecommendations(
     testAccessToken,
     queryParams
   );
-  // console.log(playlistRecommendations);
 
-  // 2. Fetch from Get Tracks' Audio Features endpoint
-  const audioFeatures = await fetchAudioFeatures(
-    testAccessToken,
-    playlistRecommendations
-  );
+  // 2. Fetch from Get Tracks' Audio Features endpoint, extract array from response
+  const listOfTrackDetails = (
+    await fetchAudioFeatures(testAccessToken, playlistRecommendations)
+  )["audio_features"];
 
-  console.log(audioFeatures);
+  // 3. Generate playlist
+  generatePlaylist(expectedFinishTime, listOfTrackDetails);
 
-  generatePlaylist(expectedFinishTime);
+  // 4. Display playlist
 }
 
 export async function redirectToAuthCodeFlow(clientId) {
@@ -553,50 +554,43 @@ async function fetchAudioFeatures(token, recommendations) {
   return await result.json();
 }
 
-function getRandomTrack() {
+function getRandomTrack(tracks) {
   // Check if there are tracks remaining
-  if (audioAnalysisSampleResponse.length === 0) {
+  if (tracks.length === 0) {
     return null; // No tracks left
   }
 
   // Randomly select a track
-  const randomIndex = Math.floor(
-    Math.random() * audioAnalysisSampleResponse.length
-  );
-  const randomTrack = audioAnalysisSampleResponse[randomIndex];
+  const randomIndex = Math.floor(Math.random() * tracks.length);
+  const randomTrack = tracks[randomIndex];
 
   // Remove the selected track from the array
-  audioAnalysisSampleResponse.splice(randomIndex, 1);
+  tracks.splice(randomIndex, 1);
 
-  // console.log(randomTrack);
   return randomTrack;
 }
 
-// const track1 = getRandomTrack();
-// console.log(track1);
-// console.log(audioAnalysisSampleResponse);
-
-// const track2 = getRandomTrack();
-// console.log(track2);
-// console.log(audioAnalysisSampleResponse);
-
-function generatePlaylist(remainingTime) {
+function generatePlaylist(remainingTime, tracks) {
   const playlist = [];
+  let durationOfPlaylist = 0;
 
   while (remainingTime > 0) {
     // Select a track from the Get Recommendations response
-    const selectedTrack = getRandomTrack();
-
-    console.log(remainingTime);
+    const selectedTrack = getRandomTrack(tracks);
 
     // Add the track to the playlist
     playlist.push(selectedTrack);
 
     // Subtract the track's duration from the remaining time
     remainingTime -= selectedTrack.duration_ms / 1000;
+
+    // Add the track's duration to the total duration of the playlist
+    durationOfPlaylist += selectedTrack.duration_ms / 1000;
   }
 
   console.log(playlist);
+  console.log(expectedFinishTime);
+  console.log(durationOfPlaylist);
   return playlist;
 }
 
