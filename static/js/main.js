@@ -2,13 +2,16 @@
 
 import { MAPBOX_API_KEY, GRAPHHOPPER_API_KEY } from "./secrets.js";
 
-const TEST_LAT = 33.65457;
-const TEST_LONG = -96.62558;
+// const TEST_LAT = 33.65457;
+// const TEST_LONG = -96.62558;
+const TEST_LAT = 37.7749;
+const TEST_LONG = -122.4194;
 
 // --------------- MAP --------------- //
 
 let waypoints = [];
 let markers = [];
+let elevationData = [];
 
 let distanceText = document.querySelector("#total-distance");
 
@@ -16,7 +19,7 @@ mapboxgl.accessToken = MAPBOX_API_KEY;
 const map = new mapboxgl.Map({
   container: "map",
   style: "mapbox://styles/mapbox/streets-v11",
-  zoom: 16,
+  zoom: 13,
   center: [TEST_LONG, TEST_LAT],
 });
 
@@ -85,6 +88,8 @@ async function createRoute() {
       const routeDistance = data.paths[0].distance;
       const routeWaypoints = data.paths[0].snapped_waypoints.coordinates;
 
+      elevationData = routeCoordinates;
+
       drawMarkers(routeWaypoints);
 
       // Display the distance of the route
@@ -125,16 +130,26 @@ map.on("click", async (e) => {
   waypoints.push([lat, lng]);
 
   createRoute();
+
+  drawChart(elevationData);
 });
 
 addEventListener("keydown", function (event) {
   if (event.ctrlKey && event.key === "z") {
     waypoints.pop();
     createRoute();
+
+    elevationData.pop();
+    drawChart(elevationData);
   }
 });
 
-document.querySelector("#clearRoute").addEventListener("click", clearRoute);
+document.querySelector("#clearRoute").addEventListener("click", () => {
+  clearRoute();
+  elevationData = [];
+
+  drawChart(elevationData);
+});
 
 map.on("load", () => {
   map.addSource("route", { type: "geojson", data: null });
@@ -143,10 +158,86 @@ map.on("load", () => {
     type: "line",
     source: "route",
     paint: {
-      "line-color": "#0033ff",
+      "line-color": "#9404db",
       "line-width": 4,
     },
   });
 });
 
 // --------------- ELEVATION --------------- //
+
+const ctx = document.getElementById("myChart");
+let chart;
+
+function drawChart(elevationData) {
+  if (chart) {
+    const elevations = elevationData.map((data) => data[2]);
+    const labels = elevationData.map((_, index) => index + 1);
+
+    chart.data.datasets[0].data = elevations;
+    chart.data.labels = labels;
+
+    // Recalculate min and max elevation
+    const minElevation = Math.min(...elevations);
+    const minRounded = Math.floor(minElevation / 10) * 10;
+
+    const maxElevation = Math.max(...elevations);
+    const maxRounded = Math.ceil(maxElevation / 10) * 10;
+
+    // Update the y-axis scales
+    chart.options.scales.y.min = minRounded;
+    chart.options.scales.y.max = maxRounded;
+
+    chart.update();
+  } else {
+    const elevations = elevationData.map((data) => data[2]);
+    const labels = elevationData.map((_, index) => index + 1);
+
+    const minElevation = Math.min(...elevations);
+    const minRounded = Math.floor(minElevation / 10) * 10;
+
+    const maxElevation = Math.max(...elevations);
+    const maxRounded = Math.ceil(maxElevation / 10) * 10;
+
+    chart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: "Elevation",
+            data: elevations,
+            borderWidth: 1,
+            borderColor: "blue",
+            fill: true,
+            backgroundColor: "rgba(0, 0, 255, 0.05)",
+            pointRadius: 0,
+            cubicInterpolationMode: "monotone",
+          },
+        ],
+      },
+      options: {
+        // animation: false,
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            display: false,
+          },
+          y: {
+            beginAtZero: true,
+            min: minRounded,
+            max: maxRounded,
+          },
+        },
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+      },
+    });
+  }
+}
+
+drawChart(elevationData);

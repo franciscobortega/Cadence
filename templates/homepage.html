@@ -6,10 +6,52 @@
 />
 <link rel="stylesheet" href="/static/css/styles.css" />
 {% endblock %} {% block body %}
-<div id="map"></div>
-<h1 id="total-distance">Distance:</h1>
-<button id="addWaypointBtn">Add Waypoint</button>
-<button id="removeWayPoint">Remove Waypoint</button>
-<button id="clearRoute">Clear Route</button>
+<div class="map-wrapper">
+  <div id="map"></div>
+  <h1 id="total-distance">Distance:</h1>
+  <button id="clearRoute">Clear Route</button>
+  <div>
+    <canvas id="myChart" width="100%" height="200"></canvas>
+  </div>
+</div>
+<div class="options-wrapper">
+  <form id="new-elevation">
+    <h2>Select run goals</h2>
+    <p>
+      target pace:
+      <input type="number" id="pace-input" name="target-pace" />
+    </p>
+    <p>
+      target time:
+      <input type="number" id="time-input" name="target-time" />
+    </p>
+    <p>
+      target intensity:
+      <input type="number" id="intensity-input" name="target-intensity" />
+    </p>
+    <h2>Select music preferences</h2>
+    <p>
+      Select up to 5 genres:
+      <!-- dropdown menu of genres -->
+      <select name="target-genres" id="">
+        <option value="pop">pop</option>
+        <option value="rock">rock</option>
+        <option value="hip-hop">hip-hop</option>
+        <option value="country">country</option>
+        <option value="jazz">jazz</option>
+      </select>
+    </p>
+    <p>
+      Select popularity:
+      <input type="number" id="popularity-input" name="target-popularity" />
+    </p>
+
+    <p>
+      <input type="submit" />
+    </p>
+  </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- <script type="module" src="/static/js/elevation.js" async defer></script> -->
 <script type="module" src="/static/js/main.js" async defer></script>
 {% endblock %}
