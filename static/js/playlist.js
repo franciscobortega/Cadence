@@ -1,6 +1,7 @@
 "use strict";
 
 import { SPOTIFY_CLIENT_ID } from "./secrets.js";
+import { redirectToAuthCodeFlow, getAccessToken } from "./auth.js";
 
 // --------------- ROUTE DISTANCE --------------- //
 let routeDistance = 2116.703; // meters
@@ -40,383 +41,7 @@ let testPopularity = 60;
 let testMinTempo = 100;
 let testMaxTempo = 120;
 
-// let playlistRecommendationsSampleResponse = [
-//   {
-//     album: {
-//       album_type: "SINGLE",
-//       artists: [
-//         {
-//           external_urls: {
-//             spotify: "https://open.spotify.com/artist/5ZsFI1h6hIdQRw2ti0hz81",
-//           },
-//           href: "https://api.spotify.com/v1/artists/5ZsFI1h6hIdQRw2ti0hz81",
-//           id: "5ZsFI1h6hIdQRw2ti0hz81",
-//           name: "ZAYN",
-//           type: "artist",
-//           uri: "spotify:artist:5ZsFI1h6hIdQRw2ti0hz81",
-//         },
-//       ],
-//       external_urls: {
-//         spotify: "https://open.spotify.com/album/2kGUeTGnkLOYlinKRJe47G",
-//       },
-//       href: "https://api.spotify.com/v1/albums/2kGUeTGnkLOYlinKRJe47G",
-//       id: "2kGUeTGnkLOYlinKRJe47G",
-//       images: [
-//         {
-//           height: 640,
-//           url: "https://i.scdn.co/image/ab67616d0000b2733bfd914f72da2ed8822a634f",
-//           width: 640,
-//         },
-//         {
-//           height: 300,
-//           url: "https://i.scdn.co/image/ab67616d00001e023bfd914f72da2ed8822a634f",
-//           width: 300,
-//         },
-//         {
-//           height: 64,
-//           url: "https://i.scdn.co/image/ab67616d000048513bfd914f72da2ed8822a634f",
-//           width: 64,
-//         },
-//       ],
-//       is_playable: true,
-//       name: "Still Got Time (feat. PARTYNEXTDOOR)",
-//       release_date: "2017-03-23",
-//       release_date_precision: "day",
-//       total_tracks: 1,
-//       type: "album",
-//       uri: "spotify:album:2kGUeTGnkLOYlinKRJe47G",
-//     },
-//     artists: [
-//       {
-//         external_urls: {
-//           spotify: "https://open.spotify.com/artist/5ZsFI1h6hIdQRw2ti0hz81",
-//         },
-//         href: "https://api.spotify.com/v1/artists/5ZsFI1h6hIdQRw2ti0hz81",
-//         id: "5ZsFI1h6hIdQRw2ti0hz81",
-//         name: "ZAYN",
-//         type: "artist",
-//         uri: "spotify:artist:5ZsFI1h6hIdQRw2ti0hz81",
-//       },
-//       {
-//         external_urls: {
-//           spotify: "https://open.spotify.com/artist/2HPaUgqeutzr3jx5a9WyDV",
-//         },
-//         href: "https://api.spotify.com/v1/artists/2HPaUgqeutzr3jx5a9WyDV",
-//         id: "2HPaUgqeutzr3jx5a9WyDV",
-//         name: "PARTYNEXTDOOR",
-//         type: "artist",
-//         uri: "spotify:artist:2HPaUgqeutzr3jx5a9WyDV",
-//       },
-//     ],
-//     disc_number: 1,
-//     duration_ms: 188490,
-//     explicit: false,
-//     external_ids: {
-//       isrc: "USRC11700675",
-//     },
-//     external_urls: {
-//       spotify: "https://open.spotify.com/track/000xQL6tZNLJzIrtIgxqSl",
-//     },
-//     href: "https://api.spotify.com/v1/tracks/000xQL6tZNLJzIrtIgxqSl",
-//     id: "000xQL6tZNLJzIrtIgxqSl",
-//     is_local: false,
-//     is_playable: true,
-//     name: "Still Got Time (feat. PARTYNEXTDOOR)",
-//     popularity: 60,
-//     preview_url:
-//       "https://p.scdn.co/mp3-preview/765e08c9b8930c6d0338c2d3d75c5b1c3efff338?cid=dc91c831cad7402aa96598bc65b59d42",
-//     track_number: 1,
-//     type: "track",
-//     uri: "spotify:track:000xQL6tZNLJzIrtIgxqSl",
-//   },
-//   {
-//     album: {
-//       album_type: "ALBUM",
-//       artists: [
-//         {
-//           external_urls: {
-//             spotify: "https://open.spotify.com/artist/4OBJLual30L7gRl5UkeRcT",
-//           },
-//           href: "https://api.spotify.com/v1/artists/4OBJLual30L7gRl5UkeRcT",
-//           id: "4OBJLual30L7gRl5UkeRcT",
-//           name: "T.I.",
-//           type: "artist",
-//           uri: "spotify:artist:4OBJLual30L7gRl5UkeRcT",
-//         },
-//       ],
-//       external_urls: {
-//         spotify: "https://open.spotify.com/album/5PfepkNWgRR2DI02Y8AawC",
-//       },
-//       href: "https://api.spotify.com/v1/albums/5PfepkNWgRR2DI02Y8AawC",
-//       id: "5PfepkNWgRR2DI02Y8AawC",
-//       images: [
-//         {
-//           height: 640,
-//           url: "https://i.scdn.co/image/ab67616d0000b273b6d4478c6f91f1cb2d326c78",
-//           width: 640,
-//         },
-//         {
-//           height: 300,
-//           url: "https://i.scdn.co/image/ab67616d00001e02b6d4478c6f91f1cb2d326c78",
-//           width: 300,
-//         },
-//         {
-//           height: 64,
-//           url: "https://i.scdn.co/image/ab67616d00004851b6d4478c6f91f1cb2d326c78",
-//           width: 64,
-//         },
-//       ],
-//       is_playable: true,
-//       name: "Paper Trail",
-//       release_date: "2008-09-07",
-//       release_date_precision: "day",
-//       total_tracks: 16,
-//       type: "album",
-//       uri: "spotify:album:5PfepkNWgRR2DI02Y8AawC",
-//     },
-//     artists: [
-//       {
-//         external_urls: {
-//           spotify: "https://open.spotify.com/artist/4OBJLual30L7gRl5UkeRcT",
-//         },
-//         href: "https://api.spotify.com/v1/artists/4OBJLual30L7gRl5UkeRcT",
-//         id: "4OBJLual30L7gRl5UkeRcT",
-//         name: "T.I.",
-//         type: "artist",
-//         uri: "spotify:artist:4OBJLual30L7gRl5UkeRcT",
-//       },
-//       {
-//         external_urls: {
-//           spotify: "https://open.spotify.com/artist/31TPClRtHm23RisEBtV3X7",
-//         },
-//         href: "https://api.spotify.com/v1/artists/31TPClRtHm23RisEBtV3X7",
-//         id: "31TPClRtHm23RisEBtV3X7",
-//         name: "Justin Timberlake",
-//         type: "artist",
-//         uri: "spotify:artist:31TPClRtHm23RisEBtV3X7",
-//       },
-//     ],
-//     disc_number: 1,
-//     duration_ms: 299746,
-//     explicit: true,
-//     external_ids: {
-//       isrc: "USAT20803689",
-//     },
-//     external_urls: {
-//       spotify: "https://open.spotify.com/track/7IhsLJMqdxoo7YAZjaSMru",
-//     },
-//     href: "https://api.spotify.com/v1/tracks/7IhsLJMqdxoo7YAZjaSMru",
-//     id: "7IhsLJMqdxoo7YAZjaSMru",
-//     is_local: false,
-//     is_playable: true,
-//     name: "Dead And Gone",
-//     popularity: 70,
-//     preview_url:
-//       "https://p.scdn.co/mp3-preview/a282d070d34ad7e8c0608d9a426617f6cd96c11f?cid=dc91c831cad7402aa96598bc65b59d42",
-//     track_number: 16,
-//     type: "track",
-//     uri: "spotify:track:7IhsLJMqdxoo7YAZjaSMru",
-//   },
-//   {
-//     album: {
-//       album_type: "ALBUM",
-//       artists: [
-//         {
-//           external_urls: {
-//             spotify: "https://open.spotify.com/artist/74XFHRwlV6OrjEM0A2NCMF",
-//           },
-//           href: "https://api.spotify.com/v1/artists/74XFHRwlV6OrjEM0A2NCMF",
-//           id: "74XFHRwlV6OrjEM0A2NCMF",
-//           name: "Paramore",
-//           type: "artist",
-//           uri: "spotify:artist:74XFHRwlV6OrjEM0A2NCMF",
-//         },
-//       ],
-//       external_urls: {
-//         spotify: "https://open.spotify.com/album/4sgYpkIASM1jVlNC8Wp9oF",
-//       },
-//       href: "https://api.spotify.com/v1/albums/4sgYpkIASM1jVlNC8Wp9oF",
-//       id: "4sgYpkIASM1jVlNC8Wp9oF",
-//       images: [
-//         {
-//           height: 640,
-//           url: "https://i.scdn.co/image/ab67616d0000b273532033d0d90736f661c13d35",
-//           width: 640,
-//         },
-//         {
-//           height: 300,
-//           url: "https://i.scdn.co/image/ab67616d00001e02532033d0d90736f661c13d35",
-//           width: 300,
-//         },
-//         {
-//           height: 64,
-//           url: "https://i.scdn.co/image/ab67616d00004851532033d0d90736f661c13d35",
-//           width: 64,
-//         },
-//       ],
-//       is_playable: true,
-//       name: "Paramore",
-//       release_date: "2013-04-05",
-//       release_date_precision: "day",
-//       total_tracks: 17,
-//       type: "album",
-//       uri: "spotify:album:4sgYpkIASM1jVlNC8Wp9oF",
-//     },
-//     artists: [
-//       {
-//         external_urls: {
-//           spotify: "https://open.spotify.com/artist/74XFHRwlV6OrjEM0A2NCMF",
-//         },
-//         href: "https://api.spotify.com/v1/artists/74XFHRwlV6OrjEM0A2NCMF",
-//         id: "74XFHRwlV6OrjEM0A2NCMF",
-//         name: "Paramore",
-//         type: "artist",
-//         uri: "spotify:artist:74XFHRwlV6OrjEM0A2NCMF",
-//       },
-//     ],
-//     disc_number: 1,
-//     duration_ms: 216013,
-//     explicit: false,
-//     external_ids: {
-//       isrc: "USAT21300012",
-//     },
-//     external_urls: {
-//       spotify: "https://open.spotify.com/track/1yjY7rpaAQvKwpdUliHx0d",
-//     },
-//     href: "https://api.spotify.com/v1/tracks/1yjY7rpaAQvKwpdUliHx0d",
-//     id: "1yjY7rpaAQvKwpdUliHx0d",
-//     is_local: false,
-//     is_playable: true,
-//     name: "Still into You",
-//     popularity: 83,
-//     preview_url:
-//       "https://p.scdn.co/mp3-preview/4abdea56e053fe7d0f4f4e446b43d404b28edf69?cid=dc91c831cad7402aa96598bc65b59d42",
-//     track_number: 9,
-//     type: "track",
-//     uri: "spotify:track:1yjY7rpaAQvKwpdUliHx0d",
-//   },
-// ];
-
-// 2. Build query string for Get Tracks' Audio Features endpoint
-
-// playlistRecommendationsSampleResponse.forEach((track) => {
-//   audioAnaylysisQueryString += track.id + ",";
-// });
-
-// console.log(audioAnaylysisQueryString);
-
-// 3. Fetch from Get Tracks' Audio Features endpoint
-// TODO: fetch from Get Tracks' Audio Features endpoint
-let audioAnalysisSampleResponse = [
-  {
-    danceability: 0.748,
-    energy: 0.627,
-    key: 7,
-    loudness: -6.029,
-    mode: 1,
-    speechiness: 0.0639,
-    acousticness: 0.131,
-    instrumentalness: 0,
-    liveness: 0.0852,
-    valence: 0.524,
-    tempo: 120.963,
-    type: "audio_features",
-    id: "000xQL6tZNLJzIrtIgxqSl",
-    uri: "spotify:track:000xQL6tZNLJzIrtIgxqSl",
-    track_href: "https://api.spotify.com/v1/tracks/000xQL6tZNLJzIrtIgxqSl",
-    analysis_url:
-      "https://api.spotify.com/v1/audio-analysis/000xQL6tZNLJzIrtIgxqSl",
-    duration_ms: 188491,
-    time_signature: 4,
-  },
-  {
-    danceability: 0.713,
-    energy: 0.746,
-    key: 0,
-    loudness: -4.99,
-    mode: 1,
-    speechiness: 0.259,
-    acousticness: 0.0402,
-    instrumentalness: 0,
-    liveness: 0.601,
-    valence: 0.47,
-    tempo: 135.021,
-    type: "audio_features",
-    id: "7IhsLJMqdxoo7YAZjaSMru",
-    uri: "spotify:track:7IhsLJMqdxoo7YAZjaSMru",
-    track_href: "https://api.spotify.com/v1/tracks/7IhsLJMqdxoo7YAZjaSMru",
-    analysis_url:
-      "https://api.spotify.com/v1/audio-analysis/7IhsLJMqdxoo7YAZjaSMru",
-    duration_ms: 299747,
-    time_signature: 4,
-  },
-  {
-    danceability: 0.602,
-    energy: 0.923,
-    key: 5,
-    loudness: -3.763,
-    mode: 1,
-    speechiness: 0.044,
-    acousticness: 0.0098,
-    instrumentalness: 0,
-    liveness: 0.0561,
-    valence: 0.765,
-    tempo: 136.01,
-    type: "audio_features",
-    id: "1yjY7rpaAQvKwpdUliHx0d",
-    uri: "spotify:track:1yjY7rpaAQvKwpdUliHx0d",
-    track_href: "https://api.spotify.com/v1/tracks/1yjY7rpaAQvKwpdUliHx0d",
-    analysis_url:
-      "https://api.spotify.com/v1/audio-analysis/1yjY7rpaAQvKwpdUliHx0d",
-    duration_ms: 216013,
-    time_signature: 4,
-  },
-  {
-    danceability: 0.402,
-    energy: 0.923,
-    key: 5,
-    loudness: -3.763,
-    mode: 1,
-    speechiness: 0.044,
-    acousticness: 0.0098,
-    instrumentalness: 0,
-    liveness: 0.0561,
-    valence: 0.765,
-    tempo: 136.01,
-    type: "audio_features",
-    id: "1yjY7rpaAQvKwpdUliHx0d",
-    uri: "spotify:track:1yjY7rpaAQvKwpdUliHx0d",
-    track_href: "https://api.spotify.com/v1/tracks/1yjY7rpaAQvKwpdUliHx0d",
-    analysis_url:
-      "https://api.spotify.com/v1/audio-analysis/1yjY7rpaAQvKwpdUliHx0d",
-    duration_ms: 116013,
-    time_signature: 4,
-  },
-  {
-    danceability: 0.902,
-    energy: 0.923,
-    key: 5,
-    loudness: -3.763,
-    mode: 1,
-    speechiness: 0.044,
-    acousticness: 0.0098,
-    instrumentalness: 0,
-    liveness: 0.0561,
-    valence: 0.765,
-    tempo: 136.01,
-    type: "audio_features",
-    id: "1yjY7rpaAQvKwpdUliHx0d",
-    uri: "spotify:track:1yjY7rpaAQvKwpdUliHx0d",
-    track_href: "https://api.spotify.com/v1/tracks/1yjY7rpaAQvKwpdUliHx0d",
-    analysis_url:
-      "https://api.spotify.com/v1/audio-analysis/1yjY7rpaAQvKwpdUliHx0d",
-    duration_ms: 305013,
-    time_signature: 4,
-  },
-];
-
 // --------------- PLAYLIST GENERATION V1 --------------- //
-const clientId = SPOTIFY_CLIENT_ID; // Replace with your client ID
 const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
 
@@ -427,93 +52,36 @@ const queryParams = {
   min_tempo: 100,
   max_tempo: 120,
 };
-let audioAnaylysisQueryString = "";
+
+const storedAccessToken = localStorage.getItem("access_token");
 
 if (!code) {
-  redirectToAuthCodeFlow(clientId);
+  // Check if the user is authenticated
+  redirectToAuthCodeFlow(SPOTIFY_CLIENT_ID);
+} else if (!storedAccessToken) {
+  // Fetch a new access token and save it in local storage
+  const accessToken = await getAccessToken(SPOTIFY_CLIENT_ID, code);
+  localStorage.setItem("access_token", accessToken);
 } else {
-  // If error with access token, uncomment following lines and update testAccessToken with new token
-  // const accessToken = await getAccessToken(clientId, code);
-  // console.log(accessToken);
-  let testAccessToken = "";
-
-  // 1. Fetch from Get Recommendations endpoint
+  // Fetch from Get Recommendations endpoint
   const playlistRecommendations = await fetchRecommendations(
-    testAccessToken,
+    storedAccessToken,
     queryParams
   );
 
-  // 2. Fetch from Get Tracks' Audio Features endpoint, extract array from response
+  // Fetch from Get Tracks' Audio Features endpoint, extract array from response
   const listOfTrackDetails = (
-    await fetchAudioFeatures(testAccessToken, playlistRecommendations)
+    await fetchAudioFeatures(storedAccessToken, playlistRecommendations)
   )["audio_features"];
 
-  // 3. Generate playlist
+  // Generate playlist
   const generatedPlaylist = generatePlaylist(
     expectedFinishTime,
     listOfTrackDetails
   );
 
-  // 4. Display playlist
+  // Display playlist
   displayPlaylist(generatedPlaylist, playlistRecommendations);
-}
-
-export async function redirectToAuthCodeFlow(clientId) {
-  const verifier = generateCodeVerifier(128);
-  const challenge = await generateCodeChallenge(verifier);
-
-  localStorage.setItem("verifier", verifier);
-
-  const params = new URLSearchParams();
-  params.append("client_id", clientId);
-  params.append("response_type", "code");
-  params.append("redirect_uri", "http://localhost:5000/playlist");
-  params.append("scope", "user-read-private user-read-email");
-  params.append("code_challenge_method", "S256");
-  params.append("code_challenge", challenge);
-
-  document.location = `https://accounts.spotify.com/authorize?${params.toString()}`;
-}
-
-function generateCodeVerifier(length) {
-  let text = "";
-  let possible =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-  for (let i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
-}
-
-async function generateCodeChallenge(codeVerifier) {
-  const data = new TextEncoder().encode(codeVerifier);
-  const digest = await window.crypto.subtle.digest("SHA-256", data);
-  return btoa(String.fromCharCode.apply(null, [...new Uint8Array(digest)]))
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=+$/, "");
-}
-
-export async function getAccessToken(clientId, code) {
-  const verifier = localStorage.getItem("verifier");
-
-  const params = new URLSearchParams();
-  params.append("client_id", clientId);
-  params.append("grant_type", "authorization_code");
-  params.append("code", code);
-  params.append("redirect_uri", "http://localhost:5000/playlist");
-  params.append("code_verifier", verifier);
-
-  const result = await fetch("https://accounts.spotify.com/api/token", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: params,
-  });
-
-  const { access_token } = await result.json();
-  console.log(access_token);
-  return access_token;
 }
 
 async function fetchRecommendations(token, params) {
