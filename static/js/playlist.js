@@ -1,83 +1,23 @@
 "use strict";
 
-import { SPOTIFY_CLIENT_ID } from "./secrets.js";
-import { redirectToAuthCodeFlow, getAccessToken } from "./auth.js";
-
-// --------------- ROUTE DISTANCE --------------- //
-let routeDistance = 2116.703; // meters
-let targetPace = 5.0; // minutes per km
-
-let expectedFinishTime = ((routeDistance * targetPace) / 1000) * 60; // seconds
-// (2116.703 * 5.0 / 1000) * 60 = 635.0109 seconds or 10.5835 minutes
-
-// --------------- ROUTE ELEVATION --------------- //
-let elevationCategories = {
-  flat: 0,
-  "moderate ascent": 1,
-  "moderate descent": -1,
-  "steep ascent": 2,
-  "steep descent": -2,
-};
-
-const tempoMappings = {
-  slow: { min: 60, max: 80 },
-  moderate: { min: 80, max: 100 },
-  energetic: { min: 100, max: 120 },
-  intense: { min: 120, max: 140 },
-};
-
-const targetIntensity = "energetic";
-const { min: minTempo, max: maxTempo } = tempoMappings[targetIntensity]; // will be passed along to Get Recommendations endpoint
-
-// console.log(minTempo);
-// console.log(maxTempo);
-
-// --------------- SPOTIFY --------------- //
-
-// 1. Fetch from Get Recommendations endpoint
-// TODO: fetch from Get Recommendations endpoint: up to 5 genres, popularity 0-100, min/max tempo
-let testGenres = "pop,rock,hip-hop";
-let testPopularity = 60;
-let testMinTempo = 100;
-let testMaxTempo = 120;
+import { storedAccessToken, queryParams, expectedFinishTime } from "./main.js";
 
 // --------------- PLAYLIST GENERATION V1 --------------- //
-const params = new URLSearchParams(window.location.search);
-const code = params.get("code");
-
-const queryParams = {
-  limit: 100,
-  market: "US",
-  seed_genres: "pop,rock,hip-hop",
-  min_tempo: 100,
-  max_tempo: 120,
-};
-
-const storedAccessToken = localStorage.getItem("access_token");
-
-if (!code) {
-  // Check if the user is authenticated
-  redirectToAuthCodeFlow(SPOTIFY_CLIENT_ID);
-} else if (!storedAccessToken) {
-  // Fetch a new access token and save it in local storage
-  const accessToken = await getAccessToken(SPOTIFY_CLIENT_ID, code);
-  localStorage.setItem("access_token", accessToken);
-}
 
 export async function initPlaylist(
-  accessToken,
+  storedAccessToken,
   queryParams,
   expectedFinishTime
 ) {
   // Fetch from Get Recommendations endpoint
   const playlistRecommendations = await fetchRecommendations(
-    accessToken,
+    storedAccessToken,
     queryParams
   );
 
   // Fetch from Get Tracks' Audio Features endpoint, extract array from response
   const listOfTrackDetails = (
-    await fetchAudioFeatures(accessToken, playlistRecommendations)
+    await fetchAudioFeatures(storedAccessToken, playlistRecommendations)
   )["audio_features"];
 
   // Generate playlist
@@ -181,6 +121,29 @@ function displayPlaylist(playlist, recommendations) {
     console.log(`${song["name"]} by ${song["artists"][0]["name"]}`);
   });
 }
+
+// --------------- ROUTE ELEVATION --------------- //
+
+let elevationCategories = {
+  flat: 0,
+  "moderate ascent": 1,
+  "moderate descent": -1,
+  "steep ascent": 2,
+  "steep descent": -2,
+};
+
+const tempoMappings = {
+  slow: { min: 60, max: 80 },
+  moderate: { min: 80, max: 100 },
+  energetic: { min: 100, max: 120 },
+  intense: { min: 120, max: 140 },
+};
+
+const targetIntensity = "energetic";
+const { min: minTempo, max: maxTempo } = tempoMappings[targetIntensity]; // will be passed along to Get Recommendations endpoint
+
+// console.log(minTempo);
+// console.log(maxTempo);
 
 // --------------- PLAYLIST GENERATION V2 --------------- //
 

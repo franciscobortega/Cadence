@@ -15,6 +15,7 @@ const TEST_LONG = -122.4194;
 let waypoints = [];
 let markers = [];
 let elevationData = [];
+let distance = 0;
 
 let distanceText = document.querySelector("#total-distance");
 
@@ -94,6 +95,8 @@ async function createRoute() {
       elevationData = routeCoordinates;
 
       drawMarkers(routeWaypoints);
+
+      distance = routeDistance;
 
       // Display the distance of the route
       distanceText.textContent = `Distance: ${(routeDistance / 1000).toFixed(
@@ -249,7 +252,7 @@ drawChart(elevationData);
 const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
 
-const queryParams = {
+export let queryParams = {
   limit: 100,
   market: "US",
   seed_genres: "pop,rock,hip-hop",
@@ -257,7 +260,7 @@ const queryParams = {
   max_tempo: 120,
 };
 
-const storedAccessToken = localStorage.getItem("access_token");
+export const storedAccessToken = localStorage.getItem("access_token");
 
 if (!code) {
   // Check if the user is authenticated
@@ -270,9 +273,16 @@ if (!code) {
 
 // Add an event listener to a button element in your HTML
 const generateButton = document.querySelector(".generate-playlist-button"); // Replace with the actual ID of your button
+export let expectedFinishTime;
 
 generateButton.addEventListener("click", () => {
   // When the button is clicked, start the playlist generation
+  let pace = 5.0; // minutes per km
+  expectedFinishTime = ((distance * pace) / 1000) * 60; // seconds
+
   console.log("clcikeed");
-  initPlaylist(storedAccessToken, queryParams, 1000);
+  console.log(expectedFinishTime);
+  console.log(distance / 1000); // this is the distance in km
+  console.log(`You will finish in ${expectedFinishTime / 60} minutes!`); // this is the expected finish time in minutes
+  initPlaylist(storedAccessToken, queryParams, expectedFinishTime);
 });
