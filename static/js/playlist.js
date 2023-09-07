@@ -62,16 +62,18 @@ if (!code) {
   // Fetch a new access token and save it in local storage
   const accessToken = await getAccessToken(SPOTIFY_CLIENT_ID, code);
   localStorage.setItem("access_token", accessToken);
-} else {
+}
+
+async function initPlaylist(accessToken) {
   // Fetch from Get Recommendations endpoint
   const playlistRecommendations = await fetchRecommendations(
-    storedAccessToken,
+    accessToken,
     queryParams
   );
 
   // Fetch from Get Tracks' Audio Features endpoint, extract array from response
   const listOfTrackDetails = (
-    await fetchAudioFeatures(storedAccessToken, playlistRecommendations)
+    await fetchAudioFeatures(accessToken, playlistRecommendations)
   )["audio_features"];
 
   // Generate playlist
@@ -83,6 +85,15 @@ if (!code) {
   // Display playlist
   displayPlaylist(generatedPlaylist, playlistRecommendations);
 }
+
+// Add an event listener to a button element in your HTML
+const generateButton = document.querySelector(".generate-playlist-button"); // Replace with the actual ID of your button
+
+generateButton.addEventListener("click", () => {
+  // When the button is clicked, start the playlist generation
+  console.log("clcikeed");
+  initPlaylist(storedAccessToken);
+});
 
 async function fetchRecommendations(token, params) {
   // Construct the URL with query parameters
