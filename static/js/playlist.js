@@ -126,7 +126,10 @@ function displayPlaylist(playlist, recommendations) {
     playlistItem.classList.add("playlist-item");
     playlistItem.innerHTML = `
        <img src="${song["album"]["images"][0]["url"]}" alt="Album cover" class="track-img"/>
-       <p>${song["name"]} by ${song["artists"][0]["name"]}</p>`;
+       <div class="track-info">
+        <p class="track-name">${song["name"]}</p>
+        <p class="track-artist">${song["artists"][0]["name"]}</p>
+       </div>`;
 
     console.log(playlistItem);
     return playlistItem.outerHTML;
