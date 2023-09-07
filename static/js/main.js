@@ -271,12 +271,11 @@ if (!code) {
   localStorage.setItem("access_token", accessToken);
 }
 
-// Add an event listener to a button element in your HTML
-const generateButton = document.querySelector(".generate-playlist-button"); // Replace with the actual ID of your button
+// Button for generating playlist, will be replaced with a form
+const generateButton = document.querySelector(".generate-playlist-button");
 export let expectedFinishTime;
 
 generateButton.addEventListener("click", () => {
-  // When the button is clicked, start the playlist generation
   let pace = 5.0; // minutes per km
   expectedFinishTime = ((distance * pace) / 1000) * 60; // seconds
 

@@ -113,13 +113,28 @@ function generatePlaylist(remainingTime, tracks) {
 
 function displayPlaylist(playlist, recommendations) {
   // Find the song title and artist name for each track in the playlist based on the ID
-  playlist.forEach((track) => {
+  const playlistContainer = document.querySelector(".playlist-container");
+
+  const playlistHTML = playlist.map((track) => {
     const song = recommendations.tracks.find(
       (recommendation) => recommendation.id === track.id
     );
     console.log(song);
     console.log(`${song["name"]} by ${song["artists"][0]["name"]}`);
+
+    const playlistItem = document.createElement("div");
+    playlistItem.classList.add("playlist-item");
+    playlistItem.innerHTML = `
+       <img src="${song["album"]["images"][0]["url"]}" alt="Album cover" class="track-img"/>
+       <p>${song["name"]} by ${song["artists"][0]["name"]}</p>`;
+
+    console.log(playlistItem);
+    return playlistItem.outerHTML;
   });
+
+  console.log(playlistHTML);
+
+  playlistContainer.innerHTML = playlistHTML.join("");
 }
 
 // --------------- ROUTE ELEVATION --------------- //

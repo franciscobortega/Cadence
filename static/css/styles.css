@@ -34,3 +34,8 @@ body {
   background-image: url("/static/images/waypoint.png"); */
   background-color: white;
 }
+
+.track-img {
+  width: 150px;
+  height: 150px;
+}
