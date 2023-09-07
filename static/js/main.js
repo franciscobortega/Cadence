@@ -1,6 +1,9 @@
 "use strict";
 
 import { MAPBOX_API_KEY, GRAPHHOPPER_API_KEY } from "./secrets.js";
+import { SPOTIFY_CLIENT_ID } from "./secrets.js";
+import { redirectToAuthCodeFlow, getAccessToken } from "./auth.js";
+import { initPlaylist } from "./playlist.js";
 
 // const TEST_LAT = 33.65457;
 // const TEST_LONG = -96.62558;
@@ -241,3 +244,35 @@ function drawChart(elevationData) {
 }
 
 drawChart(elevationData);
+
+// --------------- PLAYLIST GENERATION V1 --------------- //
+const params = new URLSearchParams(window.location.search);
+const code = params.get("code");
+
+const queryParams = {
+  limit: 100,
+  market: "US",
+  seed_genres: "pop,rock,hip-hop",
+  min_tempo: 100,
+  max_tempo: 120,
+};
+
+const storedAccessToken = localStorage.getItem("access_token");
+
+if (!code) {
+  // Check if the user is authenticated
+  redirectToAuthCodeFlow(SPOTIFY_CLIENT_ID);
+} else if (!storedAccessToken) {
+  // Fetch a new access token and save it in local storage
+  const accessToken = await getAccessToken(SPOTIFY_CLIENT_ID, code);
+  localStorage.setItem("access_token", accessToken);
+}
+
+// Add an event listener to a button element in your HTML
+const generateButton = document.querySelector(".generate-playlist-button"); // Replace with the actual ID of your button
+
+generateButton.addEventListener("click", () => {
+  // When the button is clicked, start the playlist generation
+  console.log("clcikeed");
+  initPlaylist(storedAccessToken, queryParams, 1000);
+});

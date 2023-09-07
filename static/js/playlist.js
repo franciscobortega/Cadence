@@ -64,7 +64,11 @@ if (!code) {
   localStorage.setItem("access_token", accessToken);
 }
 
-async function initPlaylist(accessToken) {
+export async function initPlaylist(
+  accessToken,
+  queryParams,
+  expectedFinishTime
+) {
   // Fetch from Get Recommendations endpoint
   const playlistRecommendations = await fetchRecommendations(
     accessToken,
@@ -85,15 +89,6 @@ async function initPlaylist(accessToken) {
   // Display playlist
   displayPlaylist(generatedPlaylist, playlistRecommendations);
 }
-
-// Add an event listener to a button element in your HTML
-const generateButton = document.querySelector(".generate-playlist-button"); // Replace with the actual ID of your button
-
-generateButton.addEventListener("click", () => {
-  // When the button is clicked, start the playlist generation
-  console.log("clcikeed");
-  initPlaylist(storedAccessToken);
-});
 
 async function fetchRecommendations(token, params) {
   // Construct the URL with query parameters
