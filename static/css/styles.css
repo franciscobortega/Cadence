@@ -8,6 +8,19 @@ body {
   padding: 0;
 }
 
+/* ------- MAP -------- */
+.main-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* grid-template-rows: 1fr 1fr;
+  grid-gap: 10px; */
+}
+
+.data-container {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+
 #map {
   width: 800px;
   height: 600px;
@@ -34,6 +47,8 @@ body {
   background-image: url("/static/images/waypoint.png"); */
   background-color: white;
 }
+
+/* ------- PLAYLIST -------- */
 
 .playlist-item {
   display: grid;

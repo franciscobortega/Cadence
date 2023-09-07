@@ -150,7 +150,7 @@ addEventListener("keydown", function (event) {
   }
 });
 
-document.querySelector("#clearRoute").addEventListener("click", () => {
+document.querySelector(".clear-route").addEventListener("click", () => {
   clearRoute();
   elevationData = [];
 

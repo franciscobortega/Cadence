@@ -6,64 +6,66 @@
 />
 <link rel="stylesheet" href="/static/css/styles.css" />
 {% endblock %} {% block body %}
-<div class="map-wrapper">
-  <div id="map"></div>
-  <h1 id="total-distance">Distance:</h1>
-  <button id="clearRoute">Clear Route</button>
-  <div>
-    <canvas id="myChart" width="100%" height="200"></canvas>
+<div class="main-wrapper">
+  <div class="map-container">
+    <!-- <div id="map"></div> -->
   </div>
-</div>
-<div class="options-wrapper">
-  <form id="new-elevation">
-    <h2>Select run goals</h2>
-    <p>
-      target pace:
-      <input type="number" id="pace-input" name="target-pace" />
-    </p>
-    <p>
-      target time:
-      <input type="number" id="time-input" name="target-time" />
-    </p>
-    <p>
-      target intensity:
-      <input type="number" id="intensity-input" name="target-intensity" />
-    </p>
-    <h2>Select music preferences</h2>
-    <p>
-      Select up to 5 genres:
-      <p>
-        pop
-        <input type="checkbox" name="pop" id="" />
-      </p>
-      <p>
-        rock
-        <input type="checkbox" name="rock" id="" />
-      </p>
-      <p>
-        hip-hop
-        <input type="checkbox" name="hip-hop" id="" />
-      </p>
-      <p>
-        country
-        <input type="checkbox" name="country" id="" />
-      </p>
-      <p>
-        jazz
-        <input type="checkbox" name="jazz" id="" />
-      </p>
-    </p>
-    <p>
-      Select popularity:
-      <input type="number" id="popularity-input" name="target-popularity" />
-    </p>
+  <div class="data-container">
+    <div class="elevation-wrapper">
+      <canvas id="myChart"></canvas>
+    </div>
+    <div class="buttons-wrapper">
+      <h1 id="total-distance">Distance:</h1>
+      <button class="clear-route">Clear Route</button>
+      <button class="save-route">Save Route</button>
+    </div>
+    <div class="options-wrapper">
+      <form id="new-elevation">
+        <h2>Select run goals</h2>
+        <label>
+          Target Pace (min/km):
+          <input type="number" id="pace-input" name="target-pace" min="1" />
+        </label>
 
-    <p>
-      <input type="submit" />
-    </p>
-  </form>
-  
-<button class="generate-playlist-button">Generate playlist</button>
+        <h2>Select up to 5 Genres:</h2>
+        <div class="genre-checkboxes">
+          <label>
+            <input type="checkbox" name="genre" value="pop" /> Pop
+          </label>
+          <label>
+            <input type="checkbox" name="genre" value="rock" /> Rock
+          </label>
+          <label>
+            <input type="checkbox" name="genre" value="hip-hop" /> Hip-Hop
+          </label>
+          <label>
+            <input type="checkbox" name="genre" value="electronic" /> Electronic
+          </label>
+          <label>
+            <input type="checkbox" name="genre" value="jazz" /> Jazz
+          </label>
+          <label>
+            <input type="checkbox" name="genre" value="classical" /> Classical
+          </label>
+          <label>
+            <input type="checkbox" name="genre" value="country" /> Country
+          </label>
+          <label>
+            <input type="checkbox" name="genre" value="reggae" /> Reggae
+          </label>
+          <label>
+            <input type="checkbox" name="genre" value="blues" /> Blues
+          </label>
+          <label>
+            <input type="checkbox" name="genre" value="r&b" /> R&B
+          </label>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+
+      <button class="generate-playlist-button">Generate playlist</button>
+    </div>
+  </div>
 </div>
 <div class="playlist-wrapper">
   <div class="playlist-container"></div>
