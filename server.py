@@ -1,4 +1,4 @@
-from flask import (Flask, render_template, request, flash, session,
+from flask import (Flask, jsonify, render_template, request, flash, session,
                    redirect)
 from jinja2 import StrictUndefined
 
@@ -70,7 +70,19 @@ def display_demo():
 
 @app.route('/save-route', methods=['POST'])
 def save_route():
-    pass
+    try:
+        title = request.json.get('title')
+        distance = request.json.get('distance')
+        elevation_gain = request.json.get('elevation_gain')
+        created_by = request.json.get('created_by')
+
+        new_route = crud.create_route(title, distance, elevation_gain, created_by)
+        db.session.add(new_route)
+        db.session.commit()
+
+        return jsonify({'message': 'Route saved successfully'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == "__main__":
     connect_to_db(app)

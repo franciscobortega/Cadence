@@ -4,7 +4,6 @@
 // const TEST_LONG = -96.62558;
 import { MAPBOX_API_KEY, GRAPHHOPPER_API_KEY } from "./secrets.js";
 import { drawChart } from "./elevation.js";
-// import { saveRouteToServer } from "./main.js";
 
 // --------------- MAP --------------- //
 
@@ -165,18 +164,29 @@ document.querySelector(".clear-route").addEventListener("click", () => {
 document.querySelector("#save-route-form").addEventListener("submit", (e) => {
   e.preventDefault();
   console.log("clicked save route");
-  console.log(e.target);
 
   const routeData = {
     title: e.target[0].value,
     distance: distance,
     elevation_gain: elevationGain,
-    created_by: e.target[3].value,
+    created_by: 1,
   };
 
   console.log(routeData);
 
-  // saveRouteToServer(routeData);
+  fetch("/save-route", {
+    method: "POST",
+    body: JSON.stringify(routeData),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      // TODO: Implement better error and success handling
+      console.log(responseJson);
+      alert(responseJson.message);
+    });
 });
 
 map.on("load", () => {

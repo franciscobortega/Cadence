@@ -25,7 +25,7 @@ def get_user_by_email(user_email):
     return User.query.filter(User.email == user_email).first()
 
 def create_route(title, distance, elevation_gain, created_by):
-    """Create and return a new movie."""
+    """Create and return a new route."""
 
     route = Route(title=title, distance=distance, elevation_gain=elevation_gain, created_by=created_by)
 
