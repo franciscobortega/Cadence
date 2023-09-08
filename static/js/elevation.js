@@ -1,98 +1,25 @@
 "use strict";
 
-// --------------- ELEVATION --------------- //
+import { elevationData } from "./map.js";
 
-let elevationData = [
-  { longtitude: 1, latitude: 2, elevation: 228.3 },
-  { longtitude: 1, latitude: 2, elevation: 228.5 },
-  { longtitude: 1, latitude: 2, elevation: 228.5 },
-  { longtitude: 1, latitude: 2, elevation: 228.5 },
-  { longtitude: 1, latitude: 2, elevation: 228.6 },
-  { longtitude: 1, latitude: 2, elevation: 228.8 },
-  { longtitude: 1, latitude: 2, elevation: 229.3 },
-  { longtitude: 1, latitude: 2, elevation: 229.7 },
-  { longtitude: 1, latitude: 2, elevation: 229.3 },
-  { longtitude: 1, latitude: 2, elevation: 229.2 },
-  { longtitude: 1, latitude: 2, elevation: 229.1 },
-  { longtitude: 1, latitude: 2, elevation: 229 },
-  { longtitude: 1, latitude: 2, elevation: 226.6 },
-  { longtitude: 1, latitude: 2, elevation: 223.1 },
-  { longtitude: 1, latitude: 2, elevation: 222.7 },
-  { longtitude: 1, latitude: 2, elevation: 222.4 },
-  { longtitude: 1, latitude: 2, elevation: 223.9 },
-  { longtitude: 1, latitude: 2, elevation: 223.9 },
-  { longtitude: 1, latitude: 2, elevation: 223.6 },
-  { longtitude: 1, latitude: 2, elevation: 223 },
-  { longtitude: 1, latitude: 2, elevation: 222.5 },
-  { longtitude: 1, latitude: 2, elevation: 221.9 },
-  { longtitude: 1, latitude: 2, elevation: 221.9 },
-  { longtitude: 1, latitude: 2, elevation: 220.6 },
-  { longtitude: 1, latitude: 2, elevation: 220.2 },
-  { longtitude: 1, latitude: 2, elevation: 218.8 },
-  { longtitude: 1, latitude: 2, elevation: 217.7 },
-  { longtitude: 1, latitude: 2, elevation: 219.6 },
-  { longtitude: 1, latitude: 2, elevation: 220.4 },
-  { longtitude: 1, latitude: 2, elevation: 221.1 },
-  { longtitude: 1, latitude: 2, elevation: 221.5 },
-  { longtitude: 1, latitude: 2, elevation: 221.9 },
-  { longtitude: 1, latitude: 2, elevation: 222.2 },
-  { longtitude: 1, latitude: 2, elevation: 222.5 },
-  { longtitude: 1, latitude: 2, elevation: 222.7 },
-  { longtitude: 1, latitude: 2, elevation: 222.8 },
-  { longtitude: 1, latitude: 2, elevation: 222.2 },
-  { longtitude: 1, latitude: 2, elevation: 221.9 },
-  { longtitude: 1, latitude: 2, elevation: 221.5 },
-  { longtitude: 1, latitude: 2, elevation: 220.8 },
-  { longtitude: 1, latitude: 2, elevation: 219.7 },
-  { longtitude: 1, latitude: 2, elevation: 219.6 },
-  { longtitude: 1, latitude: 2, elevation: 220.8 },
-  { longtitude: 1, latitude: 2, elevation: 220.8 },
-  { longtitude: 1, latitude: 2, elevation: 220.6 },
-  { longtitude: 1, latitude: 2, elevation: 220.5 },
-  { longtitude: 1, latitude: 2, elevation: 220.5 },
-  { longtitude: 1, latitude: 2, elevation: 220.5 },
-  { longtitude: 1, latitude: 2, elevation: 220.4 },
-  { longtitude: 1, latitude: 2, elevation: 220.7 },
-  { longtitude: 1, latitude: 2, elevation: 222.7 },
-  { longtitude: 1, latitude: 2, elevation: 222.8 },
-  { longtitude: 1, latitude: 2, elevation: 223.4 },
-  { longtitude: 1, latitude: 2, elevation: 223.6 },
-  { longtitude: 1, latitude: 2, elevation: 224.6 },
-  { longtitude: 1, latitude: 2, elevation: 227.9 },
-  { longtitude: 1, latitude: 2, elevation: 228.6 },
-  { longtitude: 1, latitude: 2, elevation: 228.7 },
-  { longtitude: 1, latitude: 2, elevation: 228.8 },
-  { longtitude: 1, latitude: 2, elevation: 228.8 },
-  { longtitude: 1, latitude: 2, elevation: 229.3 },
-  { longtitude: 1, latitude: 2, elevation: 229.3 },
-  { longtitude: 1, latitude: 2, elevation: 229.3 },
-  { longtitude: 1, latitude: 2, elevation: 229.4 },
-  { longtitude: 1, latitude: 2, elevation: 229.4 },
-  { longtitude: 1, latitude: 2, elevation: 229.4 },
-  { longtitude: 1, latitude: 2, elevation: 229.4 },
-  { longtitude: 1, latitude: 2, elevation: 229.3 },
-  { longtitude: 1, latitude: 2, elevation: 231.4 },
-  { longtitude: 1, latitude: 2, elevation: 231.7 },
-  { longtitude: 1, latitude: 2, elevation: 231.7 },
-  { longtitude: 1, latitude: 2, elevation: 229.9 },
-  { longtitude: 1, latitude: 2, elevation: 228.5 },
-  { longtitude: 1, latitude: 2, elevation: 228.5 },
-  { longtitude: 1, latitude: 2, elevation: 228.3 },
-];
+// --------------- ELEVATION --------------- //
 
 const ctx = document.getElementById("myChart");
 let chart;
 
-function drawChart(elevationData) {
+export function drawChart(elevationData) {
   if (chart) {
-    chart.data.datasets[0].data = elevationData.map((row) => row.elevation);
-    chart.data.labels = elevationData.map((_, index) => index + 1);
+    const elevations = elevationData.map((data) => data[2]);
+    const labels = elevationData.map((_, index) => index + 1);
+
+    chart.data.datasets[0].data = elevations;
+    chart.data.labels = labels;
 
     // Recalculate min and max elevation
-    const minElevation = Math.min(...chart.data.datasets[0].data);
+    const minElevation = Math.min(...elevations);
     const minRounded = Math.floor(minElevation / 10) * 10;
 
-    const maxElevation = Math.max(...chart.data.datasets[0].data);
+    const maxElevation = Math.max(...elevations);
     const maxRounded = Math.ceil(maxElevation / 10) * 10;
 
     // Update the y-axis scales
@@ -101,20 +28,23 @@ function drawChart(elevationData) {
 
     chart.update();
   } else {
-    const minElevation = Math.min(...elevationData.map((row) => row.elevation));
+    const elevations = elevationData.map((data) => data[2]);
+    const labels = elevationData.map((_, index) => index + 1);
+
+    const minElevation = Math.min(...elevations);
     const minRounded = Math.floor(minElevation / 10) * 10;
 
-    const maxElevation = Math.max(...elevationData.map((row) => row.elevation));
+    const maxElevation = Math.max(...elevations);
     const maxRounded = Math.ceil(maxElevation / 10) * 10;
 
     chart = new Chart(ctx, {
       type: "line",
       data: {
-        labels: elevationData.map((_, index) => index + 1),
+        labels: labels,
         datasets: [
           {
             label: "Elevation",
-            data: elevationData.map((row) => row.elevation),
+            data: elevations,
             borderWidth: 1,
             borderColor: "blue",
             fill: true,
@@ -125,6 +55,7 @@ function drawChart(elevationData) {
         ],
       },
       options: {
+        // animation: false,
         responsive: true,
         maintainAspectRatio: false,
         scales: {
@@ -147,26 +78,4 @@ function drawChart(elevationData) {
   }
 }
 
-drawChart(elevationData);
-
-document.querySelector("form").addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const newValue = parseFloat(document.querySelector("#elevation-input").value);
-
-  elevationData.push({ longtitude: 1, latitude: 2, elevation: newValue });
-
-  drawChart(elevationData);
-});
-
-document.querySelector("#delete-elevation").addEventListener("click", () => {
-  elevationData.pop();
-
-  drawChart(elevationData);
-});
-
-document.querySelector("#clear-elevation").addEventListener("click", () => {
-  elevationData = [];
-
-  drawChart(elevationData);
-});
+// drawChart(elevationData);
