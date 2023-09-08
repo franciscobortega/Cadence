@@ -15,9 +15,49 @@
       <canvas id="myChart"></canvas>
     </div>
     <div class="buttons-wrapper">
-      <h1 id="total-distance">Distance:</h1>
+      <!-- <h1 id="total-distance">Distance:</h1> -->
       <button class="clear-route">Clear Route</button>
-      <button class="save-route">Save Route</button>
+      <!-- <button class="save-route">Save Route</button> -->
+      <form id="save-route-form">
+        <label for="title">
+          Title:
+          <input
+            type="text"
+            name="title"
+            id="route-title"
+            value="First Saved Route"
+          />
+        </label>
+        <label for="distance">
+          Distance:
+          <input
+            type="number"
+            name="distance"
+            id="total-distance"
+            value="25.2"
+          />
+        </label>
+        <label for="elevation_gain">
+          Elevation Gain:
+          <input
+            type="number"
+            name="elevation_gain"
+            id="route-elevation"
+            value="100"
+          />
+        </label>
+        <label for="created_by">
+          Created By:
+          <input
+            type="text"
+            name="created_by"
+            id="route-creator"
+            value="Logged In User"
+            disabled
+          />
+        </label>
+        <button type="submit" class="save-route">Save Route</button>
+      </form>
     </div>
     <div class="options-wrapper">
       <form id="options-form">

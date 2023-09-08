@@ -68,6 +68,10 @@ def display_login():
 def display_demo():
     return render_template("demo.html")
 
+@app.route('/save-route', methods=['POST'])
+def save_route():
+    pass
+
 if __name__ == "__main__":
     connect_to_db(app)
     app.run(host="0.0.0.0", debug=True)

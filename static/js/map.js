@@ -4,6 +4,7 @@
 // const TEST_LONG = -96.62558;
 import { MAPBOX_API_KEY, GRAPHHOPPER_API_KEY } from "./secrets.js";
 import { drawChart } from "./elevation.js";
+// import { saveRouteToServer } from "./main.js";
 
 // --------------- MAP --------------- //
 
@@ -90,6 +91,7 @@ async function createRoute() {
       const routeCoordinates = data.paths[0].points.coordinates;
       const routeDistance = data.paths[0].distance;
       const routeWaypoints = data.paths[0].snapped_waypoints.coordinates;
+      console.log(data);
 
       elevationData = routeCoordinates;
 
@@ -154,6 +156,21 @@ document.querySelector(".clear-route").addEventListener("click", () => {
   elevationData = [];
 
   drawChart(elevationData);
+});
+
+document.querySelector("#save-route-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  console.log("clicked save route");
+  console.log(e.target);
+  console.log(e.target[3].value);
+  const routeData = {
+    title: e.target[0].value,
+    distance: distance,
+    elevation: "",
+    created_by: e.target[3].value,
+  };
+
+  // saveRouteToServer(routeData);
 });
 
 map.on("load", () => {

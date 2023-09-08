@@ -48,6 +48,10 @@ body {
   background-color: white;
 }
 
+#save-route-form label {
+  display: block;
+}
+
 /* ------- PLAYLIST -------- */
 
 .playlist-item {
