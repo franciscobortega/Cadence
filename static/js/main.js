@@ -271,15 +271,32 @@ if (!code) {
   localStorage.setItem("access_token", accessToken);
 }
 
-// Button for generating playlist, will be replaced with a form
-const generateButton = document.querySelector(".generate-playlist-button");
 export let expectedFinishTime;
 
-generateButton.addEventListener("click", () => {
-  let pace = 5.0; // minutes per km
-  expectedFinishTime = ((distance * pace) / 1000) * 60; // seconds
+const optionsForm = document.getElementById("options-form");
 
-  console.log("clcikeed");
+optionsForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  // Get all the selected genre checkboxes
+  const selectedGenres = Array.from(
+    document.querySelectorAll('input[name="genre"]:checked')
+  ).map((checkbox) => checkbox.value);
+
+  // Validate that only up to 5 genres are selected
+  if (selectedGenres.length > 5) {
+    alert("You can select up to 5 genres.");
+    return;
+  }
+
+  // Get the target pace value from the input field
+  const targetPace = document.getElementById("target-pace").value;
+
+  // Update the queryParams object with the selected genres
+  queryParams.seed_genres = selectedGenres.join(",");
+
+  expectedFinishTime = ((distance * targetPace) / 1000) * 60; // seconds
+
   console.log(expectedFinishTime);
   console.log(distance / 1000); // this is the distance in km
   console.log(`You will finish in ${expectedFinishTime / 60} minutes!`); // this is the expected finish time in minutes
