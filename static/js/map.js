@@ -2,15 +2,25 @@
 
 // const TEST_LAT = 33.65457;
 // const TEST_LONG = -96.62558;
-import { GRAPHHOPPER_API_KEY } from "./secrets.js";
+import { MAPBOX_API_KEY, GRAPHHOPPER_API_KEY } from "./secrets.js";
 import { drawChart } from "./elevation.js";
-import { map } from "./main.js";
 
 // --------------- MAP --------------- //
 
-export let waypoints = [];
+const TEST_LAT = 37.7749;
+const TEST_LONG = -122.4194;
+
+mapboxgl.accessToken = MAPBOX_API_KEY;
+const map = new mapboxgl.Map({
+  container: "map",
+  style: "mapbox://styles/mapbox/streets-v11",
+  zoom: 13,
+  center: [TEST_LONG, TEST_LAT],
+});
+
+let waypoints = [];
 let markers = [];
-export let elevationData = [];
+let elevationData = [];
 export let distance = 0;
 
 let distanceText = document.querySelector("#total-distance");

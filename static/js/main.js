@@ -1,22 +1,9 @@
 "use strict";
 
-import { MAPBOX_API_KEY, SPOTIFY_CLIENT_ID } from "./secrets.js";
+import { SPOTIFY_CLIENT_ID } from "./secrets.js";
 import { redirectToAuthCodeFlow, getAccessToken } from "./auth.js";
 import { initPlaylist } from "./playlist.js";
 import { distance } from "./map.js";
-
-// --------------- MAP INITIALIZATION --------------- //
-
-const TEST_LAT = 37.7749;
-const TEST_LONG = -122.4194;
-
-mapboxgl.accessToken = MAPBOX_API_KEY;
-export const map = new mapboxgl.Map({
-  container: "map",
-  style: "mapbox://styles/mapbox/streets-v11",
-  zoom: 13,
-  center: [TEST_LONG, TEST_LAT],
-});
 
 // --------------- PLAYLIST GENERATION V1 --------------- //
 const params = new URLSearchParams(window.location.search);

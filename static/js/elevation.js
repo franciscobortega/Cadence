@@ -1,7 +1,5 @@
 "use strict";
 
-import { elevationData } from "./map.js";
-
 // --------------- ELEVATION --------------- //
 
 const ctx = document.getElementById("myChart");
@@ -77,5 +75,3 @@ export function drawChart(elevationData) {
     });
   }
 }
-
-// drawChart(elevationData);
