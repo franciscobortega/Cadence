@@ -23,6 +23,7 @@ let waypoints = [];
 let markers = [];
 let elevationData = [];
 export let distance = 0;
+let elevationGain = 0;
 
 let distanceText = document.querySelector("#total-distance");
 
@@ -91,6 +92,8 @@ async function createRoute() {
       const routeCoordinates = data.paths[0].points.coordinates;
       const routeDistance = data.paths[0].distance;
       const routeWaypoints = data.paths[0].snapped_waypoints.coordinates;
+      const routeAscent = data.paths[0].ascend;
+      const routeDescent = data.paths[0].descend;
       console.log(data);
 
       elevationData = routeCoordinates;
@@ -98,6 +101,7 @@ async function createRoute() {
       drawMarkers(routeWaypoints);
 
       distance = routeDistance;
+      elevationGain = routeAscent - routeDescent;
 
       // Display the distance of the route
       distanceText.textContent = `Distance: ${(routeDistance / 1000).toFixed(
@@ -162,13 +166,15 @@ document.querySelector("#save-route-form").addEventListener("submit", (e) => {
   e.preventDefault();
   console.log("clicked save route");
   console.log(e.target);
-  console.log(e.target[3].value);
+
   const routeData = {
     title: e.target[0].value,
     distance: distance,
-    elevation: "",
+    elevation_gain: elevationGain,
     created_by: e.target[3].value,
   };
+
+  console.log(routeData);
 
   // saveRouteToServer(routeData);
 });
