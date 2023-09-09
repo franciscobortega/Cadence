@@ -51,9 +51,48 @@ export async function getAccessToken(clientId, code) {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: params,
-  });
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("HTTP status " + response.status);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("refresh_token", data.refresh_token);
+      localStorage.setItem("expires_in", data.expires_in);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
 
-  const { access_token } = await result.json();
+export async function refreshAccessToken(clientId, code) {
+  // const verifier = localStorage.getItem("verifier");
+  const refresh_token = localStorage.getItem("refresh_token");
 
-  return access_token;
+  const params = new URLSearchParams();
+  params.append("grant_type", "refresh_token");
+  params.append("refresh_token", refresh_token);
+  params.append("client_id", clientId);
+
+  const result = await fetch("https://accounts.spotify.com/api/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: params,
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("HTTP status " + response.status);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }

@@ -8,6 +8,7 @@ import { distance } from "./map.js";
 // --------------- PLAYLIST GENERATION V1 --------------- //
 const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
+let redirect_uri = "http://localhost:5000";
 
 export let queryParams = {
   limit: 100,
@@ -21,11 +22,15 @@ export const storedAccessToken = localStorage.getItem("access_token");
 
 if (!code) {
   // Check if the user is authenticated
+  console.log("You are not authenticated!");
   redirectToAuthCodeFlow(SPOTIFY_CLIENT_ID);
-} else if (!storedAccessToken) {
+  getAccessToken(SPOTIFY_CLIENT_ID, code);
+}
+
+if (!storedAccessToken) {
   // Fetch a new access token and save it in local storage
-  const accessToken = await getAccessToken(SPOTIFY_CLIENT_ID, code);
-  localStorage.setItem("access_token", accessToken);
+  console.log("You are authenticated, but you don't have an access token!");
+  getAccessToken(SPOTIFY_CLIENT_ID, code);
 }
 
 export let expectedFinishTime;
