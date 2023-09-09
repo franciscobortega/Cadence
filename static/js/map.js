@@ -189,6 +189,21 @@ document.querySelector("#save-route-form").addEventListener("submit", (e) => {
     });
 });
 
+document.querySelector(".toggle-distance").addEventListener("click", () => {
+  // TODO: refine this
+  const distanceText = document.querySelector("#total-distance");
+  const distanceUnit = document.querySelector("#distance-unit");
+  console.log(distance);
+
+  if (distanceUnit.textContent === "km") {
+    distanceText.textContent = `Distance: ${(distance / 1609).toFixed(2)} mi`;
+    distanceUnit.textContent = "mi";
+  } else {
+    distanceText.textContent = `Distance: ${(distance / 1000).toFixed(2)} km`;
+    distanceUnit.textContent = "km";
+  }
+});
+
 map.on("load", () => {
   map.addSource("route", { type: "geojson", data: null });
   map.addLayer({
