@@ -54,15 +54,35 @@ def display_login():
     email = request.form.get('email')
     password = request.form.get('password')
 
-    user_exists = crud.get_user_by_email(email)
+    user = crud.get_user_by_email(email)
 
-    if user_exists and user_exists.password == password:
-        session['user_id'] = user_exists.user_id
+    if user and user.password == password:
+        session['user_id'] = user.user_id
+        session['username'] = user.username
         flash('Logged in!')
+        print(user.user_id)
+        print(session)
+        print(session['user_id'])
+        return redirect(f'/users/{user.user_id}')   
     else:
         flash('Wrong email or password!')
     
     return redirect('/auth')
+
+@app.route('/users/<user_id>')
+def display_user(user_id):
+    """Show user details."""
+
+    user = crud.get_user_by_id(user_id)
+
+    #  TODO: Fix authorization
+    # if user_id not in session:
+    #     flash('You are not authorized to view this page.')
+    #     return redirect('/auth')
+    print(user_id)
+
+    return render_template('user.html', user=user)
+
 
 @app.route('/demo')
 def display_demo():
