@@ -39,12 +39,13 @@ with open("static/data/routes.json") as json_file:
         distance = route['distance']
         elevation_gain = route['elevation_gain']
         created_by = route['created_by']
+        image_url = route['image_url']
 
         # Then, get the waypoints by removing it from the dict
         waypoints_data = route.pop("waypoints")
         
         # create and add new route to db
-        new_route = crud.create_route(title, distance, elevation_gain, created_by)
+        new_route = crud.create_route(title, distance, elevation_gain, created_by, image_url)
         model.db.session.add(new_route)
         
         # This ensures the route_id is available for waypoints

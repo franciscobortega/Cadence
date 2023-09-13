@@ -36,6 +36,7 @@ class Route(db.Model):
     distance = db.Column(db.Float)
     elevation_gain = db.Column(db.Float)
     created_by = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    image_url = db.Column(db.String)
 
     user = db.relationship("User", back_populates="routes")
     waypoints = db.relationship("Waypoint", back_populates="route")
