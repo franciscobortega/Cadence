@@ -81,7 +81,9 @@ def display_user(user_id):
     #     return redirect('/auth')
     print(user_id)
 
-    return render_template('user.html', user=user)
+    user_routes = crud.get_routes_by_user_id(user_id)
+
+    return render_template('user.html', user=user, user_routes=user_routes)
 
 
 @app.route('/demo')

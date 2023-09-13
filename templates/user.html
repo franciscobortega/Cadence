@@ -3,4 +3,12 @@
 {% endblock %} {% block body %}
 <h1>Hello, {{ user.username}}</h1>
 
+<h2>Saved Routes:</h2>
+
+<ul>
+  {% for route in user_routes %}
+  <li>{{ route.title }} - Distance: {{ route.distance }} km</li>
+  {% endfor %}
+</ul>
+
 {% endblock %}

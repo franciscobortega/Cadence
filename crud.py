@@ -41,6 +41,11 @@ def get_route_by_id(route_id):
 
     return Route.query.get(route_id)
 
+def get_routes_by_user_id(user_id):
+    """Return routes by user id."""
+
+    return Route.query.filter(Route.created_by == user_id).all()
+
 def create_waypoint(route, latitude, longitude, elevation):
     """Create and return a new waypoint."""
 
