@@ -12,9 +12,13 @@ app.jinja_env.undefined = StrictUndefined
 
 @app.route('/')
 def display_home():
+    # if not logged in, redirect to auth
     if 'user_id' not in session:
         return redirect('/auth')
-    return render_template("homepage.html")
+    
+    user = crud.get_user_by_id(session['user_id'])
+    
+    return render_template("homepage.html", user=user)
 
 @app.route('/elevation')
 def display_elevation():
@@ -26,6 +30,10 @@ def display_playlist():
 
 @app.route('/auth')
 def display_auth():
+    # if logged in, redirect to homepage
+    if 'user_id' in session:
+        return redirect('/')
+    
     return render_template("auth.html")
 
 @app.route("/users", methods=["POST"])
@@ -70,6 +78,14 @@ def display_login():
     else:
         flash('Wrong email or password!')
     
+    return redirect('/auth')
+
+@app.route('/logout')
+def logout_user():
+    """Log out user."""
+
+    session.clear()
+    flash('Logged out!')
     return redirect('/auth')
 
 @app.route('/users/<user_id>')
