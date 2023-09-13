@@ -169,7 +169,6 @@ document.querySelector("#save-route-form").addEventListener("submit", (e) => {
     title: e.target[0].value,
     distance: distance,
     elevation_gain: elevationGain,
-    created_by: 1,
   };
 
   console.log(routeData);

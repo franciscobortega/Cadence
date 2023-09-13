@@ -11,12 +11,12 @@
     <div id="map"></div>
   </div>
   <div class="data-container">
+    {% if user == None %}
+    <p>Hello, log in to save and generate routes!</p>
+    {% else %}
+    <p>Hello {{user.first_name}}</p>
+    {% endif %}
     <div class="elevation-wrapper">
-      {% if user == None %}
-      <p>Hello, log in to save and generate routes!</p>
-      {% else %}
-      <p>Hello {{user.first_name}}</p>
-      {% endif %}
       <canvas id="myChart"></canvas>
     </div>
     <div class="buttons-wrapper">
@@ -33,29 +33,6 @@
             name="title"
             id="route-title"
             value="First Saved Route"
-          />
-        </label>
-        <label for="distance">
-          Distance:
-          <input type="number" name="distance" value="25.2" />
-        </label>
-        <label for="elevation_gain">
-          Elevation Gain:
-          <input
-            type="number"
-            name="elevation_gain"
-            id="route-elevation"
-            value="100"
-          />
-        </label>
-        <label for="created_by">
-          Created By:
-          <input
-            type="text"
-            name="created_by"
-            id="route-creator"
-            value="Logged In User"
-            disabled
           />
         </label>
         <button type="submit" class="save-route">Save Route</button>
