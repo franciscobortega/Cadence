@@ -12,7 +12,11 @@
   </div>
   <div class="data-container">
     <div class="elevation-wrapper">
+      {% if user == None %}
+      <p>Hello, log in to save and generate routes!</p>
+      {% else %}
       <p>Hello {{user.first_name}}</p>
+      {% endif %}
       <canvas id="myChart"></canvas>
     </div>
     <div class="buttons-wrapper">

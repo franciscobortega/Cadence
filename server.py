@@ -12,11 +12,16 @@ app.jinja_env.undefined = StrictUndefined
 
 @app.route('/')
 def display_home():
-    # if not logged in, redirect to auth
-    if 'user_id' not in session:
-        return redirect('/auth')
+    """Display homepage.
     
-    user = crud.get_user_by_id(session['user_id'])
+    Logged in - display user personalization on homepage.
+    
+    Not logged in - display generic homepage.
+    """
+    if 'user_id' in session:
+        user = crud.get_user_by_id(session['user_id'])
+    else:
+        user = None
     
     return render_template("homepage.html", user=user)
 
