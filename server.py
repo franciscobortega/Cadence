@@ -12,6 +12,8 @@ app.jinja_env.undefined = StrictUndefined
 
 @app.route('/')
 def display_home():
+    if 'user_id' not in session:
+        return redirect('/auth')
     return render_template("homepage.html")
 
 @app.route('/elevation')
@@ -63,7 +65,8 @@ def display_login():
         print(user.user_id)
         print(session)
         print(session['user_id'])
-        return redirect(f'/users/{user.user_id}')   
+        # return redirect(f'/users/{user.user_id}')   
+        return redirect('/')
     else:
         flash('Wrong email or password!')
     
