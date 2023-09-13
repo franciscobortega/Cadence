@@ -97,13 +97,21 @@ def logout_user():
 def display_user(user_id):
     """Show user details."""
 
+    current_user_id = session.get('user_id')
+
     user = crud.get_user_by_id(user_id)
 
-    #  TODO: Fix authorization
-    # if user_id not in session:
-    #     flash('You are not authorized to view this page.')
-    #     return redirect('/auth')
-    print(user_id)
+    print(type(user_id)) # str
+    print(type(current_user_id)) # int
+
+    if not user:
+        flash('User not found.')
+        return redirect('/')
+    
+    if current_user_id != int(user_id):
+        # TODO: change to read-only view of user profile
+        flash('You are not authorized to view this page.')
+        return redirect('/')
 
     user_routes = crud.get_routes_by_user_id(user_id)
 
