@@ -4,7 +4,7 @@
     "distance": 2116.703,
     "elevation_gain": 0.11150360107,
     "created_by": 1,
-    "image_url": "static/images/default-map.jpg",
+    "image_url": "/images/default-map.jpg",
     "waypoints": [
       { "longitude": -96.627969, "latitude": 33.652082, "elevation": 225.53 },
       { "longitude": -96.629598, "latitude": 33.651737, "elevation": 224.72 },
@@ -23,7 +23,7 @@
     "distance": 11126.609,
     "elevation_gain": -45.5434989929,
     "created_by": 1,
-    "image_url": "static/images/default-map.jpg",
+    "image_url": "/images/default-map.jpg",
     "waypoints": [
       { "longitude": -122.50625, "latitude": 37.784065, "elevation": 97.42 },
       { "longitude": -122.479629, "latitude": 37.832655, "elevation": 52.13 },

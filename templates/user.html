@@ -7,7 +7,10 @@
 
 <ul>
   {% for route in user_routes %}
-  <li>{{ route.title }} - Distance: {{ route.distance }} km</li>
+  <li>
+    <img src="{{ url_for('static', filename=route.image_url) }}" alt="" />
+    {{ route.title }} - Distance: {{ route.distance }} km
+  </li>
   {% endfor %}
 </ul>
 
