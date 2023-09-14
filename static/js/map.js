@@ -165,7 +165,7 @@ document.querySelector("#save-route-form")?.addEventListener("submit", (e) => {
   e.preventDefault();
   console.log("clicked save route");
 
-  // TODO: Fix image_url, replace default image with static image from Mapbox API
+  // TODO: Fix image_url, replace default image with static image from Mapbox
   const routeData = {
     title: e.target[0].value,
     distance: distance,
