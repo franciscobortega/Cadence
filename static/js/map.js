@@ -165,10 +165,12 @@ document.querySelector("#save-route-form")?.addEventListener("submit", (e) => {
   e.preventDefault();
   console.log("clicked save route");
 
+  // TODO: Fix image_url, replace default image with static image from Mapbox API
   const routeData = {
     title: e.target[0].value,
     distance: distance,
     elevation_gain: elevationGain,
+    image_url: "/images/default-map.jpg",
   };
 
   console.log(routeData);

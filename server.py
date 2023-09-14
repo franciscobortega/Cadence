@@ -129,8 +129,10 @@ def save_route():
         distance = request.json.get('distance')
         elevation_gain = request.json.get('elevation_gain')
         created_by = session.get('user_id')
+        image_url = request.json.get('image_url')
 
-        new_route = crud.create_route(title, distance, elevation_gain, created_by)
+        new_route = crud.create_route(title, distance, elevation_gain, created_by, image_url)
+        print(new_route)
         db.session.add(new_route)
         db.session.commit()
 

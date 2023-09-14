@@ -9,7 +9,7 @@
   {% for route in user_routes %}
   <li>
     <img src="{{ url_for('static', filename=route.image_url) }}" alt="" />
-    {{ route.title }} - Distance: {{ route.distance }} km
+    {{ route.title }} - Distance: {{ "%.2f"|format(route.distance / 1000) }} km
   </li>
   {% endfor %}
 </ul>
