@@ -188,20 +188,25 @@ document.querySelector("#save-route-form")?.addEventListener("submit", (e) => {
     });
 });
 
-document.querySelector(".toggle-distance").addEventListener("click", () => {
-  // TODO: refine this
-  const distanceText = document.querySelector("#total-distance");
-  const distanceUnit = document.querySelector("#distance-unit");
-  console.log(distance);
+document
+  .querySelector(".toggle-distance")
+  .addEventListener("click", async () => {
+    const testImage = await getStaticMapImage();
+    // console.log(testImage);
 
-  if (distanceUnit.textContent === "km") {
-    distanceText.textContent = `Distance: ${(distance / 1609).toFixed(2)} mi`;
-    distanceUnit.textContent = "mi";
-  } else {
-    distanceText.textContent = `Distance: ${(distance / 1000).toFixed(2)} km`;
-    distanceUnit.textContent = "km";
-  }
-});
+    // TODO: refine this
+    const distanceText = document.querySelector("#total-distance");
+    const distanceUnit = document.querySelector("#distance-unit");
+    console.log(distance);
+
+    if (distanceUnit.textContent === "km") {
+      distanceText.textContent = `Distance: ${(distance / 1609).toFixed(2)} mi`;
+      distanceUnit.textContent = "mi";
+    } else {
+      distanceText.textContent = `Distance: ${(distance / 1000).toFixed(2)} km`;
+      distanceUnit.textContent = "km";
+    }
+  });
 
 map.on("load", () => {
   map.addSource("route", { type: "geojson", data: null });
@@ -215,3 +220,19 @@ map.on("load", () => {
     },
   });
 });
+
+// TODO: Fix issue with saving image from static image API endpoint to database
+async function getStaticMapImage() {
+  const { lng, lat } = map.getCenter();
+  const currentZoom = map.getZoom();
+  console.log(lng, lat, currentZoom);
+
+  const STATIC_IMAGES_API_URL = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${lng},${lat},${currentZoom},0/800x600?access_token=${MAPBOX_API_KEY}`;
+
+  const response = await fetch(STATIC_IMAGES_API_URL);
+  console.log(response);
+  const mapImage = response.url;
+  console.log(mapImage);
+
+  return mapImage;
+}
