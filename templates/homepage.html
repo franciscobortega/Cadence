@@ -11,11 +11,6 @@
     <div id="map"></div>
   </div>
   <div class="data-container">
-    {% if user == None %}
-    <p>Hello, log in to save and generate routes!</p>
-    {% else %}
-    <p>Hello {{user.first_name}}</p>
-    {% endif %}
     <div class="elevation-wrapper">
       <canvas id="myChart"></canvas>
     </div>
@@ -24,7 +19,10 @@
       <span id="distance-unit">km</span>
       <button class="clear-route">Clear Route</button>
       <button class="toggle-distance">Toggle km/mi</button>
-      <!-- <button class="save-route">Save Route</button> -->
+      {% if user == None %}
+      <p>Hello, log in to save and generate routes!</p>
+      {% else %}
+      <p>Hello {{user.first_name}}</p>
       <form id="save-route-form">
         <label for="title">
           Title:
@@ -37,6 +35,7 @@
         </label>
         <button type="submit" class="save-route">Save Route</button>
       </form>
+      {% endif %}
     </div>
     <div class="options-wrapper">
       <form id="options-form">

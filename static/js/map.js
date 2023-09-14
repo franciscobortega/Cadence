@@ -161,7 +161,7 @@ document.querySelector(".clear-route").addEventListener("click", () => {
   drawChart(elevationData);
 });
 
-document.querySelector("#save-route-form").addEventListener("submit", (e) => {
+document.querySelector("#save-route-form")?.addEventListener("submit", (e) => {
   e.preventDefault();
   console.log("clicked save route");
 
