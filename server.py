@@ -131,6 +131,12 @@ def save_route():
         return jsonify({'message': 'Route saved successfully'}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+@app.route('/load-route')
+def load_route():
+    """Load saved route to map."""
+    
+    pass
 
 if __name__ == "__main__":
     connect_to_db(app)
