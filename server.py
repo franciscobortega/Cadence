@@ -29,14 +29,6 @@ def display_home():
     
     return render_template("homepage.html", user=user)
 
-@app.route('/elevation')
-def display_elevation():
-    return render_template("test-elevation.html")
-
-@app.route('/playlist')
-def display_playlist():
-    return render_template("test-playlist.html")
-
 @app.route('/auth')
 def display_auth():
     # if logged in, redirect to homepage
@@ -121,10 +113,6 @@ def display_user(user_id):
 
     return render_template('user.html', user=user, user_routes=user_routes, access_token=MAPBOX_ACCESS_TOKEN)
 
-
-@app.route('/demo')
-def display_demo():
-    return render_template("demo.html")
 
 @app.route('/save-route', methods=['POST'])
 def save_route():
