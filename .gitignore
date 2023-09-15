@@ -1,4 +1,5 @@
 config.json
+config.py
 example-response.json
 playlist-response.json
 secrets.js

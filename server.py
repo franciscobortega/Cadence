@@ -4,11 +4,15 @@ from jinja2 import StrictUndefined
 
 from model import connect_to_db, db
 import crud
+from config import Config
 
 
 app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
+app.config.from_object(Config)
+
+MAPBOX_ACCESS_TOKEN = app.config['MAPBOX_ACCESS_TOKEN']
 
 @app.route('/')
 def display_home():
@@ -109,13 +113,13 @@ def display_user(user_id):
         return redirect('/')
     
     if current_user_id != int(user_id):
-        # TODO: change to read-only view of user profile
+        # TODO: potentially change to read-only view of other users profile
         flash('You are not authorized to view this page.')
         return redirect('/')
 
     user_routes = crud.get_routes_by_user_id(user_id)
 
-    return render_template('user.html', user=user, user_routes=user_routes)
+    return render_template('user.html', user=user, user_routes=user_routes, access_token=MAPBOX_ACCESS_TOKEN)
 
 
 @app.route('/demo')
