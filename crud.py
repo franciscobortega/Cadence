@@ -53,6 +53,11 @@ def create_waypoint(route, latitude, longitude, elevation):
 
     return waypoint
 
+def get_waypoints_by_route_id(route_id):
+    """Return waypoints by route id."""
+
+    return Waypoint.query.filter(Waypoint.route_id == route_id).all()
+
 if __name__ == '__main__':
     from server import app
     connect_to_db(app)

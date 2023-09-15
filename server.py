@@ -134,9 +134,18 @@ def save_route():
     
 @app.route('/load-route')
 def load_route():
-    """Load saved route to map."""
+    """Load saved route waypoints to map on homepage."""
     
-    pass
+    route_id = request.args.get('route_id')
+    route = crud.get_route_by_id(route_id)
+    waypoints = crud.get_waypoints_by_route_id(route_id)
+
+    print(route)
+    print(waypoints)
+    
+    return jsonify({'route': route, 'waypoints': waypoints})
+
+    
 
 if __name__ == "__main__":
     connect_to_db(app)
