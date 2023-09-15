@@ -161,41 +161,40 @@ document.querySelector(".clear-route").addEventListener("click", () => {
   drawChart(elevationData);
 });
 
-document.querySelector("#save-route-form")?.addEventListener("submit", (e) => {
-  e.preventDefault();
-  console.log("clicked save route");
+document
+  .querySelector("#save-route-form")
+  ?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    console.log("clicked save route");
 
-  // TODO: Fix image_url, replace default image with static image from Mapbox
-  const routeData = {
-    title: e.target[0].value,
-    distance: distance,
-    elevation_gain: elevationGain,
-    image_url: "/images/default-map.jpg",
-  };
+    // TODO: Potentially update so that no call is made to Static Image API and instead save template URL only
+    const routeData = {
+      title: e.target[0].value,
+      distance: distance,
+      elevation_gain: elevationGain,
+      image_url: await getStaticMapImage(),
+    };
 
-  console.log(routeData);
+    console.log(routeData);
 
-  fetch("/save-route", {
-    method: "POST",
-    body: JSON.stringify(routeData),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then((responseJson) => {
-      // TODO: Implement better error and success handling
-      console.log(responseJson);
-      alert(responseJson.message);
-    });
-});
+    fetch("/save-route", {
+      method: "POST",
+      body: JSON.stringify(routeData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        // TODO: Implement better error and success handling
+        console.log(responseJson);
+        alert(responseJson.message);
+      });
+  });
 
 document
   .querySelector(".toggle-distance")
   .addEventListener("click", async () => {
-    const testImage = await getStaticMapImage();
-    // console.log(testImage);
-
     // TODO: refine this
     const distanceText = document.querySelector("#total-distance");
     const distanceUnit = document.querySelector("#distance-unit");
@@ -223,7 +222,6 @@ map.on("load", () => {
   });
 });
 
-// TODO: Fix issue with saving image from static image API endpoint to database
 async function getStaticMapImage() {
   const { lng, lat } = map.getCenter();
   const currentZoom = map.getZoom();
@@ -233,7 +231,7 @@ async function getStaticMapImage() {
 
   const response = await fetch(STATIC_IMAGES_API_URL);
   console.log(response);
-  const mapImage = response.url;
+  const mapImage = response.url.split("?access_token")[0];
   console.log(mapImage);
 
   return mapImage;

@@ -8,8 +8,15 @@
 <ul>
   {% for route in user_routes %}
   <li>
+    {% if route.image_url == '/images/default-map.jpg' %}
     <img src="{{ url_for('static', filename=route.image_url) }}" alt="" />
-    {{ route.title }} - Distance: {{ "%.2f"|format(route.distance / 1000) }} km
+    {% else %}
+    <img
+      src="{{ route.image_url }}?access_token={{ MAPBOX_ACCESS_TOKEN }}}"
+      alt=""
+    />
+    {% endif %} {{ route.title }} - Distance: {{ "%.2f"|format(route.distance /
+    1000) }} km
   </li>
   {% endfor %}
 </ul>
