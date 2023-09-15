@@ -8,17 +8,15 @@
     {% block head %}{% endblock %}
   </head>
   <body>
-    <nav class="main-nav">
-      <ul>
-          <li><a href="/" class="logo"><img src="#" alt=""></a></li>
+    <nav class="nav-wrapper">
+      <ul class="nav-content">
+          <li><a href="/" class="nav-logo">CADENCE</a></li>
           <li><a href="{{ url_for('display_home') }}">Explore</a></li>
           {% if 'user_id' in session %}
           <li><a href="{{ url_for('display_user', user_id=session['user_id']) }}">Profile</a></li>
           {% else %}
           <li><a href="{{ url_for('display_auth') }}">Profile</a></li>
           {% endif %}
-          <li><a href="#">Saved</a></li>
-          <li><a href="#">Settings</a></li>
           <li><a href="{{ url_for('logout_user') }}" class="logout"><span>Logout</span></i></a>
       </ul>
   </nav>

@@ -1,11 +1,50 @@
 /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
 /* Optional: Makes the sample page fill the window. */
-html,
-body {
-  height: 80%;
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background-color: #b188e5;
+}
+
+/* ------- NAVIGATION -------- */
+
+.nav-wrapper {
+  background-color: rgba(50, 0, 115, 0.6);
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+}
+.nav-content {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr 1fr;
+  align-items: center;
+  /* padding: 10px; */
+}
+
+.nav-content li {
+  list-style-type: none;
+}
+
+.nav-content a {
+  text-decoration: none;
+  color: white;
+}
+
+.nav-logo {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 6px;
 }
 
 /* ------- MAP -------- */
