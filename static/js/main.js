@@ -35,6 +35,20 @@ if (!storedAccessToken) {
 
 export let expectedFinishTime;
 
+const genreCheckboxes = document.querySelectorAll(".checkbox-field");
+
+genreCheckboxes.forEach((checkbox) => {
+  const genre = checkbox.querySelector('input[type="checkbox"]');
+  const genreLabel = checkbox.querySelector(".form-label");
+
+  checkbox.addEventListener("click", () => {
+    // Toggle the checkbox checked state
+    genre.checked = !genre.checked;
+
+    genreLabel.classList.toggle("checked", genre.checked);
+  });
+});
+
 const optionsForm = document.getElementById("options-form");
 
 optionsForm.addEventListener("submit", (e) => {
