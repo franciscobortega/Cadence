@@ -4,6 +4,8 @@ import { storedAccessToken, queryParams, expectedFinishTime } from "./main.js";
 
 // --------------- PLAYLIST GENERATION V1 --------------- //
 
+export let trackURIs = [];
+
 export async function initPlaylist(
   storedAccessToken,
   queryParams,
@@ -28,6 +30,9 @@ export async function initPlaylist(
 
   // Display playlist
   displayPlaylist(generatedPlaylist, playlistRecommendations);
+
+  // extract track URIs from generated playlist
+  trackURIs = generatedPlaylist.map((track) => track.uri);
 }
 
 async function fetchRecommendations(token, params) {

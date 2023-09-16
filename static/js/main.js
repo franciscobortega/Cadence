@@ -2,7 +2,7 @@
 
 import { SPOTIFY_CLIENT_ID } from "./secrets.js";
 import { redirectToAuthCodeFlow, getAccessToken } from "./auth.js";
-import { initPlaylist } from "./playlist.js";
+import { trackURIs, initPlaylist } from "./playlist.js";
 import { distance } from "./map.js";
 
 // --------------- PLAYLIST GENERATION V1 --------------- //
@@ -82,33 +82,55 @@ optionsForm.addEventListener("submit", (e) => {
 const exportPlaylistButton = document.querySelector(".export-playlist");
 
 exportPlaylistButton.addEventListener("click", async () => {
-  console.log("clicked");
+  // TODO: Update playlistName from input field
+  const playlistName = "Cadence Playlist";
 
-  const spotifyIdResponse = await fetch("https://api.spotify.com/v1/me", {
-    method: "GET",
-    headers: { Authorization: `Bearer ${storedAccessToken}` },
-  });
+  try {
+    // TODO: Consider getting the user's ID from the auth flow
+    // Get spotify ID of the user
+    const spotifyIdResponse = await fetch("https://api.spotify.com/v1/me", {
+      method: "GET",
+      headers: { Authorization: `Bearer ${storedAccessToken}` },
+    });
+    const spotifyIdData = await spotifyIdResponse.json();
+    const spotifyUserId = spotifyIdData.id;
 
-  const data = await spotifyIdResponse.json();
+    // Create a new blank playlist
+    const playlistResponse = await fetch(
+      `https://api.spotify.com/v1/users/${spotifyUserId}/playlists`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${storedAccessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: playlistName,
+          public: true,
+        }),
+      }
+    );
+    const playlistData = await playlistResponse.json();
+    const playlistId = playlistData.id;
 
-  const spotifyUserId = data.id;
-
-  console.log(spotifyUserId);
-
-  const playlistResponse = await fetch(
-    `https://api.spotify.com/v1/users/${spotifyUserId}/playlists`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${storedAccessToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: playlistName,
-        public: true,
-      }),
-    }
-  );
-
-  console.log(playlistResponse);
+    // Populate the playlist with the tracks
+    const playlistTracksResponse = await fetch(
+      `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${storedAccessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          uris: trackURIs,
+        }),
+      }
+    );
+    const playlistTracksData = await playlistTracksResponse.json();
+    console.log(playlistTracksData);
+    //TODO: Add success message
+  } catch (error) {
+    console.error(error);
+  }
 });
