@@ -17,8 +17,8 @@
     <div class="buttons-wrapper">
       <h1 id="total-distance">Distance:</h1>
       <span id="distance-unit">km</span>
-      <button class="clear-route">Clear Route</button>
-      <button class="toggle-distance">Toggle km/mi</button>
+      <button class="clear-route rounded-btn">Clear Route</button>
+      <button class="toggle-distance rounded-btn">Toggle km/mi</button>
       {% if user == None %}
       <p>Hello, log in to save and generate routes!</p>
       {% else %}
@@ -33,7 +33,7 @@
             value="First Saved Route"
           />
         </label>
-        <button type="submit" class="save-route">Save Route</button>
+        <button type="submit" class="save-route rounded-btn">Save Route</button>
       </form>
       {% endif %}
     </div>
@@ -54,45 +54,37 @@
         </label>
 
         <h2>Select up to 5 Genres:</h2>
-        <div class="genre-checkboxes">
-          <label>
-            <input type="checkbox" name="genre" value="pop" /> Pop
+        <div class="form-genres-wrapper">
+          <label class="checkbox-field">
+            <input type="checkbox" name="genre" value="pop" />
+            <span class="form-label" for="genre">Pop</span>
           </label>
-          <label>
-            <input type="checkbox" name="genre" value="rock" /> Rock
+          <label class="checkbox-field">
+            <input type="checkbox" name="genre" value="rock" />
+            <span class="form-label" for="genre">Rock</span>
           </label>
-          <label>
-            <input type="checkbox" name="genre" value="hip-hop" /> Hip-Hop
+          <label class="checkbox-field">
+            <input type="checkbox" name="genre" value="hip-hop" />
+            <span class="form-label" for="genre">Hip-hop</span>
           </label>
-          <label>
-            <input type="checkbox" name="genre" value="electronic" /> Electronic
+          <label class="checkbox-field">
+            <div class="checkbox-input"></div>
+            <input type="checkbox" name="genre" value="country" />
+            <span class="form-label" for="genre">Country</span>
           </label>
-          <label>
-            <input type="checkbox" name="genre" value="jazz" /> Jazz
-          </label>
-          <label>
-            <input type="checkbox" name="genre" value="classical" /> Classical
-          </label>
-          <label>
-            <input type="checkbox" name="genre" value="country" /> Country
-          </label>
-          <label>
-            <input type="checkbox" name="genre" value="reggae" /> Reggae
-          </label>
-          <label>
-            <input type="checkbox" name="genre" value="blues" /> Blues
-          </label>
-          <label>
-            <input type="checkbox" name="genre" value="r&b" /> R&B
+          <label class="checkbox-field">
+            <div class="checkbox-input"></div>
+            <input type="checkbox" name="genre" value="pop" />
+            <span class="form-label" for="genre">Electronic</span>
           </label>
         </div>
-        <button type="submit">Generate Playlist</button>
+        <button type="submit" class="rounded-btn">Generate Playlist</button>
       </form>
     </div>
+    <div class="playlist-wrapper">
+      <div class="playlist-container"></div>
+    </div>
   </div>
-</div>
-<div class="playlist-wrapper">
-  <div class="playlist-container"></div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="module" src="/static/js/map.js" async defer></script>

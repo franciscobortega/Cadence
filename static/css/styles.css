@@ -8,13 +8,21 @@
 }
 
 html {
-  width: 100%;
-  height: 100%;
   font-family: "Inter", sans-serif;
 }
 
 body {
   background-color: #b188e5;
+  overflow: hidden;
+}
+
+.rounded-btn {
+  border-radius: 20px;
+  padding: 10px 20px;
+  background-color: #b188e5;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
 /* ------- NAVIGATION -------- */
@@ -24,12 +32,22 @@ body {
   padding: 10px;
   margin: 10px;
   border-radius: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* Add other styles as needed for your navigation */
+  z-index: 2; /* Place the navigation on top of everything */
 }
+
+.nav > * {
+  max-width: 100%; /* Limit the width of individual elements */
+}
+
 .nav-content {
   display: grid;
   grid-template-columns: 3fr 1fr 1fr 1fr;
   align-items: center;
-  /* padding: 10px; */
 }
 
 .nav-content li {
@@ -49,20 +67,66 @@ body {
 
 /* ------- MAP -------- */
 .main-wrapper {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  /* grid-template-rows: 1fr 1fr;
-  grid-gap: 10px; */
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  /* width: 100vw; */
 }
 
-.data-container {
-  display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
+.map-container {
+  flex: 1;
+  position: relative;
 }
 
 #map {
-  width: 800px;
-  height: 600px;
+  width: 100%;
+  height: 100%;
+}
+
+/* ------- USER PREFERENCES -------- */
+
+.data-container {
+  position: absolute;
+  background-color: white;
+  padding: 20px;
+  right: 20px;
+  top: 8%;
+  height: 80%;
+  border-radius: 20px;
+  border: 5px solid rgba(50, 0, 115, 0.6);
+  background-clip: padding-box;
+}
+
+/* ------- GENRES -------- */
+.form-genres-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  max-width: 500px;
+}
+
+.checkbox-field {
+  border: 1px solid #dfdfdf;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.checkbox-field input {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.form-label {
+  color: #b188e5;
+  background-color: white;
+  padding: 4px 20px;
+}
+
+.checked {
+  background-color: #b188e5;
+  border-color: #b188e5;
+  color: white;
 }
 
 .marker {
