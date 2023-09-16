@@ -9,6 +9,6 @@ Public Trello Board for vertical development of application during Sprint 1 and 
 <img src="https://github.com/franciscobortega/Cadence/assets/121342618/cbd6c28d-fa25-4748-9ae1-89c8665e08e8" width="500">
 
 ## Homepage 
-![cadence-homepage](https://github.com/franciscobortega/Cadence/assets/121342618/5af43bc5-d681-4e05-97a3-0185638fd743)
-Initial design for homepage 
+![cadence-homepage-v2](https://github.com/franciscobortega/Cadence/assets/121342618/ebb90ca3-c594-45d9-9d53-1eb95a251cb0)
+Updated design for homepage 
 
