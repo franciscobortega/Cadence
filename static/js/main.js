@@ -78,3 +78,37 @@ optionsForm.addEventListener("submit", (e) => {
   console.log(`You will finish in ${expectedFinishTime / 60} minutes!`); // this is the expected finish time in minutes
   initPlaylist(storedAccessToken, queryParams, expectedFinishTime);
 });
+
+const exportPlaylistButton = document.querySelector(".export-playlist");
+
+exportPlaylistButton.addEventListener("click", async () => {
+  console.log("clicked");
+
+  const spotifyIdResponse = await fetch("https://api.spotify.com/v1/me", {
+    method: "GET",
+    headers: { Authorization: `Bearer ${storedAccessToken}` },
+  });
+
+  const data = await spotifyIdResponse.json();
+
+  const spotifyUserId = data.id;
+
+  console.log(spotifyUserId);
+
+  const playlistResponse = await fetch(
+    `https://api.spotify.com/v1/users/${spotifyUserId}/playlists`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${storedAccessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: playlistName,
+        public: true,
+      }),
+    }
+  );
+
+  console.log(playlistResponse);
+});
