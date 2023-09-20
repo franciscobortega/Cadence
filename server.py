@@ -1,9 +1,11 @@
+import base64
 from flask import (Flask, jsonify, render_template, request, flash, session,
                    redirect)
 from jinja2 import StrictUndefined
 
 from model import connect_to_db, db
 import crud
+import requests
 from config import Config
 
 
@@ -13,6 +15,8 @@ app.jinja_env.undefined = StrictUndefined
 app.config.from_object(Config)
 
 MAPBOX_ACCESS_TOKEN = app.config['MAPBOX_ACCESS_TOKEN']
+SPOTIFY_CLIENT_ID = app.config['SPOTIFY_CLIENT_ID']
+SPOTIFY_CLIENT_SECRET = app.config['SPOTIFY_CLIENT_SECRET']
 
 @app.route('/')
 def display_home():
@@ -36,6 +40,80 @@ def display_auth():
         return redirect('/')
     
     return render_template("auth.html")
+
+@app.route('/users')
+def redirect_user():
+    """Get auth code and exchange for acces token."""
+    
+    code = request.args.get('code')
+
+    if code:
+        # exchange auth code for access token and refresh token
+        response = request_access_token(code)
+
+        access_token = response.get('access_token')
+        refresh_token = response.get('refresh_token')
+
+        session['access_token'] = access_token
+        session['refresh_token'] = refresh_token
+
+        print(session)
+
+        # Redirect to the user's page
+        user_id = session.get('user_id')
+        return redirect(f'/users/{user_id}')
+    else:
+        # TODO: implement error handling
+        return redirect('/auth')
+
+def request_access_token(auth_code):
+    """Exchange the authorization code for an access token."""
+    
+    # Spotify's token endpoint URL
+    url = "https://accounts.spotify.com/api/token"
+
+    # Spotify application credentials
+    client_id = SPOTIFY_CLIENT_ID
+    client_secret = SPOTIFY_CLIENT_SECRET
+    redirect_uri = "http://localhost:5000/users"
+
+    # Parameters for the token request
+    form = {
+        "grant_type": "authorization_code",
+        "code": auth_code,
+        "redirect_uri": redirect_uri,
+    }
+
+    # HTTP Basic Authentication header
+    headers = {
+        "Authorization": f"Basic {base64_encode(client_id, client_secret)}",
+    }
+
+    # Send the POST request to exchange the code for a token
+    response = requests.post(url, data=form, headers=headers)
+
+    # Parse the response JSON to extract the access token
+    if response.status_code == 200:
+        data = response.json()
+        print(data)
+        # access_token = token_data.get("access_token")
+        return data
+    else:
+        # Handle errors here, e.g., log the error or return None
+        print(f"Request failed. Status code: {response.status_code} Message: {response.text}")
+
+        return None
+
+def base64_encode(client_id, client_secret):
+    """Encodes the client ID and client secret for use in auth code flow."""
+
+    # Convert the client ID and client secret to Base64
+    message = f"{client_id}:{client_secret}"
+    message_bytes = message.encode("ascii")
+    base64_bytes = base64.b64encode(message_bytes)
+    base64_message = base64_bytes.decode("ascii")
+
+    return base64_message
 
 @app.route("/users", methods=["POST"])
 def register_user():

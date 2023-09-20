@@ -4,7 +4,7 @@
 <h1>Hello, {{ user.username}}</h1>
 
 <h2>Saved Routes:</h2>
-
+<button class="authorize-spotify">Link Spotify</button>
 <ul>
   {% for route in user_routes %}
   <li>
@@ -20,5 +20,5 @@
   </li>
   {% endfor %}
 </ul>
-
+<script type="module" src="/static/js/auth.js" async defer></script>
 {% endblock %}
