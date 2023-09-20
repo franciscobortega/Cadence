@@ -28,10 +28,12 @@ def display_home():
     """
     if 'user_id' in session:
         user = crud.get_user_by_id(session['user_id'])
+        access_token = session.get('access_token')
     else:
         user = None
+        access_token = None
     
-    return render_template("homepage.html", user=user)
+    return render_template("homepage.html", user=user, access_token=access_token)
 
 @app.route('/auth')
 def display_auth():

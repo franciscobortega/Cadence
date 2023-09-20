@@ -1,14 +1,11 @@
 "use strict";
 
-import { SPOTIFY_CLIENT_ID } from "./secrets.js";
-import { redirectToAuthCodeFlow, getAccessToken } from "./auth.js";
 import { trackURIs, initPlaylist } from "./playlist.js";
 import { distance } from "./map.js";
 
 // --------------- PLAYLIST GENERATION V1 --------------- //
-const params = new URLSearchParams(window.location.search);
-const code = params.get("code");
-let redirect_uri = "http://localhost:5000";
+
+console.log(accessToken);
 
 export let queryParams = {
   limit: 100,
@@ -18,20 +15,7 @@ export let queryParams = {
   max_tempo: 120,
 };
 
-export const storedAccessToken = localStorage.getItem("access_token");
-
-if (!code) {
-  // Check if the user is authenticated
-  console.log("You are not authenticated!");
-  redirectToAuthCodeFlow(SPOTIFY_CLIENT_ID);
-  getAccessToken(SPOTIFY_CLIENT_ID, code);
-}
-
-if (!storedAccessToken) {
-  // Fetch a new access token and save it in local storage
-  console.log("You are authenticated, but you don't have an access token!");
-  getAccessToken(SPOTIFY_CLIENT_ID, code);
-}
+export const storedAccessToken = accessToken;
 
 export let expectedFinishTime;
 
