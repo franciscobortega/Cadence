@@ -1,7 +1,5 @@
 "use strict";
 
-// const TEST_LAT = 33.65457;
-// const TEST_LONG = -96.62558;
 import { MAPBOX_API_KEY, GRAPHHOPPER_API_KEY } from "./secrets.js";
 import { drawChart } from "./elevation.js";
 
@@ -236,3 +234,28 @@ async function getStaticMapImage() {
 
   return mapImage;
 }
+
+// --------------- LOADED ROUTE --------------- //
+
+// if (loadedRoute) {
+//   console.log(loadedRoute);
+//   console.log(loadedWaypoints);
+
+//   loadedWaypoints.forEach((waypoint) => {
+//     const { latitude, longitude } = waypoint;
+//     waypoints.push([latitude, longitude]);
+//   });
+//   console.log(waypoints);
+
+//   map.on("load", () => {
+//     // TODO: Currently centers the map to the first waypoint, but should center to show the full route instead
+//     map.flyTo({
+//       center: [waypoints[0][1], waypoints[0][0]],
+//       zoom: 13,
+//     });
+
+//     createRoute();
+
+//     drawChart(elevationData);
+//   });
+// }

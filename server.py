@@ -1,9 +1,10 @@
 import base64
-from flask import (Flask, jsonify, render_template, request, flash, session,
+from flask import (Flask, json, jsonify, render_template, request, flash, session,
                    redirect)
 from jinja2 import StrictUndefined
 
 from model import connect_to_db, db
+import json
 import crud
 import requests
 from config import Config
@@ -33,7 +34,7 @@ def display_home():
         user = None
         access_token = None
     
-    return render_template("homepage.html", user=user, access_token=access_token)
+    return render_template("homepage.html", user=user, access_token=access_token, route=None, waypoints=None)
 
 @app.route('/auth')
 def display_auth():
@@ -215,15 +216,40 @@ def save_route():
 @app.route('/load-route')
 def load_route():
     """Load saved route waypoints to map on homepage."""
+
+    if 'user_id' in session:
+        user = crud.get_user_by_id(session['user_id'])
+        access_token = session.get('access_token')
+
+    else:
+        user = None
+        access_token = None
     
     route_id = request.args.get('route_id')
     route = crud.get_route_by_id(route_id)
     waypoints = crud.get_waypoints_by_route_id(route_id)
 
-    print(route)
-    print(waypoints)
-    
-    return jsonify({'route': route, 'waypoints': waypoints})
+    route_data = {
+        "title": route.title,
+        "distance": route.distance,
+        "elevation_gain": route.elevation_gain,
+    }
+
+    waypoints_data = []
+    for waypoint in waypoints:
+        waypoint_data = {
+            "latitude": waypoint.latitude,
+            "longitude": waypoint.longitude,
+            "elevation": waypoint.elevation,
+        }
+        waypoints_data.append(waypoint_data)
+
+    print(route_data)
+    print(waypoints_data)
+
+    # return jsonify(route=route_data, waypoints=waypoints_data)
+
+    return render_template('homepage.html', user=user, access_token=access_token, route=route_data, waypoints=waypoints_data)
 
     
 
