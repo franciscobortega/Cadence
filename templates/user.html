@@ -28,14 +28,27 @@
           </div>
           <div class="route-card-info">
             <h2 class="route-card-title">{{ route.title }}</h2>
-            <p class="route-card-info">
+            <p class="route-card-description">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam
               omnis facilis alias fugiat assumenda totam dignissimos quam
               distinctio id inventore!
             </p>
-            <a href="{{ url_for('load_route', route_id=route.route_id) }}"
-              >Load Route</a
-            >
+            <div class="route-card-buttons">
+              <div class="route-card-load">
+                <a
+                  href="{{ url_for('load_route', route_id=route.route_id) }}"
+                  class="route-card-link"
+                  >Load Route</a
+                >
+              </div>
+              <div class="route-card-delete">
+                <a
+                  href="{{ url_for('load_route', route_id=route.route_id) }}"
+                  class="route-card-link"
+                  >Delete Route</a
+                >
+              </div>
+            </div>
           </div>
         </li>
         {% endfor %}

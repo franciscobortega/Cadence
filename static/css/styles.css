@@ -244,6 +244,11 @@ body {
 }
 
 .route-card-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+  width: 60%;
   position: relative;
   z-index: 1;
 }
@@ -253,12 +258,36 @@ body {
   font-size: 24px;
   font-weight: 700;
   letter-spacing: 6px;
-  margin-bottom: 20px;
 }
 
-.route-card-info {
+.route-card-description {
   color: white;
   font-size: 16px;
   font-weight: 400;
   letter-spacing: 2px;
+}
+
+.route-card-buttons {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.route-card-load {
+  background-color: #6fbd77;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  max-width: fit-content;
+  min-height: fit-content;
+}
+
+.route-card-load:hover {
+  background-color: #6fbd77;
+  cursor: pointer;
+}
+
+.route-card-link {
+  text-decoration: none;
+  color: white;
+  padding: 10px 20px;
 }
