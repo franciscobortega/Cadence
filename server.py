@@ -1,10 +1,9 @@
 import base64
-from flask import (Flask, json, jsonify, render_template, request, flash, session,
+from flask import (Flask, jsonify, render_template, request, flash, session,
                    redirect)
 from jinja2 import StrictUndefined
 
 from model import connect_to_db, db
-import json
 import crud
 import requests
 from config import Config
@@ -110,7 +109,6 @@ def request_access_token(auth_code):
 def base64_encode(client_id, client_secret):
     """Encodes the client ID and client secret for use in auth code flow."""
 
-    # Convert the client ID and client secret to Base64
     message = f"{client_id}:{client_secret}"
     message_bytes = message.encode("ascii")
     base64_bytes = base64.b64encode(message_bytes)
@@ -154,8 +152,7 @@ def display_login():
         flash('Logged in!')
         print(user.user_id)
         print(session)
-        print(session['user_id'])
-        # return redirect(f'/users/{user.user_id}')   
+        print(session['user_id']) 
         return redirect('/')
     else:
         flash('Wrong email or password!')
@@ -194,7 +191,6 @@ def display_user(user_id):
 
     return render_template('user.html', user=user, user_routes=user_routes, access_token=MAPBOX_ACCESS_TOKEN)
 
-
 @app.route('/save-route', methods=['POST'])
 def save_route():
     try:
@@ -218,7 +214,6 @@ def save_route():
         db.session.add(new_route)
         db.session.commit()
 
-
         return jsonify({'message': 'Route saved successfully'}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -227,8 +222,9 @@ def save_route():
 def delete_route():
     try:
         route_id = request.form.get('route_id')
+
+        crud.delete_waypoints_by_route_id(route_id)
         crud.delete_route(route_id)
-        
 
         return jsonify({'success': True, 'message': 'Route deleted successfully'}), 200
     except Exception as e:
@@ -265,11 +261,6 @@ def load_route():
             "elevation": waypoint.elevation,
         }
         waypoints_data.append(waypoint_data)
-
-    print(route_data)
-    print(waypoints_data)
-
-    # return jsonify(route=route_data, waypoints=waypoints_data)
 
     return render_template('homepage.html', user=user, access_token=access_token, route=route_data, waypoints=waypoints_data)
 
