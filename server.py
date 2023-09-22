@@ -203,11 +203,21 @@ def save_route():
         elevation_gain = request.json.get('elevation_gain')
         created_by = session.get('user_id')
         image_url = request.json.get('image_url')
+        waypoints = request.json.get('waypoints')
 
         new_route = crud.create_route(title, distance, elevation_gain, created_by, image_url)
-        print(new_route)
+
+        for waypoint in waypoints:
+            longitude = waypoint[0]
+            latitude = waypoint[1]
+            elevation = waypoint[2]
+
+            new_waypoint = crud.create_waypoint(new_route, latitude, longitude, elevation)
+            db.session.add(new_waypoint)
+
         db.session.add(new_route)
         db.session.commit()
+
 
         return jsonify({'message': 'Route saved successfully'}), 200
     except Exception as e:

@@ -21,6 +21,7 @@ let markers = [];
 let elevationData = [];
 export let distance = 0;
 let elevationGain = 0;
+let responseWaypoints = [];
 
 let distanceText = document.querySelector("#total-distance");
 
@@ -97,6 +98,8 @@ async function createRoute() {
 
       drawMarkers(routeWaypoints);
 
+      responseWaypoints = routeWaypoints;
+
       distance = routeDistance;
       elevationGain = routeAscent - routeDescent;
 
@@ -171,6 +174,7 @@ document
       distance: distance,
       elevation_gain: elevationGain,
       image_url: await getStaticMapImage(),
+      waypoints: responseWaypoints,
     };
 
     console.log(routeData);
