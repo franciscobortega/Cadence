@@ -9,7 +9,7 @@
       <h1 class="saved-title">Saved Routes</h1>
       <ul>
         {% for route in user_routes %}
-        <li class="route-card">
+        <li class="route-card" data-route-id="{{ route.route_id }}">
           <div class="route-card-background">
             {% if route.image_url == '/images/default-map.jpg' %}
             <img
@@ -42,11 +42,20 @@
                 >
               </div>
               <div class="route-card-delete">
-                <a
-                  href="{{ url_for('load_route', route_id=route.route_id) }}"
-                  class="route-card-link"
-                  >Delete Route</a
+                <form
+                  action="{{ url_for('delete_route')}}"
+                  method="POST"
+                  class="route-card-form"
                 >
+                  <input
+                    type="hidden"
+                    name="route_id"
+                    value="{{ route.route_id }}"
+                  />
+                  <button type="submit" class="route-card-link">
+                    Delete Route
+                  </button>
+                </form>
               </div>
             </div>
           </div>
@@ -59,6 +68,36 @@
     </div>
   </main>
 </div>
+<script>
+  const userRoutes = document.querySelectorAll(".route-card");
+  userRoutes.forEach((route) => {
+    const routeForm = route.querySelector(".route-card-form");
 
+    routeForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const routeId = route.getAttribute("data-route-id");
+      const formData = new FormData(routeForm);
+      formData.append("route_id", routeId);
+
+      try {
+        const response = await fetch(routeForm.action, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success) {
+            route.remove();
+          }
+        } else {
+          console.error("Failed to delete route.");
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    });
+  });
+</script>
 <script type="module" src="/static/js/auth.js" async defer></script>
 {% endblock %}

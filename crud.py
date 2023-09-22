@@ -46,6 +46,12 @@ def get_routes_by_user_id(user_id):
 
     return Route.query.filter(Route.created_by == user_id).all()
 
+def delete_route(route_id):
+    """Delete route by id."""
+
+    Route.query.filter(Route.route_id == route_id).delete()
+    db.session.commit()
+
 def create_waypoint(route, latitude, longitude, elevation):
     """Create and return a new waypoint."""
 
@@ -57,6 +63,12 @@ def get_waypoints_by_route_id(route_id):
     """Return waypoints by route id."""
 
     return Waypoint.query.filter(Waypoint.route_id == route_id).all()
+
+def delete_waypoints_by_route_id(route_id):
+    """Delete waypoints by route id."""
+
+    Waypoint.query.filter(Waypoint.route_id == route_id).delete()
+    db.session.commit()
 
 if __name__ == '__main__':
     from server import app

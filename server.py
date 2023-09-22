@@ -212,6 +212,18 @@ def save_route():
         return jsonify({'message': 'Route saved successfully'}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@app.route('/delete-route', methods=['POST'])
+def delete_route():
+    try:
+        route_id = request.form.get('route_id')
+        crud.delete_route(route_id)
+        
+
+        return jsonify({'success': True, 'message': 'Route deleted successfully'}), 200
+    except Exception as e:
+        print(e)
+        return jsonify({'success': False, 'error': str(e)}), 500
     
 @app.route('/load-route')
 def load_route():
