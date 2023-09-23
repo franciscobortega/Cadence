@@ -245,7 +245,7 @@ const loadedRoute = document.querySelector(".loaded-route").dataset.route;
 const loadedWaypoints =
   document.querySelector(".loaded-waypoints").dataset.waypoints;
 
-if (loadedRoute) {
+if (loadedRoute && loadedRoute != "None") {
   const parsedRoute = JSON.parse(loadedRoute);
   const parsedWaypoints = JSON.parse(loadedWaypoints);
 
