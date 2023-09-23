@@ -241,25 +241,27 @@ async function getStaticMapImage() {
 
 // --------------- LOADED ROUTE --------------- //
 
-// if (loadedRoute) {
-//   console.log(loadedRoute);
-//   console.log(loadedWaypoints);
+const loadedRoute = document.querySelector(".loaded-route").dataset.route;
+const loadedWaypoints =
+  document.querySelector(".loaded-waypoints").dataset.waypoints;
 
-//   loadedWaypoints.forEach((waypoint) => {
-//     const { latitude, longitude } = waypoint;
-//     waypoints.push([latitude, longitude]);
-//   });
-//   console.log(waypoints);
+if (loadedRoute) {
+  const parsedRoute = JSON.parse(loadedRoute);
+  const parsedWaypoints = JSON.parse(loadedWaypoints);
 
-//   map.on("load", () => {
-//     // TODO: Currently centers the map to the first waypoint, but should center to show the full route instead
-//     map.flyTo({
-//       center: [waypoints[0][1], waypoints[0][0]],
-//       zoom: 13,
-//     });
+  parsedWaypoints.forEach((waypoint) => {
+    const { latitude, longitude } = waypoint;
+    waypoints.push([latitude, longitude]);
+  });
 
-//     createRoute();
+  map.on("load", () => {
+    // TODO: Currently centers the map to the first waypoint, but should center to show the full route instead
+    map.flyTo({
+      center: [waypoints[0][1], waypoints[0][0]],
+      zoom: 13,
+    });
 
-//     drawChart(elevationData);
-//   });
-// }
+    createRoute();
+    drawChart(elevationData);
+  });
+}

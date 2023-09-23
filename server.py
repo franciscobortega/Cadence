@@ -1,4 +1,5 @@
 import base64
+import json
 from flask import (Flask, jsonify, render_template, request, flash, session,
                    redirect)
 from jinja2 import StrictUndefined
@@ -262,7 +263,10 @@ def load_route():
         }
         waypoints_data.append(waypoint_data)
 
-    return render_template('homepage.html', user=user, access_token=access_token, route=route_data, waypoints=waypoints_data)
+    route_json = json.dumps(route_data)
+    waypoints_json = json.dumps(waypoints_data)
+
+    return render_template('homepage.html', user=user, access_token=access_token, route=route_json, waypoints=waypoints_json)
 
     
 

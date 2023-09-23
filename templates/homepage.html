@@ -6,6 +6,8 @@
 />
 <link rel="stylesheet" href="/static/css/styles.css" />
 {% endblock %} {% block body %}
+<div class="loaded-route" hidden data-route="{{ route }}"></div>
+<div class="loaded-waypoints" hidden data-waypoints="{{ waypoints }}"></div>
 <div class="main-wrapper">
   <div class="map-container">
     <div id="map"></div>
@@ -88,9 +90,6 @@
   </div>
 </div>
 <script>
-  const loadedRoute = "{{ route }}";
-  const loadedWaypoints = "{{ waypoints }}";
-
   const accessToken = "{{ access_token }}";
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
