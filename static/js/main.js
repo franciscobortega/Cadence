@@ -26,6 +26,16 @@ genreCheckboxes.forEach((checkbox) => {
   const genreLabel = checkbox.querySelector(".form-label");
 
   checkbox.addEventListener("click", () => {
+    let selectedGenres = Array.from(
+      document.querySelectorAll('input[name="genre"]:checked')
+    );
+
+    // Limit the number of selected genres to 5
+    if (selectedGenres.length >= 5 && !genre.checked) {
+      alert("You can select up to 5 genres.");
+      return;
+    }
+
     // Toggle the checkbox checked state
     genre.checked = !genre.checked;
 
