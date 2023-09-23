@@ -33,25 +33,21 @@ body {
   margin: 10px;
   border-radius: 10px;
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  /* Add other styles as needed for your navigation */
-  z-index: 2; /* Place the navigation on top of everything */
-}
-
-.nav > * {
-  max-width: 100%; /* Limit the width of individual elements */
+  width: 98%;
+  left: 50%;
+  margin-left: -49%;
+  z-index: 2;
 }
 
 .nav-content {
   display: grid;
-  grid-template-columns: 3fr 1fr 1fr 1fr;
+  grid-template-columns: 4fr 1fr 1fr 1fr;
   align-items: center;
 }
 
 .nav-content li {
   list-style-type: none;
+  text-align: center;
 }
 
 .nav-content a {
@@ -65,8 +61,30 @@ body {
   letter-spacing: 6px;
 }
 
+.nav-user {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 12px;
+  /* margin-right: 10px; */
+}
+
+.nav-user-msg {
+  color: #dfdfdf;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: end;
+}
+
+.user-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: yellow;
+}
+
 /* ------- MAP -------- */
-.main-wrapper {
+.mainpage-wrapper {
   display: flex;
   flex-direction: column;
   height: 100vh;

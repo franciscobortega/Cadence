@@ -11,18 +11,38 @@
     {% block nav %}
     <nav class="nav-wrapper">
       <ul class="nav-content">
-        <li><a href="/" class="nav-logo">CADENCE</a></li>
-          <li><a href="{{ url_for('display_home') }}">Explore</a></li>
-          {% if 'user_id' in session %}
-          <li><a href="{{ url_for('display_user', user_id=session['user_id']) }}">Profile</a></li>
-          {% else %}
-          <li><a href="{{ url_for('display_auth') }}">Profile</a></li>
-          {% endif %}
-          <li><a href="{{ url_for('logout_user') }}" class="logout"><span>Logout</span></i></a>
-          </ul>
-        </nav>
-    {% endblock %}
-    {% for msg in get_flashed_messages() %}
+        <li class="nav-logo"><a href="/">CADENCE</a></li>
+        <li><a href="{{ url_for('display_home') }}">Explore</a></li>
+        {% if 'user_id' in session %}
+        <li>
+          <a href="{{ url_for('display_user', user_id=session['user_id']) }}"
+            >Profile</a
+          >
+        </li>
+        {% else %}
+        <li><a href="{{ url_for('display_auth') }}">Profile</a></li>
+        {% endif %}
+        <li>
+          <div class="nav-user">
+            <div class="nav-user-msg">
+              {% if 'user_id' in session %}
+              <p>Welcome,</p>
+              <p>{{ user.first_name }} &darr;</p>
+              {% else %}
+              <p>Hello, log in to save and generate routes!</p>
+              {% endif %}
+            </div>
+            <div class="nav-user-img">
+              <div class="user-img"></div>
+              <a href="{{ url_for('logout_user') }}" hidden class="logout"
+                ><span>Logout</span></a
+              >
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    {% endblock %} {% for msg in get_flashed_messages() %}
     <p class="flash-msg">{{ msg }}</p>
     {% endfor %} {% block body %}{% endblock %}
   </body>
