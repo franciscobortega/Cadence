@@ -8,7 +8,7 @@
 }
 
 html {
-  font-family: "Inter", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 body {
@@ -138,15 +138,13 @@ body {
 }
 
 .form-label {
-  color: #b188e5;
-  background-color: white;
+  color: white;
+  background-color: #dddddd;
   padding: 4px 20px;
 }
 
 .checked {
-  background-color: #b188e5;
-  border-color: #b188e5;
-  color: white;
+  background-color: #757575;
 }
 
 .marker {
