@@ -16,7 +16,15 @@
     {% block nav %}
     <nav class="nav-wrapper">
       <ul class="nav-content">
-        <li class="nav-logo"><a href="/">CADENCE</a></li>
+        <li class="nav-logo-wrapper">
+          <a href="/">
+            <img
+              class="nav-logo"
+              src="/static/images/cadence-logo.png"
+              alt="Cadence Logo"
+            />
+          </a>
+        </li>
         <li><a href="{{ url_for('display_home') }}">Explore</a></li>
         {% if 'user_id' in session %}
         <li>
