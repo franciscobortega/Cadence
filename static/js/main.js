@@ -11,8 +11,8 @@ export let queryParams = {
   limit: 100,
   market: "US",
   seed_genres: "pop,rock,hip-hop",
-  min_tempo: 100,
-  max_tempo: 120,
+  min_tempo: 0,
+  max_tempo: 210,
 };
 
 export const storedAccessToken = accessToken;

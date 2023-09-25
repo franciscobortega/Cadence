@@ -17,6 +17,8 @@ export async function initPlaylist(
     queryParams
   );
 
+  console.log(playlistRecommendations);
+
   // Fetch from Get Tracks' Audio Features endpoint, extract array from response
   const listOfTrackDetails = (
     await fetchAudioFeatures(storedAccessToken, playlistRecommendations)
@@ -93,6 +95,10 @@ function getRandomTrack(tracks) {
 }
 
 function generatePlaylist(remainingTime, tracks) {
+  console.log(tracks);
+
+  sortedTracksByTempo(tracks);
+
   const playlist = [];
   let durationOfPlaylist = 0;
 
@@ -136,16 +142,76 @@ function displayPlaylist(playlist, recommendations) {
         <p class="track-artist">${song["artists"][0]["name"]}</p>
        </div>`;
 
-    console.log(playlistItem);
+    // console.log(playlistItem);
     return playlistItem.outerHTML;
   });
 
-  console.log(playlistHTML);
+  // console.log(playlistHTML);
 
   playlistContainer.innerHTML = playlistHTML.join("");
 }
 
-// --------------- ROUTE ELEVATION --------------- //
+// --------------- TEMPO MAPPINGS --------------- //
+/*
+ * Teh response of the Get Tracks' Audio Features endpoint will be iterated over and the tempo
+ * of each track will be compared to the min and max tempo values of the tempoMappings. A new
+ * property called tempoCategory will be added to each track object. The tempoCategory will be
+ * used to build a dictionary of tempo categories and their corresponding tracks organized from
+ * slowest to fastest tempo.
+ */
+
+const tempoMappings = {
+  slow: { min: 0, max: 80 },
+  moderate: { min: 80, max: 110 },
+  normal: { min: 110, max: 140 },
+  fast: { min: 140, max: 170 },
+  energetic: { min: 170, max: 210 },
+};
+
+const tracksByTempo = {
+  slow: [],
+  moderate: [],
+  normal: [],
+  fast: [],
+  energetic: [],
+};
+
+async function sortedTracksByTempo(tracks) {
+  // Build a new array of tracks with the tempoCategory property
+  const tracksWithTempoCategory = tracks.map((track) => {
+    let tempoCategory;
+
+    // Check the tempo of each track against the tempo mappings
+    for (const [category, tempoRange] of Object.entries(tempoMappings)) {
+      if (
+        track["tempo"] >= tempoRange.min &&
+        track["tempo"] <= tempoRange.max
+      ) {
+        tempoCategory = category;
+        break;
+      }
+    }
+
+    // Set the new tempoCategory property for each track
+    track["tempoCategory"] = tempoCategory;
+    return track;
+  });
+
+  console.log(tracksWithTempoCategory);
+
+  // Iterate thru tracksWithTempoCategory and add each track to its corresponding tempo category array
+  tracksWithTempoCategory.forEach((track) => {
+    const tempoCategory = track["tempoCategory"];
+    tracksByTempo[tempoCategory].push(track);
+
+    // Sort the tracks immediately after adding them to the array
+    tracksByTempo[tempoCategory].sort((a, b) => a.tempo - b.tempo);
+  });
+
+  console.log(tracksByTempo);
+}
+
+// --------------- PLAYLIST GENERATION V2 --------------- //
 
 let elevationCategories = {
   flat: 0,
@@ -154,21 +220,6 @@ let elevationCategories = {
   "steep ascent": 2,
   "steep descent": -2,
 };
-
-const tempoMappings = {
-  slow: { min: 60, max: 80 },
-  moderate: { min: 80, max: 100 },
-  energetic: { min: 100, max: 120 },
-  intense: { min: 120, max: 140 },
-};
-
-const targetIntensity = "energetic";
-const { min: minTempo, max: maxTempo } = tempoMappings[targetIntensity]; // will be passed along to Get Recommendations endpoint
-
-// console.log(minTempo);
-// console.log(maxTempo);
-
-// --------------- PLAYLIST GENERATION V2 --------------- //
 
 function splitRouteIntoSegments(elevationData, elevationThreshold) {
   const segments = [];
