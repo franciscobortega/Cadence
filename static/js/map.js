@@ -196,7 +196,7 @@ document
 
 document
   .querySelector(".toggle-distance")
-  .addEventListener("click", async () => {
+  ?.addEventListener("click", async () => {
     // TODO: refine this
     const distanceText = document.querySelector("#total-distance");
     const distanceUnit = document.querySelector("#distance-unit");

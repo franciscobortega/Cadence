@@ -19,6 +19,8 @@ export async function initPlaylist(
 
   console.log(playlistRecommendations);
 
+  console.log(queryParams);
+
   // Fetch from Get Tracks' Audio Features endpoint, extract array from response
   const listOfTrackDetails = (
     await fetchAudioFeatures(storedAccessToken, playlistRecommendations)
@@ -214,11 +216,11 @@ async function sortedTracksByTempo(tracks) {
 // --------------- PLAYLIST GENERATION V2 --------------- //
 
 let elevationCategories = {
+  "steep descent": -2,
+  "moderate descent": -1,
   flat: 0,
   "moderate ascent": 1,
-  "moderate descent": -1,
   "steep ascent": 2,
-  "steep descent": -2,
 };
 
 function splitRouteIntoSegments(elevationData, elevationThreshold) {

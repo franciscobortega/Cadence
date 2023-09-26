@@ -13,6 +13,7 @@ export let queryParams = {
   seed_genres: "pop,rock,hip-hop",
   min_tempo: 0,
   max_tempo: 210,
+  target_popularity: 50,
 };
 
 export const storedAccessToken = accessToken;
@@ -61,6 +62,13 @@ optionsForm.addEventListener("submit", (e) => {
 
   // Get the target pace value from the input field
   const targetPace = document.getElementById("target-pace").value;
+
+  // Get the target popularity value from the input field
+  const targetPopularity = document.getElementById("target-popularity").value;
+
+  // console.log(targetPopularity);
+
+  queryParams.target_popularity = targetPopularity;
 
   // Update the queryParams object with the selected genres
   queryParams.seed_genres = selectedGenres.join(",");
