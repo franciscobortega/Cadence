@@ -137,6 +137,8 @@ async function createRoute() {
   } else {
     clearRoute();
   }
+
+  drawChart(elevationData);
 }
 
 map.on("click", async (e) => {
@@ -146,7 +148,7 @@ map.on("click", async (e) => {
 
   createRoute();
 
-  drawChart(elevationData);
+  // drawChart(elevationData);
 });
 
 addEventListener("keydown", function (event) {
@@ -225,7 +227,7 @@ map.on("load", () => {
     type: "line",
     source: "route",
     paint: {
-      "line-color": "#9404db",
+      "line-color": "#320070",
       "line-width": 4,
     },
   });
