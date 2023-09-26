@@ -24,6 +24,7 @@ let elevationGain = 0;
 let responseWaypoints = [];
 
 let distanceText = document.querySelector("#total-distance");
+let elevationText = document.querySelector("#total-elevation");
 
 function routePolyline(coords) {
   console.log("Attempting to draw polyline");
@@ -69,7 +70,10 @@ function clearRoute() {
   routePolyline([]);
 
   // Reset total distance text
-  distanceText.textContent = "Distance: 0 km";
+  distanceText.textContent = "0 km";
+
+  // Reset total elevation text
+  elevationText.textContent = "0 m";
 }
 
 async function createRoute() {
@@ -104,9 +108,9 @@ async function createRoute() {
       elevationGain = routeAscent - routeDescent;
 
       // Display the distance of the route
-      distanceText.textContent = `Distance: ${(routeDistance / 1000).toFixed(
-        2
-      )} km`;
+      distanceText.textContent = `${(routeDistance / 1000).toFixed(2)} km`;
+
+      elevationText.textContent = `${elevationGain.toFixed(2)} m`;
 
       // Display the route polyline on the map
       routePolyline(routeCoordinates);
@@ -129,7 +133,7 @@ async function createRoute() {
     markers.push(marker);
 
     // Display the distance of the route as 0 km
-    distanceText.textContent = "Distance: 0 km";
+    distanceText.textContent = "0 km";
   } else {
     clearRoute();
   }
@@ -194,22 +198,25 @@ document
       });
   });
 
-document
-  .querySelector(".toggle-distance")
-  ?.addEventListener("click", async () => {
-    // TODO: refine this
-    const distanceText = document.querySelector("#total-distance");
-    const distanceUnit = document.querySelector("#distance-unit");
-    console.log(distance);
+const routeDataBtns = document.querySelectorAll(".route-data-btn");
 
-    if (distanceUnit.textContent === "km") {
-      distanceText.textContent = `Distance: ${(distance / 1609).toFixed(2)} mi`;
-      distanceUnit.textContent = "mi";
+routeDataBtns.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    if (
+      distanceText.classList.contains("metric") ||
+      elevationText.classList.contains("metric")
+    ) {
+      distanceText.textContent = `${(distance / 1609).toFixed(2)} mi`;
+      elevationText.textContent = `${(elevationGain * 3.28084).toFixed(2)} ft`;
     } else {
-      distanceText.textContent = `Distance: ${(distance / 1000).toFixed(2)} km`;
-      distanceUnit.textContent = "km";
+      distanceText.textContent = `${(distance / 1000).toFixed(2)} km`;
+      elevationText.textContent = `${elevationGain.toFixed(2)} m`;
     }
+
+    distanceText.classList.toggle("metric");
+    elevationText.classList.toggle("metric");
   });
+});
 
 map.on("load", () => {
   map.addSource("route", { type: "geojson", data: null });
