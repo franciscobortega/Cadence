@@ -18,12 +18,20 @@
     </div>
     <div class="buttons-wrapper">
       <div class="route-data-wrapper">
-        <button class="distance-content route-data-btn">
-          <span id="total-distance" class="metric">0 km</span>
-        </button>
-        <button class="elevation-content route-data-btn">
-          <span id="total-elevation" class="metric">0 m</span>
-        </button>
+        <div class="distance-content">
+          <button class="route-data-btn">
+            <span id="total-distance" class="route-data-span metric">0 km</span>
+          </button>
+          <label for="total-distance" class="route-data-label">Distance</label>
+        </div>
+        <div class="elevation-content">
+          <button class="route-data-btn">
+            <span id="total-elevation" class="route-data-span metric">0 m</span>
+          </button>
+          <label for="total-elevation" class="route-data-label"
+            >Elevation</label
+          >
+        </div>
       </div>
       {% if user == None %}
       <p>Hello, log in to save and generate routes!</p>

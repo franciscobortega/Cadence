@@ -123,6 +123,44 @@ body {
   overflow: scroll;
 }
 
+.route-data-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.distance-content,
+.elevation-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.route-data-btn {
+  background-color: #320070;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  padding: 10px 20px;
+  margin: 10px 10px 0 10px;
+  cursor: pointer;
+  width: 75%;
+}
+
+.route-data-span {
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: 2px;
+}
+
+.route-data-label {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  color: #757575;
+}
+
 /* ------- GENRES -------- */
 .form-genres-wrapper {
   display: flex;
