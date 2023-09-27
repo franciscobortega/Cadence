@@ -221,8 +221,7 @@ body {
 }
 
 .marker {
-  background-image: url("/static/images/waypoint.png");
-  background-size: cover;
+  background-color: white;
   width: 10px;
   height: 10px;
   border-radius: 50%;

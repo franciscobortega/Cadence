@@ -84,7 +84,7 @@ async function createRoute() {
       .join("&point=");
 
     // Construct the GraphHopper API request URL
-    const DIRECTIONS_API_URL = `https://graphhopper.com/api/1/route?point=${waypointsQuery}&profile=foot&locale=en&points_encoded=false&elevation=true&key=${GRAPHHOPPER_API_KEY}`;
+    const DIRECTIONS_API_URL = `https://graphhopper.com/api/1/route?point=${waypointsQuery}&profile=foot&locale=en&points_encoded=false&elevation=true&details=distance&details=time&details=average_slope&key=${GRAPHHOPPER_API_KEY}`;
 
     try {
       const response = await fetch(DIRECTIONS_API_URL);
@@ -161,7 +161,7 @@ addEventListener("keydown", function (event) {
   }
 });
 
-document.querySelector(".clear-route").addEventListener("click", () => {
+document.querySelector(".clear-route")?.addEventListener("click", () => {
   clearRoute();
   elevationData = [];
 
@@ -271,6 +271,7 @@ if (loadedRoute && loadedRoute != "None") {
     });
 
     createRoute();
+    console.log(loadedRoute.distance);
     drawChart(elevationData);
   });
 }
