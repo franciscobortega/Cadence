@@ -109,7 +109,7 @@ body {
 
 /* ------- USER PREFERENCES -------- */
 
-.data-container {
+#data-container {
   position: absolute;
   background-color: white;
   padding: 20px;

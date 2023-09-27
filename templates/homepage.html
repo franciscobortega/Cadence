@@ -12,120 +12,153 @@
   <div class="map-container">
     <div id="map"></div>
   </div>
-  <div class="data-container">
-    <div class="elevation-wrapper">
-      <canvas id="myChart"></canvas>
-    </div>
-    <div class="buttons-wrapper">
-      <div class="route-data-wrapper">
-        <div class="distance-content">
-          <button class="route-data-btn">
-            <span id="total-distance" class="route-data-span metric">0 km</span>
-          </button>
-          <label for="total-distance" class="route-data-label">Distance</label>
-        </div>
-        <div class="elevation-content">
-          <button class="route-data-btn">
-            <span id="total-elevation" class="route-data-span metric">0 m</span>
-          </button>
-          <label for="total-elevation" class="route-data-label"
-            >Elevation</label
-          >
-        </div>
+  <div id="data-container" class="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#data-container" data-slide-to="0" class="active"></li>
+      <li data-target="#data-container" data-slide-to="1"></li>
+      <li data-target="#data-container" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="elevation-wrapper">
+        <canvas id="myChart"></canvas>
       </div>
-      {% if user == None %}
-      <p>Hello, log in to save and generate routes!</p>
-      {% else %}
-      <p>Hello {{user.first_name}}</p>
-      <form id="save-route-form">
-        <label for="title">
-          <input
-            required
-            type="text"
-            name="title"
-            id="route-title"
-            placeholder="Route Title"
-          />
-        </label>
-        <button type="submit" class="save-route rounded-btn">Save Route</button>
-      </form>
-      <div class="route-control-btns">
-        <button class="rounded-btn">Undo</button>
-        <button class="clear-route rounded-btn">Clear Route</button>
-      </div>
-
-      {% endif %}
-    </div>
-    <div class="options-wrapper">
-      <form id="options-form">
-        <h2>Select Run Preferences</h2>
-        <label for="target-pace">
-          Target Pace (min/km):
-          <input
-            type="number"
-            id="target-pace"
-            name="target-pace"
-            min="1"
-            step="0.01"
-            placeholder="e.g., 5.0"
-            required
-          />
-        </label>
-
-        <h2>Select Music Preferences</h2>
-        <label for="">
-          Select up to 5 genres:
-          <div class="form-genres-wrapper">
-            <label class="checkbox-field">
-              <input type="checkbox" name="genre" value="acoustic" />
-              <span class="form-label" for="genre">Acoustic</span>
-            </label>
-
-            <label class="checkbox-field">
-              <input type="checkbox" name="genre" value="afrobeat" />
-              <span class="form-label" for="genre">Afrobeat</span>
-            </label>
-
-            <label class="checkbox-field">
-              <input type="checkbox" name="genre" value="alt-rock" />
-              <span class="form-label" for="genre">Alt-Rock</span>
-            </label>
-
-            <label class="checkbox-field">
-              <input type="checkbox" name="genre" value="alternative" />
-              <span class="form-label" for="genre">Alternative</span>
-            </label>
-
-            <label class="checkbox-field">
-              <input type="checkbox" name="genre" value="ambient" />
-              <span class="form-label" for="genre">Ambient</span>
-            </label>
-
-            <label class="checkbox-field">
-              <input type="checkbox" name="genre" value="anime" />
-              <span class="form-label" for="genre">Anime</span>
-            </label>
+      <div class="buttons-wrapper">
+        <div class="route-data-wrapper">
+          <div class="distance-content">
+            <button class="route-data-btn">
+              <span id="total-distance" class="route-data-span metric"
+                >0 km</span
+              >
+            </button>
+            <label for="total-distance" class="route-data-label"
+              >Distance</label
+            >
           </div>
-        </label>
-        <label for="target-popularity" class="target-popularity-container">
-          Select target popularity (0-100):
-          <input
-            type="range"
-            id="target-popularity"
-            name="target-popularity"
-            min="1"
-            max="100"
-            value="50"
-            required
-          />
-        </label>
-        <button type="submit" class="rounded-btn">Generate Playlist</button>
-      </form>
+          <div class="elevation-content">
+            <button class="route-data-btn">
+              <span id="total-elevation" class="route-data-span metric"
+                >0 m</span
+              >
+            </button>
+            <label for="total-elevation" class="route-data-label"
+              >Elevation</label
+            >
+          </div>
+        </div>
+        {% if user == None %}
+        <p>Hello, log in to save and generate routes!</p>
+        {% else %}
+        <p>Hello {{user.first_name}}</p>
+        <form id="save-route-form">
+          <label for="title">
+            <input
+              required
+              type="text"
+              name="title"
+              id="route-title"
+              placeholder="Route Title"
+            />
+          </label>
+          <button type="submit" class="save-route rounded-btn">
+            Save Route
+          </button>
+        </form>
+        <div class="route-control-btns">
+          <button class="rounded-btn">Undo</button>
+          <button class="clear-route rounded-btn">Clear Route</button>
+        </div>
+
+        {% endif %}
+      </div>
+      <div class="options-wrapper">
+        <form id="options-form">
+          <h2>Select Run Preferences</h2>
+          <label for="target-pace">
+            Target Pace (min/km):
+            <input
+              type="number"
+              id="target-pace"
+              name="target-pace"
+              min="1"
+              step="0.01"
+              placeholder="e.g., 5.0"
+              required
+            />
+          </label>
+
+          <h2>Select Music Preferences</h2>
+          <label for="">
+            Select up to 5 genres:
+            <div class="form-genres-wrapper">
+              <label class="checkbox-field">
+                <input type="checkbox" name="genre" value="acoustic" />
+                <span class="form-label" for="genre">Acoustic</span>
+              </label>
+
+              <label class="checkbox-field">
+                <input type="checkbox" name="genre" value="afrobeat" />
+                <span class="form-label" for="genre">Afrobeat</span>
+              </label>
+
+              <label class="checkbox-field">
+                <input type="checkbox" name="genre" value="alt-rock" />
+                <span class="form-label" for="genre">Alt-Rock</span>
+              </label>
+
+              <label class="checkbox-field">
+                <input type="checkbox" name="genre" value="alternative" />
+                <span class="form-label" for="genre">Alternative</span>
+              </label>
+
+              <label class="checkbox-field">
+                <input type="checkbox" name="genre" value="ambient" />
+                <span class="form-label" for="genre">Ambient</span>
+              </label>
+
+              <label class="checkbox-field">
+                <input type="checkbox" name="genre" value="anime" />
+                <span class="form-label" for="genre">Anime</span>
+              </label>
+            </div>
+          </label>
+          <label for="target-popularity" class="target-popularity-container">
+            Select target popularity (0-100):
+            <input
+              type="range"
+              id="target-popularity"
+              name="target-popularity"
+              min="1"
+              max="100"
+              value="50"
+              required
+            />
+          </label>
+          <button type="submit" class="rounded-btn">Generate Playlist</button>
+        </form>
+      </div>
+      <div class="playlist-wrapper">
+        <div class="playlist-container"></div>
+        <button class="export-playlist rounded-btn">Export</button>
+      </div>
     </div>
-    <div class="playlist-wrapper">
-      <div class="playlist-container"></div>
-      <button class="export-playlist rounded-btn">Export</button>
-    </div>
+    <a
+      class="carousel-control-prev"
+      href="#carouselExampleIndicators"
+      role="button"
+      data-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a
+      class="carousel-control-next"
+      href="#carouselExampleIndicators"
+      role="button"
+      data-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
   </div>
 </div>
 <script>
