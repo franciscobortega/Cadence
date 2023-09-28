@@ -1,6 +1,7 @@
 "use strict";
 
 import { storedAccessToken, queryParams, expectedFinishTime } from "./main.js";
+import { data } from "./map.js";
 
 // --------------- PLAYLIST GENERATION V1 --------------- //
 
@@ -9,8 +10,20 @@ export let trackURIs = [];
 export async function initPlaylist(
   storedAccessToken,
   queryParams,
-  expectedFinishTime
+  distance,
+  targetPace
 ) {
+  const routeSegmentsDistances = data.paths[0].details.distance;
+  console.log(routeSegmentsDistances);
+
+  const routeSegmentsElevations = data.paths[0].details.average_slope;
+  console.log(routeSegmentsElevations);
+
+  const classifiedSegments = segmentClassification(
+    routeSegmentsDistances,
+    routeSegmentsElevations
+  );
+  console.log(classifiedSegments);
   // Fetch from Get Recommendations endpoint
   const playlistRecommendations = await fetchRecommendations(
     storedAccessToken,
@@ -27,8 +40,16 @@ export async function initPlaylist(
   )["audio_features"];
 
   // Generate playlist
-  const generatedPlaylist = generatePlaylist(
-    expectedFinishTime,
+  // const generatedPlaylist = generatePlaylist(
+  //   expectedFinishTime,
+  //   listOfTrackDetails
+  // );
+
+  const generatedPlaylist = generatePlaylistByElevation(
+    targetPace,
+    distance,
+    routeSegmentsDistances,
+    classifiedSegments,
     listOfTrackDetails
   );
 
@@ -37,6 +58,7 @@ export async function initPlaylist(
 
   // extract track URIs from generated playlist
   trackURIs = generatedPlaylist.map((track) => track.uri);
+  console.log(trackURIs);
 }
 
 async function fetchRecommendations(token, params) {
@@ -128,10 +150,12 @@ function displayPlaylist(playlist, recommendations) {
   // Find the song title and artist name for each track in the playlist based on the ID
   const playlistContainer = document.querySelector(".playlist-container");
 
+  console.log(recommendations);
   const playlistHTML = playlist.map((track) => {
     const song = recommendations.tracks.find(
       (recommendation) => recommendation.id === track.id
     );
+
     console.log(song);
     console.log(`${song["name"]} by ${song["artists"][0]["name"]}`);
 
@@ -170,7 +194,7 @@ const tempoMappings = {
   energetic: { min: 170, max: 210 },
 };
 
-const tracksByTempo = {
+let tracksByTempo = {
   slow: [],
   moderate: [],
   normal: [],
@@ -179,6 +203,11 @@ const tracksByTempo = {
 };
 
 async function sortedTracksByTempo(tracks) {
+  //Clear out the tracksByTempo object
+  for (const [category, tracks] of Object.entries(tracksByTempo)) {
+    tracksByTempo[category] = [];
+  }
+
   // Build a new array of tracks with the tempoCategory property
   const tracksWithTempoCategory = tracks.map((track) => {
     let tempoCategory;
@@ -199,7 +228,7 @@ async function sortedTracksByTempo(tracks) {
     return track;
   });
 
-  console.log(tracksWithTempoCategory);
+  // console.log(tracksWithTempoCategory);
 
   // Iterate thru tracksWithTempoCategory and add each track to its corresponding tempo category array
   tracksWithTempoCategory.forEach((track) => {
@@ -210,50 +239,154 @@ async function sortedTracksByTempo(tracks) {
     tracksByTempo[tempoCategory].sort((a, b) => a.tempo - b.tempo);
   });
 
-  console.log(tracksByTempo);
+  return tracksByTempo;
 }
 
 // --------------- PLAYLIST GENERATION V2 --------------- //
 
-let elevationCategories = {
-  "steep descent": -2,
-  "moderate descent": -1,
-  flat: 0,
-  "moderate ascent": 1,
-  "steep ascent": 2,
-};
+function segmentClassification(segmentDistances, segmentElevations) {
+  let i = 0;
+  let classifiedSegments = [];
 
-function splitRouteIntoSegments(elevationData, elevationThreshold) {
-  const segments = [];
-  let currentSegment = [elevationData[0]];
+  segmentDistances.forEach((segment) => {
+    let correspondingSegment = segmentElevations[i];
+    let [start, end, segmentDistance] = correspondingSegment;
 
-  // First segment starts with first point, we loop through the rest
-  for (let i = 1; i < elevationData.length; i++) {
-    const elevationChange = elevationData[i] - elevationData[i - 1];
-
-    // If current elevationChange is greater than threshold start a new segment otherwise add point to the current segment
-    if (Math.abs(elevationChange) >= elevationThreshold) {
-      segments.push(currentSegment);
-      currentSegment = [elevationData[i]];
-    } else {
-      currentSegment.push(elevationData[i]);
+    if (segment[0] >= start) {
+      if (correspondingSegment[2] < -10) {
+        classifiedSegments.push({
+          segment: segment,
+          classification: "slow",
+        });
+      } else if (correspondingSegment[2] < -5) {
+        classifiedSegments.push({
+          segment: segment,
+          classification: "moderate",
+        });
+      } else if (correspondingSegment[2] > 5) {
+        classifiedSegments.push({
+          segment: segment,
+          classification: "fast",
+        });
+      } else if (correspondingSegment[2] > 10) {
+        classifiedSegments.push({
+          segment: segment,
+          classification: "energetic",
+        });
+      } else {
+        classifiedSegments.push({
+          segment: segment,
+          classification: "normal",
+        });
+      }
     }
-  }
 
-  // Add the last segment
-  segments.push(currentSegment);
+    if (segment[1] >= end) {
+      i++;
+    }
+  });
 
-  return segments;
+  return classifiedSegments;
 }
 
-let testElevationData = [
-  225.53, 224.72, 224.11, 223.65, 223.35, 223.46, 225.26, 226.33, 226.46,
-  226.93, 227.06, 227.19, 227.22, 227.23, 227.25, 227.27, 227.34, 227.36, 227.6,
-  227.68, 227.72, 227.76, 227.95, 228.03, 228.06, 228.1, 227.14, 227.2, 227.3,
-  227.46, 228.21, 228.29, 228.53, 228.81, 229.1, 229.6, 229.74, 229.83, 229.91,
-  230.0, 230.78, 230.86, 230.95, 231.05, 231.21, 231.35, 231.42, 232.36, 233.48,
-  233.54, 232.32, 230.78, 230.67, 230.24, 230.65, 230.16, 230.07, 230.02,
-  229.98, 228.15, 226.32, 226.15, 225.96, 225.64,
-];
+function generatePlaylistByElevation(
+  targetPace,
+  totalDistance,
+  segmentDistances,
+  classifiedSegments,
+  tracks
+) {
+  // TODO: CLEAN UP!
+  // TODO: Fix issue where user might get duplicates of the same track
 
-// console.log(splitRouteIntoSegments(testElevationData, 1.3));
+  // console.log(targetPace);
+  // console.log(totalDistance);
+  // console.log(segmentDistances);
+  // console.log(classifiedSegments);
+  // console.log(tracks);
+  let newPlaylist = [];
+  sortedTracksByTempo(tracks);
+  let j = 0;
+
+  while (totalDistance > 0 && j < segmentDistances.length) {
+    let firstItemInSegments = segmentDistances[j];
+    let [start, end, segmentDistance] = firstItemInSegments;
+
+    let segmentIntensity = classifiedSegments[j].classification;
+
+    // Check if there are tracks left for this intensity
+    if (tracksByTempo[segmentIntensity] && tracksByTempo[segmentIntensity][j]) {
+      // select random track from category
+      let random = Math.floor(
+        Math.random() * tracksByTempo[segmentIntensity].length
+      );
+      let trackToAdd = tracksByTempo[segmentIntensity][random];
+      newPlaylist.push(trackToAdd);
+      console.log("Track added: ", trackToAdd);
+
+      // remove track from tracksByTempo
+      tracksByTempo[segmentIntensity].shift();
+
+      // use track duration to calculate distance traveled based on targetPace
+      let distanceOfTrack =
+        (trackToAdd.duration_ms / 1000) * (1 / ((targetPace / 1000) * 60)); // in meters
+
+      if (distanceOfTrack > totalDistance) {
+        console.log("Finished");
+        break;
+      }
+
+      totalDistance -= distanceOfTrack;
+
+      // subtract distance traveled from segment distance until 0 then subtract remainder from next item in array if it exists
+      while (distanceOfTrack > 0) {
+        // console.log(firstItemInSegments);
+        if (segmentDistance > distanceOfTrack) {
+          segmentDistance -= distanceOfTrack;
+          distanceOfTrack = 0;
+          segmentDistances[j][2] = segmentDistance;
+          // console.log("Updated segment distance: ", segmentDistances[j][2]);
+          break;
+        }
+
+        distanceOfTrack -= segmentDistance;
+        j++;
+
+        if (j < segmentDistances.length) {
+          [start, end, segmentDistance] = segmentDistances[j];
+        } else {
+          console.log("Finished");
+          break;
+        }
+      }
+    } else {
+      // TODO: Currently when there are no more tracks in a category it just skips to the next iteration. Need to add logic to check if there are any tracks left in the other categories
+      j++;
+    }
+  }
+  console.log(newPlaylist);
+
+  let playlistDuration = 0;
+  newPlaylist.forEach((track) => {
+    playlistDuration += track.duration_ms / 1000;
+  });
+  console.log("Playlist duration: ", playlistDuration / 60);
+
+  // if the playlist duration is shorter than the expected finish time add one final track from the slow category
+  if (playlistDuration < expectedFinishTime) {
+    console.log("Playlist is too short");
+    let trackToAdd = tracksByTempo["slow"][0];
+    newPlaylist.push(trackToAdd);
+    tracksByTempo["slow"].shift();
+    // break;
+  }
+
+  console.log(newPlaylist);
+  playlistDuration = 0;
+  newPlaylist.forEach((track) => {
+    playlistDuration += track.duration_ms / 1000;
+  });
+  console.log("Playlist duration: ", playlistDuration / 60);
+
+  return newPlaylist;
+}

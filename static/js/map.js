@@ -22,6 +22,7 @@ let elevationData = [];
 export let distance = 0;
 let elevationGain = 0;
 let responseWaypoints = [];
+export let data;
 
 let distanceText = document.querySelector("#total-distance");
 let elevationText = document.querySelector("#total-elevation");
@@ -88,7 +89,7 @@ async function createRoute() {
 
     try {
       const response = await fetch(DIRECTIONS_API_URL);
-      const data = await response.json();
+      data = await response.json();
 
       // routeCoordinates and routeWaypoints return 3-point array where the 3 value is the elevation
       const routeCoordinates = data.paths[0].points.coordinates;
