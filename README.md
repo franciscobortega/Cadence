@@ -1,12 +1,10 @@
-# Cadence
-
-TODO: App logo
-
-## <a name="summary"></a> Summary
+# <a name="summary"> <img src="https://github.com/franciscobortega/Cadence/blob/main/static/images/cadence-logo.png" width="40%" alt="Cadence Logo">
 
 Cadence is an app that builds a tailored music playlist based on the users’ music preferences and running session. Users plot their desired running route using the Mapbox API and select their run goals (e.g., target pace, target time, target intensity) for their session. The Graphhopper API is then used to retrieve elevation data along the specified running route. The Spotify API is leveraged to dynamically generate a playlist based on the user's goals and preferences.
 
-## Table Of Contents
+</br>
+
+**Table Of Contents**
 
 - [Summary](#summary)
 - [Tech Stack](#tech-stack)
