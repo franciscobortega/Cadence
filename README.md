@@ -1,14 +1,73 @@
 # Cadence
-An app that builds a tailored music playlist based on the users’ music preferences and running session. Users input their desired running route and select the type of run (e.g., long run, easy run, sprints) for their session. The Google Maps API is used to retrieve elevation data along the specified running route for playlist customization. Spotify API is leveraged to access music and dynamically generate a playlist based on the user profile and preferences.
 
-# TODO
-Public Trello Board for vertical development of application during Sprint 1 and Sprint 2: https://trello.com/b/RVz5wIFa/cadence
+TODO: App logo
 
-# User Flow and Wireframes
-## User Flow Diagram
-<img src="https://github.com/franciscobortega/Cadence/assets/121342618/cbd6c28d-fa25-4748-9ae1-89c8665e08e8" width="500">
+## <a name="summary"></a> Summary
 
-## Homepage 
-![cadence-homepage-v2](https://github.com/franciscobortega/Cadence/assets/121342618/ebb90ca3-c594-45d9-9d53-1eb95a251cb0)
-Updated design for homepage 
+Cadence is an app that builds a tailored music playlist based on the users’ music preferences and running session. Users plot their desired running route using the Mapbox API and select their run goals (e.g., target pace, target time, target intensity) for their session. The Graphhopper API is then used to retrieve elevation data along the specified running route. The Spotify API is leveraged to dynamically generate a playlist based on the user's goals and preferences.
 
+## Table Of Contents
+
+- [Summary](#summary)
+- [Tech Stack](#tech-stack)
+- [Features](#features)
+- [Installation](#installation)
+- [About Me](#about-me)
+
+## <a name="tech-stack"></a>Tech Stack
+
+**Frontend:** HTML5, CSS, Javascript <br/>
+**Backend:** Python, Flask, PostgreSQL, SQLAlchemy <br/>
+**APIs:** Mapbox, Graphhopper, Spotify <br/>
+
+## <a name="features"></a> Features
+
+TODO: add features
+
+## <a name="installation"></a> Installation
+
+#### Requirements:
+
+- PostgreSQL
+- Python 3.7.3
+- Mapbox, Graphhopper, and Spotify API keys
+
+Follow the following steps to run on your local computer:
+
+Clone repository:
+
+```
+$ git clone https://github.com/franciscobortega/Cadence.git
+```
+
+Create and activate a virtual environment:
+
+```
+$ pip3 install virtualenv
+$ virtualenv env
+$ source env/bin/activate
+```
+
+Install dependencies:
+
+```
+(env) $ pip3 install -r requirements.txt
+```
+
+Run the database seeding script:
+
+```
+(env) $ python3 seed.py
+```
+
+Start the backend server:
+
+```
+(env) $ python3 server.py
+```
+
+Navigate to `localhost:5000` in your browser to see the web app
+
+## <a name="about-me"></a> About me
+
+TODO: Add about section
