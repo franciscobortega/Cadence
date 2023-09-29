@@ -371,8 +371,24 @@ input[type="password"] {
   border: none;
   border-radius: 20px;
   color: white;
-  max-width: fit-content;
-  min-height: fit-content;
+  /* max-width: fit-content; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 180px;
+  height: 60px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.route-card-load:hover {
+  transform: scale(1.025);
+  transition: all 0.2s ease-in-out;
+}
+
+.route-card-delete {
+  display: flex;
+  align-items: center;
+  margin-left: 18px;
 }
 
 .route-card-load:hover {
@@ -384,6 +400,30 @@ input[type="password"] {
   text-decoration: none;
   color: white;
   padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 700;
+
+  letter-spacing: 1.4px;
+}
+
+.route-card-delete-btn {
+  /* border: 1px solid red; */
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+}
+
+ion-icon {
+  /* padding: 5px; */
+  /* border: 1px solid yellow; */
+  font-size: 30px;
+  color: white;
+}
+.route-card-delete-btn ion-icon:hover {
+  color: #c04545;
+  transition: all 0.2s ease-in-out;
 }
 
 /* ------- LOGIN -------- */

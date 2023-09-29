@@ -38,7 +38,7 @@
                 <a
                   href="{{ url_for('load_route', route_id=route.route_id) }}"
                   class="route-card-link"
-                  >Load Route</a
+                  >Load on Map</a
                 >
               </div>
               <div class="route-card-delete">
@@ -52,8 +52,8 @@
                     name="route_id"
                     value="{{ route.route_id }}"
                   />
-                  <button type="submit" class="route-card-link">
-                    Delete Route
+                  <button type="submit" class="route-card-delete-btn">
+                    <ion-icon name="trash"></ion-icon>
                   </button>
                 </form>
               </div>
@@ -99,5 +99,6 @@
     });
   });
 </script>
+<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 <script type="module" src="/static/js/auth.js" async defer></script>
 {% endblock %}
