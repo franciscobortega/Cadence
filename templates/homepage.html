@@ -12,64 +12,72 @@
   <div class="map-container">
     <div id="map"></div>
   </div>
-  <div id="data-container" class="carousel">
-    <ol class="carousel-indicators">
-      <li data-target="#data-container" data-slide-to="0" class="active"></li>
-      <li data-target="#data-container" data-slide-to="1"></li>
-      <li data-target="#data-container" data-slide-to="2"></li>
-    </ol>
-    <div class="carousel-inner">
-      <div class="elevation-wrapper">
-        <canvas id="myChart"></canvas>
-      </div>
-      <div class="buttons-wrapper">
-        <div class="route-data-wrapper">
-          <div class="distance-content">
-            <button class="route-data-btn">
-              <span id="total-distance" class="route-data-span metric"
-                >0 km</span
-              >
-            </button>
-            <label for="total-distance" class="route-data-label"
-              >Distance</label
-            >
-          </div>
-          <div class="elevation-content">
-            <button class="route-data-btn">
-              <span id="total-elevation" class="route-data-span metric"
-                >0 m</span
-              >
-            </button>
-            <label for="total-elevation" class="route-data-label"
-              >Elevation</label
-            >
-          </div>
-        </div>
-        {% if user == None %}
-        <p>Hello, log in to save and generate routes!</p>
-        {% else %}
-        <p>Hello {{user.first_name}}</p>
-        <form id="save-route-form">
-          <label for="title">
-            <input
-              required
-              type="text"
-              name="title"
-              id="route-title"
-              placeholder="Route Title"
-            />
-          </label>
-          <button type="submit" class="save-route rounded-btn">
-            Save Route
+  <div id="data-container">
+    <div class="buttons-wrapper">
+      <div class="route-data-wrapper">
+        <div class="distance-content">
+          <button class="route-data-btn">
+            <span id="total-distance" class="route-data-span metric">0 km</span>
           </button>
-        </form>
-        <div class="route-control-btns">
-          <button class="rounded-btn">Undo</button>
-          <button class="clear-route rounded-btn">Clear Route</button>
+          <label for="total-distance" class="route-data-label">Distance</label>
         </div>
-
-        {% endif %}
+        <div class="elevation-content">
+          <button class="route-data-btn">
+            <span id="total-elevation" class="route-data-span metric">0 m</span>
+          </button>
+          <label for="total-elevation" class="route-data-label"
+            >Elevation</label
+          >
+        </div>
       </div>
+      {% if user == None %}
+      <form id="save-route-form">
+        <label for="route-title">
+          <input
+            disabled
+            type="text"
+            name="title"
+            id="route-title"
+            placeholder="Log in to save routes"
+          />
+        </label>
+      </form>
+      {% else %}
+      <form id="save-route-form">
+        <label for="route-title">
+          <input
+            required
+            type="text"
+            name="title"
+            id="route-title"
+            placeholder="Route Title"
+          />
+        </label>
+      </form>
+      <div class="route-control">
+        <div class="route-control-btns">
+          <button class="clear-route rounded-btn">
+            <ion-icon name="trash"></ion-icon>
+          </button>
+          <button class="rounded-btn">
+            <ion-icon name="undo"></ion-icon>
+          </button>
+          <button class="rounded-btn">
+            <ion-icon name="redo"></ion-icon>
+          </button>
+
+          <button type="submit" class="save-route rounded-btn">
+            <ion-icon name="save"></ion-icon>
+          </button>
+        </div>
+      </div>
+
+      {% endif %}
+    </div>
+    <div class="elevation-wrapper">
+      <canvas id="myChart"></canvas>
+    </div>
+    <div class="generation-wrapper">
       <div class="options-wrapper">
         <form id="options-form">
           <h2>Select Run Preferences</h2>
@@ -141,29 +149,12 @@
         <button class="export-playlist rounded-btn">Export</button>
       </div>
     </div>
-    <a
-      class="carousel-control-prev"
-      href="#carouselExampleIndicators"
-      role="button"
-      data-slide="prev"
-    >
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a
-      class="carousel-control-next"
-      href="#carouselExampleIndicators"
-      role="button"
-      data-slide="next"
-    >
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
   </div>
 </div>
 <script>
   const accessToken = "{{ access_token }}";
 </script>
+<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="module" src="/static/js/map.js" async defer></script>
 <script type="module" src="/static/js/elevation.js" async defer></script>

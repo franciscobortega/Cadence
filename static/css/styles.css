@@ -120,17 +120,30 @@ input[type="password"] {
   padding: 20px;
   right: 20px;
   top: 8%;
-  height: 80%;
+  height: 90%;
   max-width: 40%;
   border-radius: 20px;
   border: 5px solid rgba(50, 0, 115, 0.6);
   background-clip: padding-box;
   overflow-y: scroll;
+  display: grid;
+  grid-template-rows: auto;
+  gap: 20px;
+}
+
+.buttons-wrapper {
+  /* display: grid;
+  grid-template-rows: auto; */
 }
 
 .route-data-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
+}
+
+.elevation-wrapper {
+  border-radius: 20px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
 }
 
 .distance-content,
@@ -162,7 +175,7 @@ input[type="password"] {
   font-size: 16px;
   font-weight: 500;
   letter-spacing: 2px;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
   color: #757575;
 }
 
@@ -246,8 +259,58 @@ input[type="password"] {
   background-color: white;
 }
 
+#save-route-form,
+.route-control {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 #save-route-form label {
-  display: block;
+  width: 100%;
+}
+
+#save-route-form input {
+  background-color: #d9d9d9;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 1.8px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
+#save-route-form input:focus {
+  /* outline: none; */
+  color: #320070;
+}
+
+.route-control-btns {
+  background-color: #d9d9d9;
+  border-radius: 20px;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.route-control-btns ion-icon {
+  color: #979797;
+}
+
+.route-control-btns .rounded-btn {
+  background-color: transparent;
+  border-radius: 0;
+}
+
+.route-control-btns .rounded-btn:hover {
+  background-color: #757575;
+  cursor: pointer;
 }
 
 /* ------- PLAYLIST -------- */
