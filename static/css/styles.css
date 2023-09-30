@@ -12,14 +12,14 @@ html {
 }
 
 body {
-  background-color: #b188e5;
+  background-color: #320070;
   overflow: hidden;
 }
 
 .rounded-btn {
   border-radius: 20px;
   padding: 10px 20px;
-  background-color: #b188e5;
+  background-color: #320070;
   color: white;
   border: none;
   cursor: pointer;
@@ -127,7 +127,7 @@ input[type="password"] {
   background-clip: padding-box;
   overflow-y: scroll;
   display: grid;
-  grid-template-rows: auto;
+  grid-template-rows: 1fr 0.75fr 1fr;
   gap: 20px;
 }
 
@@ -180,7 +180,7 @@ input[type="password"] {
 }
 
 .target-popularity-container {
-  width: 100%;
+  max-width: 100%;
 }
 
 #target-popularity {
@@ -191,6 +191,7 @@ input[type="password"] {
   background: #d3d3d3;
   outline: none;
   opacity: 0.7;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
   -webkit-transition: 0.2s; /* 0.2 seconds transition on hover */
   transition: opacity 0.2s;
 }
@@ -208,8 +209,43 @@ input[type="password"] {
   cursor: pointer;
 }
 
+/* ------- GENERATION WRAPPER -------- */
+
+.generation-wrapper {
+  border-radius: 20px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
+.options-wrapper h2 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  color: #320070;
+}
+
+#options-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 10px;
+}
+
+#options-form label {
+  margin-left: 20px;
+}
+
+#options-form input[type="number"] {
+  background-color: #d9d9d9;
+  text-align: center;
+  font-family: Roboto;
+  padding: 4px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
 /* ------- GENRES -------- */
-.form-genres-wrapper {
+#form-genres-wrapper {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -217,9 +253,10 @@ input[type="password"] {
 }
 
 .checkbox-field {
-  border: 1px solid #dfdfdf;
-  border-radius: 20px;
+  border-radius: 10px;
   overflow: hidden;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  padding: 8px 0;
 }
 
 .checkbox-field input {
@@ -229,13 +266,16 @@ input[type="password"] {
 }
 
 .form-label {
-  color: white;
-  background-color: #dddddd;
-  padding: 4px 20px;
+  padding: 10px 20px;
+  color: #666;
+  background-color: #d9d9d9;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .checked {
-  background-color: #757575;
+  background-color: #320070;
+  color: white;
 }
 
 .marker {
@@ -266,6 +306,7 @@ input[type="password"] {
   align-items: center;
   justify-content: center;
 }
+
 #save-route-form label {
   width: 100%;
 }

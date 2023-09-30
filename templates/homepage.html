@@ -95,9 +95,9 @@
           </label>
 
           <h2>Select Music Preferences</h2>
-          <label for="">
+          <label for="form-genres-wrapper">
             Select up to 5 genres:
-            <div class="form-genres-wrapper">
+            <div id="form-genres-wrapper">
               <label class="checkbox-field">
                 <input type="checkbox" name="genre" value="acoustic" />
                 <span class="form-label" for="genre">Acoustic</span>
@@ -144,7 +144,7 @@
           <button type="submit" class="rounded-btn">Generate Playlist</button>
         </form>
       </div>
-      <div class="playlist-wrapper">
+      <div class="playlist-wrapper hidden">
         <div class="playlist-container"></div>
         <button class="export-playlist rounded-btn">Export</button>
       </div>
