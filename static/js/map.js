@@ -152,13 +152,23 @@ map.on("click", async (e) => {
   // drawChart(elevationData);
 });
 
-addEventListener("keydown", function (event) {
-  if (event.ctrlKey && event.key === "z") {
-    waypoints.pop();
-    createRoute();
+// Remove last waypoint from route
+function removeLastWaypoint() {
+  waypoints.pop();
+  createRoute();
 
-    elevationData.pop();
-    drawChart(elevationData);
+  elevationData.pop();
+  drawChart(elevationData);
+}
+
+// Event listener for the undo button click
+const undoBtn = document.querySelector(".undo-route");
+undoBtn.addEventListener("click", removeLastWaypoint);
+
+// Event listener for the 'Ctrl+Z' keystroke
+addEventListener("keydown", (e) => {
+  if (e.ctrlKey && e.key === "z") {
+    removeLastWaypoint();
   }
 });
 
