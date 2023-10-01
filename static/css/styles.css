@@ -121,11 +121,11 @@ input[type="password"] {
   right: 20px;
   top: 8%;
   height: 90%;
-  max-width: 40%;
+  width: 50%;
   border-radius: 20px;
   border: 5px solid rgba(50, 0, 115, 0.6);
   background-clip: padding-box;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   display: grid;
   grid-template-rows: 1fr 0.75fr 1fr;
   gap: 20px;
@@ -303,11 +303,13 @@ input[type="password"] {
 .route-control {
   margin-top: 20px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
 }
 
 #save-route-form label {
+  display: block;
   width: 100%;
 }
 
@@ -330,6 +332,10 @@ input[type="password"] {
 #save-route-form input:focus {
   /* outline: none; */
   color: #320070;
+}
+
+.route-control {
+  max-width: fit-content;
 }
 
 .route-control-btns {

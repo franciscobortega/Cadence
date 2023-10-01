@@ -10,7 +10,7 @@
 <div class="loaded-waypoints" hidden data-waypoints="{{ waypoints }}"></div>
 <div class="mainpage-wrapper">
   <div class="map-container">
-    <div id="map"></div>
+    <!-- <div id="map"></div> -->
   </div>
   <div id="data-container">
     <div class="buttons-wrapper">
@@ -53,24 +53,24 @@
             placeholder="Route Title"
           />
         </label>
-      </form>
-      <div class="route-control">
-        <div class="route-control-btns">
-          <button class="clear-route rounded-btn">
-            <ion-icon name="trash"></ion-icon>
-          </button>
-          <button class="rounded-btn">
-            <ion-icon name="undo"></ion-icon>
-          </button>
-          <button class="rounded-btn">
-            <ion-icon name="redo"></ion-icon>
-          </button>
+        <div class="route-control">
+          <div class="route-control-btns">
+            <button class="clear-route rounded-btn">
+              <ion-icon name="trash"></ion-icon>
+            </button>
+            <button class="rounded-btn">
+              <ion-icon name="undo"></ion-icon>
+            </button>
+            <button class="rounded-btn">
+              <ion-icon name="redo"></ion-icon>
+            </button>
 
-          <button type="submit" class="save-route rounded-btn">
-            <ion-icon name="save"></ion-icon>
-          </button>
+            <button type="submit" class="save-route rounded-btn">
+              <ion-icon name="save"></ion-icon>
+            </button>
+          </div>
         </div>
-      </div>
+      </form>
 
       {% endif %}
     </div>
@@ -78,7 +78,7 @@
       <canvas id="myChart"></canvas>
     </div>
     <div class="generation-wrapper">
-      <div class="options-wrapper">
+      <div class="options-wrapper hidden">
         <form id="options-form">
           <h2>Select Run Preferences</h2>
           <label for="target-pace">
@@ -144,7 +144,7 @@
           <button type="submit" class="rounded-btn">Generate Playlist</button>
         </form>
       </div>
-      <div class="playlist-wrapper hidden">
+      <div class="playlist-wrapper">
         <div class="playlist-container"></div>
         <button class="export-playlist rounded-btn">Export</button>
       </div>
