@@ -45,9 +45,14 @@ genreCheckboxes.forEach((checkbox) => {
 });
 
 const optionsForm = document.getElementById("options-form");
+const optionsWrapper = document.querySelector(".options-wrapper");
 
 optionsForm.addEventListener("submit", (e) => {
   e.preventDefault();
+
+  // Toggle visibility of playlist and preferences
+  optionsWrapper.classList.toggle("hidden");
+  playlistWrapper.classList.toggle("hidden");
 
   // Get all the selected genre checkboxes
   const selectedGenres = Array.from(
@@ -135,4 +140,13 @@ exportPlaylistButton.addEventListener("click", async () => {
   } catch (error) {
     console.error(error);
   }
+});
+
+// Toggle between playlist results and preferences
+const returnBtn = document.querySelector(".return-options");
+const playlistWrapper = document.querySelector(".playlist-wrapper");
+
+returnBtn.addEventListener("click", () => {
+  optionsWrapper.classList.toggle("hidden");
+  playlistWrapper.classList.toggle("hidden");
 });
