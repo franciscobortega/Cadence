@@ -37,10 +37,8 @@ def update_route(route_id, title, description):
     route = Route.query.get(route_id)
     route.title = title
     route.description = description
-    print(route)
     db.session.commit()
     
-
 def get_routes():
     """Return all routes."""
 
