@@ -1,6 +1,7 @@
 [
   {
     "title": "Test Run",
+    "description": "A simple route for testing purposes.",
     "distance": 2116.703,
     "elevation_gain": 0.11150360107,
     "created_by": 1,
@@ -20,6 +21,7 @@
   },
   {
     "title": "Golden Gate Bridge Out and Back",
+    "description": "A scenic route across the Golden Gate Bridge originating in San Francisco.",
     "distance": 11126.609,
     "elevation_gain": -45.5434989929,
     "created_by": 1,

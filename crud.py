@@ -24,10 +24,10 @@ def get_user_by_email(user_email):
 
     return User.query.filter(User.email == user_email).first()
 
-def create_route(title, distance, elevation_gain, created_by, image_url):
+def create_route(title, description, distance, elevation_gain, created_by, image_url):
     """Create and return a new route."""
 
-    route = Route(title=title, distance=distance, elevation_gain=elevation_gain, created_by=created_by, image_url=image_url)
+    route = Route(title=title, description=description, distance=distance, elevation_gain=elevation_gain, created_by=created_by, image_url=image_url)
 
     return route 
 

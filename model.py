@@ -33,6 +33,7 @@ class Route(db.Model):
                         autoincrement=True,
                         primary_key=True, )
     title = db.Column(db.String)
+    description = db.Column(db.Text)
     distance = db.Column(db.Float)
     elevation_gain = db.Column(db.Float)
     created_by = db.Column(db.Integer, db.ForeignKey("users.user_id"))
