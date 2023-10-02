@@ -26,12 +26,24 @@
             {% endif %}
             <div class="route-card-gradient"></div>
           </div>
-          <div class="route-card-info">
-            <h2 class="route-card-title">{{ route.title }}</h2>
-            <p class="route-card-description">
-              {% if route.description == None %} Click to add a description {%
-              else %} {{ route.description }} {% endif %}
-            </p>
+          <form
+            action="{{ url_for('update_route')}}"
+            method="POST"
+            class="route-card-info"
+          >
+            <input
+              type="text"
+              name=""
+              class="route-card-title"
+              placeholder="{{ route.title}}"
+            />
+            <input
+              type="text"
+              name=""
+              class="route-card-description"
+              placeholder="{% if route.description == None %} Click to add a description {%
+              else %} {{ route.description }} {% endif %}"
+            />
             <div class="route-card-buttons">
               <div class="route-card-load">
                 <a
@@ -41,23 +53,23 @@
                 >
               </div>
               <div class="route-card-delete">
-                <form
-                  action="{{ url_for('delete_route')}}"
-                  method="POST"
-                  class="route-card-form"
+                <input
+                  type="hidden"
+                  name="route_id"
+                  value="{{ route.route_id }}"
+                />
+                <button
+                  formaction="{{ url_for('delete_route')}}"
+                  class="route-card-delete-btn"
                 >
-                  <input
-                    type="hidden"
-                    name="route_id"
-                    value="{{ route.route_id }}"
-                  />
-                  <button type="submit" class="route-card-delete-btn">
-                    <ion-icon name="trash"></ion-icon>
-                  </button>
-                </form>
+                  <ion-icon name="trash"></ion-icon>
+                </button>
               </div>
+              <button type="submit" class="route-card-update">
+                <ion-icon name="checkmark"></ion-icon>
+              </button>
             </div>
-          </div>
+          </form>
         </li>
         {% endfor %}
       </ul>
@@ -70,16 +82,17 @@
 <script>
   const userRoutes = document.querySelectorAll(".route-card");
   userRoutes.forEach((route) => {
-    const routeForm = route.querySelector(".route-card-form");
+    const routeForm = route.querySelector(".route-card-info");
+    const deleteButton = route.querySelector(".route-card-delete-btn");
 
-    routeForm.addEventListener("submit", async (e) => {
+    deleteButton?.addEventListener("click", async (e) => {
       e.preventDefault();
       const routeId = route.getAttribute("data-route-id");
       const formData = new FormData(routeForm);
       formData.append("route_id", routeId);
 
       try {
-        const response = await fetch(routeForm.action, {
+        const response = await fetch(deleteButton.formAction, {
           method: "POST",
           body: formData,
         });

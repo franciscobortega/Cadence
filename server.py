@@ -224,7 +224,7 @@ def save_route():
 def delete_route():
     try:
         route_id = request.form.get('route_id')
-
+        print("deleting")
         crud.delete_waypoints_by_route_id(route_id)
         crud.delete_route(route_id)
 
@@ -232,6 +232,18 @@ def delete_route():
     except Exception as e:
         print(e)
         return jsonify({'success': False, 'error': str(e)}), 500
+    
+@app.route('/update-route', methods=['POST'])
+def update_route():
+    try:
+        route_id = request.form.get('route_id')
+
+        print("in function")
+
+        return jsonify({'success': True, 'message': 'Route updated successfully'}), 200
+    except Exception as e:
+        print(e)
+        return jsonify({'success': False, 'error': str(e)}), 500    
     
 @app.route('/load-route')
 def load_route():
