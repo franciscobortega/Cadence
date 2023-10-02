@@ -210,37 +210,35 @@ document.querySelector(".clear-route")?.addEventListener("click", () => {
   drawChart(elevationData);
 });
 
-document
-  .querySelector("#save-route-form")
-  ?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    console.log("clicked save route");
+document.querySelector("#save-route-form")?.addEventListener("submit", (e) => {
+  e.preventDefault();
+  console.log("clicked save route");
 
-    // TODO: Potentially update so that no call is made to Static Image API and instead save template URL only
-    const routeData = {
-      title: e.target[0].value,
-      distance: distance,
-      elevation_gain: elevationGain,
-      image_url: await getStaticMapImage(),
-      waypoints: responseWaypoints,
-    };
+  // TODO: Potentially update so that no call is made to Static Image API and instead save template URL only
+  const routeData = {
+    title: e.target[0].value,
+    distance: distance,
+    elevation_gain: elevationGain,
+    image_url: getStaticMapImageURL(),
+    waypoints: responseWaypoints,
+  };
 
-    console.log(routeData);
+  console.log(routeData);
 
-    fetch("/save-route", {
-      method: "POST",
-      body: JSON.stringify(routeData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        // TODO: Implement better error and success handling
-        console.log(responseJson);
-        alert(responseJson.message);
-      });
-  });
+  fetch("/save-route", {
+    method: "POST",
+    body: JSON.stringify(routeData),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      // TODO: Implement better error and success handling
+      console.log(responseJson);
+      alert(responseJson.message);
+    });
+});
 
 const routeDataBtns = document.querySelectorAll(".route-data-btn");
 
@@ -275,19 +273,11 @@ map.on("load", () => {
   });
 });
 
-async function getStaticMapImage() {
+function getStaticMapImageURL() {
   const { lng, lat } = map.getCenter();
   const currentZoom = map.getZoom();
-  console.log(lng, lat, currentZoom);
 
-  const STATIC_IMAGES_API_URL = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${lng},${lat},${currentZoom},0/800x600?access_token=${MAPBOX_API_KEY}`;
-
-  const response = await fetch(STATIC_IMAGES_API_URL);
-  console.log(response);
-  const mapImage = response.url.split("?access_token")[0];
-  console.log(mapImage);
-
-  return mapImage;
+  return `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${lng},${lat},${currentZoom},0/800x600`;
 }
 
 // --------------- LOADED ROUTE --------------- //
