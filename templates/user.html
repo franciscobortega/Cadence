@@ -28,7 +28,10 @@
           </div>
           <div class="route-card-info">
             <h2 class="route-card-title">{{ route.title }}</h2>
-            <p class="route-card-description">{{ route.description }}</p>
+            <p class="route-card-description">
+              {% if route.description == None %} Click to add a description {%
+              else %} {{ route.description }} {% endif %}
+            </p>
             <div class="route-card-buttons">
               <div class="route-card-load">
                 <a

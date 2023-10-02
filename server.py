@@ -196,13 +196,14 @@ def display_user(user_id):
 def save_route():
     try:
         title = request.json.get('title')
+        description = None
         distance = request.json.get('distance')
         elevation_gain = request.json.get('elevation_gain')
         created_by = session.get('user_id')
         image_url = request.json.get('image_url')
         waypoints = request.json.get('waypoints')
 
-        new_route = crud.create_route(title, distance, elevation_gain, created_by, image_url)
+        new_route = crud.create_route(title, description, distance, elevation_gain, created_by, image_url)
 
         for waypoint in waypoints:
             longitude = waypoint[0]
