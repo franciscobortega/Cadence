@@ -32,17 +32,21 @@
             class="route-card-info"
           >
             <input
+              required
+              onClick="this.select();"
               type="text"
               name="route-title"
               class="route-card-title"
-              placeholder="{{ route.title}}"
+              value="{{ route.title}}"
             />
             <input
+              required
+              onClick="this.select();"
               type="text"
               name="route-description"
               class="route-card-description"
-              placeholder="{% if route.description == None %} Click to add a description {%
-              else %} {{ route.description }} {% endif %}"
+              value="{% if route.description == None %}Click to add a description{%
+              else %}{{ route.description }}{% endif %}"
             />
             <div class="route-card-buttons">
               <div class="route-card-load">
