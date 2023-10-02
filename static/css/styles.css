@@ -36,6 +36,29 @@ input[type="password"] {
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  /* border-radius: 10px; */
+  /* box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset; */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: rgba(50, 0, 115, 0.6);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 /* ------- NAVIGATION -------- */
 
 .nav-wrapper {
