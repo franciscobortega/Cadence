@@ -237,6 +237,13 @@ def delete_route():
 def update_route():
     try:
         route_id = request.form.get('route_id')
+        new_title = request.form.get('route-title')
+        new_description = request.form.get('route-description')
+
+        print(route_id)
+        print(new_title)
+        print(new_description)
+        crud.update_route(route_id, new_title, new_description)
 
         print("in function")
 

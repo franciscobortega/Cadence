@@ -589,7 +589,7 @@ form input {
 
 .route-card-buttons {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 2fr 1fr 1fr;
 }
 
 .route-card-load {
@@ -632,13 +632,22 @@ form input {
   letter-spacing: 1.4px;
 }
 
-.route-card-delete-btn {
+.route-card-delete-btn,
+.route-card-update {
   background-color: transparent;
   cursor: pointer;
   border: none;
   display: flex;
   align-items: center;
 }
+
+/* .route-card-update {
+  display: none;
+}
+
+.route-card-title:focus ~ .route-card-buttons > .route-card-update {
+  display: block;
+} */
 
 ion-icon {
   /* padding: 5px; */

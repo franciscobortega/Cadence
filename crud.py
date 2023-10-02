@@ -31,6 +31,16 @@ def create_route(title, description, distance, elevation_gain, created_by, image
 
     return route 
 
+def update_route(route_id, title, description):
+    """Return route by id."""
+
+    route = Route.query.get(route_id)
+    route.title = title
+    route.description = description
+    print(route)
+    db.session.commit()
+    
+
 def get_routes():
     """Return all routes."""
 
