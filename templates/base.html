@@ -35,21 +35,23 @@
         {% else %}
         <li><a href="{{ url_for('display_auth') }}">Profile</a></li>
         {% endif %}
-        <li>
+        <li class="nav-user-wrapper">
           <div class="nav-user">
             <div class="nav-user-msg">
               {% if 'user_id' in session %}
               <p>Welcome,</p>
-              <p>{{ user.first_name }} &darr;</p>
+              <p>{{ user.first_name }} &#8628;</p>
+              <div class="logout-button">
+                <a href="{{ url_for('logout_user') }}" class="logout"
+                  ><span>Logout</span></a
+                >
+              </div>
               {% else %}
               <p>Hello, log in to save and generate routes!</p>
               {% endif %}
             </div>
             <div class="nav-user-img">
               <div class="user-img"></div>
-              <a href="{{ url_for('logout_user') }}" hidden class="logout"
-                ><span>Logout</span></a
-              >
             </div>
           </div>
         </li>
