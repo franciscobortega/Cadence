@@ -152,9 +152,16 @@ map.on("click", async (e) => {
   // drawChart(elevationData);
 });
 
+let lastPoppedWaypoint = [];
+
 // Remove last waypoint from route
 function removeLastWaypoint() {
-  waypoints.pop();
+  if (waypoints.length == 0) {
+    console.log("Nothing left to undo!");
+    return;
+  }
+  let removedWaypoint = waypoints.pop();
+  lastPoppedWaypoint.push(removedWaypoint);
   createRoute();
 
   elevationData.pop();
@@ -169,6 +176,30 @@ undoBtn.addEventListener("click", removeLastWaypoint);
 addEventListener("keydown", (e) => {
   if (e.ctrlKey && e.key === "z") {
     removeLastWaypoint();
+  }
+});
+
+// Add last removed waypoint from route
+function reAddLastWaypoint() {
+  if (lastPoppedWaypoint.length == 0) {
+    console.log("No moe point available!");
+    return;
+  }
+  let nextWaypoint = lastPoppedWaypoint.pop();
+  waypoints.push(nextWaypoint);
+  createRoute();
+
+  drawChart(elevationData);
+}
+
+// Event listener for the undo button click
+const redoBtn = document.querySelector(".redo-route");
+redoBtn.addEventListener("click", reAddLastWaypoint);
+
+// Event listener for the 'Ctrl+Z' keystroke
+addEventListener("keydown", (e) => {
+  if (e.ctrlKey && e.key === "y") {
+    reAddLastWaypoint();
   }
 });
 

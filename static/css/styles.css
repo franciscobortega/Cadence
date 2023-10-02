@@ -144,6 +144,25 @@ input[type="password"] {
 
 /* ------- USER PREFERENCES -------- */
 
+.data-wrapper {
+  position: absolute;
+
+  background-color: rgba(50, 0, 115, 0.6);
+  padding: 20px;
+  right: 20px;
+  bottom: 5%;
+  height: 85%;
+  max-width: 80px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.expand-btn {
+  width: 50px;
+  background-color: #320070;
+}
+
 #data-container {
   position: absolute;
   background-color: #f3f3f3;
@@ -153,7 +172,7 @@ input[type="password"] {
   height: 85%;
   width: 50%;
   border-radius: 20px;
-  border: 5px solid rgba(50, 0, 115, 0.6);
+  border: 8px solid rgba(50, 0, 115, 0.6);
   background-clip: padding-box;
   /* overflow-y: scroll; */
   display: grid;
