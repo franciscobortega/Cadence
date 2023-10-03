@@ -564,6 +564,8 @@ form input {
 }
 
 .saved-wrapper {
+  border-radius: 20px 0 0 20px;
+  box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25) inset;
   overflow-y: scroll;
 }
 
@@ -703,6 +705,10 @@ ion-icon {
 .route-card-delete-btn ion-icon:hover {
   color: var(--main-red-color);
   transition: all 0.2s ease-in-out;
+}
+
+.user-wrapper {
+  background-color: var(--main-color);
 }
 
 /* ------- LOGIN -------- */

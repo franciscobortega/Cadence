@@ -79,7 +79,62 @@
       </ul>
     </div>
     <div class="user-wrapper">
-      <button class="authorize-spotify">Link Spotify</button>
+      <div class="user-card-content">
+        <div class="user-card-details">
+          <ion-icon name="person"></ion-icon>
+        </div>
+        <div class="user-card-form">
+          <form action="/users" method="POST" class="form-signup">
+            <div class="form-field-name">
+              <input
+                type="text"
+                name="first_name"
+                placeholder="First Name"
+                class="form-field"
+              />
+              <input
+                type="text"
+                name="last_name"
+                placeholder="Last Name"
+                class="form-field"
+              />
+            </div>
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              class="form-field"
+            />
+            <input
+              type="text"
+              name="email"
+              placeholder="Email"
+              class="form-field"
+            />
+            <input
+              type="password"
+              name="current-password"
+              placeholder="Current Password"
+              class="form-field"
+            />
+            <input
+              type="password"
+              name="new-password"
+              placeholder="New Password"
+              class="form-field"
+            />
+            <input type="submit" value="Update Info" class="signup-btn" />
+          </form>
+        </div>
+      </div>
+      <div class="user-card-buttons">
+        <div class="logout-button">
+          <a href="{{ url_for('logout_user') }}" class="logout"
+            ><span>Logout</span></a
+          >
+        </div>
+        <button class="authorize-spotify rounded-btn">Link Spotify</button>
+      </div>
     </div>
   </main>
 </div>
