@@ -80,6 +80,14 @@
       <div class="user-card-content">
         <div class="user-card-details">
           <ion-icon name="person"></ion-icon>
+          <form
+            action="/update-user-image"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <input type="file" name="user-img-file" />
+            <input type="submit" />
+          </form>
         </div>
         <div class="user-card-form">
           <form action="/users" method="POST" class="form-signup">

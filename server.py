@@ -18,6 +18,9 @@ app.config.from_object(Config)
 MAPBOX_ACCESS_TOKEN = app.config['MAPBOX_ACCESS_TOKEN']
 SPOTIFY_CLIENT_ID = app.config['SPOTIFY_CLIENT_ID']
 SPOTIFY_CLIENT_SECRET = app.config['SPOTIFY_CLIENT_SECRET']
+CLOUDINARY_KEY = app.config['CLOUDINARY_KEY']
+CLOUDINARY_SECRET= app.config['CLOUDINARY_SECRET']
+CLOUD_NAME = "dk4puuzrh"
 
 @app.route('/')
 def display_home():
@@ -191,6 +194,10 @@ def display_user(user_id):
     user_routes = crud.get_routes_by_user_id(user_id)
 
     return render_template('user.html', user=user, user_routes=user_routes, access_token=MAPBOX_ACCESS_TOKEN)
+
+@app.route('/update-user-image', methods=['POST'])
+def update_user_image(user_id):
+    pass
 
 @app.route('/save-route', methods=['POST'])
 def save_route():
