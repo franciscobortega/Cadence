@@ -446,7 +446,11 @@ form input {
 
 .route-control-btns .rounded-btn:hover {
   background-color: var(--main-gray-color);
+  color: var(--main-white);
   cursor: pointer;
+}
+.route-control-btns .rounded-btn:hover ion-icon {
+  color: var(--main-white);
 }
 
 .playlist-wrapper {
@@ -708,6 +712,7 @@ ion-icon {
 }
 
 .user-wrapper {
+  border-radius: 0 20px 20px 0;
   background-color: var(--main-color);
 }
 

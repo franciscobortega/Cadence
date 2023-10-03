@@ -307,3 +307,18 @@ if (loadedRoute && loadedRoute != "None") {
     drawChart(elevationData);
   });
 }
+
+// --------------- GEOLOCATE THE USER --------------- //
+
+const geolocationButton = document.querySelector(".locate-user");
+
+geolocationButton.addEventListener("click", () => {
+  console.log("Locating the user...");
+  navigator.geolocation.getCurrentPosition((position) => {
+    console.log(position.coords.latitude, position.coords.longitude);
+    map.flyTo({
+      center: [position.coords.longitude, position.coords.latitude],
+      zoom: 13,
+    });
+  });
+});
