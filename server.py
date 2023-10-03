@@ -3,7 +3,7 @@ import json
 from flask import (Flask, jsonify, render_template, request, flash, session,
                    redirect)
 from jinja2 import StrictUndefined
-
+import cloudinary.uploader
 from model import connect_to_db, db
 import crud
 import requests
