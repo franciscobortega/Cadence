@@ -53,7 +53,7 @@
             <div class="nav-user-img">
               <div class="user-img">
                 {% if 'user_id' in session and user.profile_url != None %}
-                <img src="{{ user.profile_url }}" />
+                <img src="{{ user.profile_url }}" class="user-profile-image" />
                 {% else %}
                 <ion-icon name="person"></ion-icon>
                 {% endif %}

@@ -79,7 +79,13 @@
     <div class="user-wrapper">
       <div class="user-card-content">
         <div class="user-card-details">
-          <ion-icon name="person"></ion-icon>
+          <div class="user-img">
+            {% if 'user_id' in session and user.profile_url != None %}
+            <img src="{{ user.profile_url }}" class="user-profile-image" />
+            {% else %}
+            <ion-icon name="person"></ion-icon>
+            {% endif %}
+          </div>
           <form
             action="{{ url_for('update_user_image') }}"
             method="POST"
