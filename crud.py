@@ -2,10 +2,10 @@
 
 from model import db, User, Route, Waypoint, connect_to_db
 
-def create_user(username, email, password, first_name, last_name):
+def create_user(username, email, password, first_name, last_name, profile_url=None):
     """Create and return a new user."""
 
-    user = User(username=username, email=email, password=password, first_name=first_name, last_name=last_name)
+    user = User(username=username, email=email, password=password, first_name=first_name, last_name=last_name, profile_url=profile_url)
 
     return user
 

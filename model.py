@@ -18,6 +18,7 @@ class User(db.Model):
     password = db.Column(db.String)
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
+    profile_url = db.Column(db.String)
 
     routes = db.relationship("Route", back_populates="user")
 
