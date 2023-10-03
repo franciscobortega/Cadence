@@ -81,11 +81,12 @@
         <div class="user-card-details">
           <ion-icon name="person"></ion-icon>
           <form
-            action="/update-user-image"
+            action="{{ url_for('update_user_image') }}"
             method="POST"
             enctype="multipart/form-data"
           >
             <input type="file" name="user-img-file" />
+            <input type="hidden" name="user_id" value="{{ user.user_id }}" />
             <input type="submit" />
           </form>
         </div>

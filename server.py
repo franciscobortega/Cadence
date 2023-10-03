@@ -196,8 +196,25 @@ def display_user(user_id):
     return render_template('user.html', user=user, user_routes=user_routes, access_token=MAPBOX_ACCESS_TOKEN)
 
 @app.route('/update-user-image', methods=['POST'])
-def update_user_image(user_id):
-    pass
+def update_user_image():
+    
+    try:
+        new_image = request.files['user-img-file']
+        user_id = request.form.get('user_id')
+
+        result = cloudinary.uploader.upload(new_image, 
+                                            api_key=CLOUDINARY_KEY, api_secret=CLOUDINARY_SECRET,
+                                            cloud_name=CLOUD_NAME)
+        if 'secure_url' in result:
+            img_url = result['secure_url']
+            crud.update_user_profile_img(user_id, img_url)
+            return jsonify({'success': True, 'message': 'User image updated successfully'}), 200
+        else:
+            return jsonify({'success': False, 'error': 'Image upload failed'}), 500
+
+    except Exception as e:
+        print(e)
+        return jsonify({'success': False, 'error': str(e)}), 500    
 
 @app.route('/save-route', methods=['POST'])
 def save_route():
