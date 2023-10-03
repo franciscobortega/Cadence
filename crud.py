@@ -24,6 +24,13 @@ def get_user_by_email(user_email):
 
     return User.query.filter(User.email == user_email).first()
 
+def update_user_profile_img(user_id, img_url):
+    """Update the user profile_url by id."""
+
+    user = User.query.get(user_id)
+    user.profile_url = img_url
+    db.session.commit()
+
 def create_route(title, description, distance, elevation_gain, created_by, image_url):
     """Create and return a new route."""
 
@@ -32,7 +39,7 @@ def create_route(title, description, distance, elevation_gain, created_by, image
     return route 
 
 def update_route(route_id, title, description):
-    """Return route by id."""
+    """Update the route title and description by id."""
 
     route = Route.query.get(route_id)
     route.title = title
