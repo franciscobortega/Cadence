@@ -26,6 +26,7 @@ export let data;
 
 let distanceText = document.querySelector("#total-distance");
 let elevationText = document.querySelector("#total-elevation");
+let elevationMsg = document.querySelector(".elevation-msg");
 
 function routePolyline(coords) {
   console.log("Attempting to draw polyline");
@@ -135,6 +136,7 @@ async function createRoute() {
 
     // Display the distance of the route as 0 km
     distanceText.textContent = "0 km";
+    elevationMsg.classList.add("hidden");
   } else {
     clearRoute();
   }
@@ -157,7 +159,11 @@ let lastPoppedWaypoint = [];
 // Remove last waypoint from route
 function removeLastWaypoint() {
   if (waypoints.length == 0) {
+    elevationMsg.classList.remove("hidden");
     console.log("Nothing left to undo!");
+
+    elevationData = [];
+    drawChart(elevationData);
     return;
   }
   let removedWaypoint = waypoints.pop();
@@ -207,6 +213,7 @@ document.querySelector(".clear-route")?.addEventListener("click", () => {
   clearRoute();
   elevationData = [];
 
+  elevationMsg.classList.remove("hidden");
   drawChart(elevationData);
 });
 
