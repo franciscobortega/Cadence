@@ -90,10 +90,14 @@
             action="{{ url_for('update_user_image') }}"
             method="POST"
             enctype="multipart/form-data"
+            class="update-user-form"
           >
-            <input type="file" name="user-img-file" />
+            <input type="file" name="user-img-file" hidden />
+            <label for="upload">
+              <ion-icon name="create"></ion-icon>
+            </label>
             <input type="hidden" name="user_id" value="{{ user.user_id }}" />
-            <input type="submit" />
+            <input type="submit" hidden />
           </form>
         </div>
         <div class="user-card-form">
@@ -136,7 +140,7 @@
               placeholder="New Password"
               class="form-field"
             />
-            <input type="submit" value="Update Info" class="signup-btn" />
+            <input type="submit" value="Update Info" class="rounded-btn" />
           </form>
         </div>
       </div>
