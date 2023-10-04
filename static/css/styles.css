@@ -107,6 +107,10 @@ input[type="password"] {
   color: var(--main-color);
 }
 
+.close-icon {
+  color: var(--main-color);
+}
+
 /* ------- NAVIGATION -------- */
 
 .nav-wrapper {

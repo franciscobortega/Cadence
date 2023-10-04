@@ -67,11 +67,20 @@
     <div class="flash-msg-wrapper">
       <div class="flash-msg-content">
         <button class="flash-msg-exit">
-          <ion-icon name="close"></ion-icon>
+          <ion-icon name="close" class="close-icon"></ion-icon>
         </button>
         <div class="flash-msg">{{ msg }}</div>
       </div>
     </div>
     {% endfor %} {% block body %}{% endblock %}
+
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <script>
+      const flashCloseBtn = document.querySelector(".flash-msg-exit");
+      flashCloseBtn?.addEventListener("click", () => {
+        const flashWrapper = document.querySelector(".flash-msg-wrapper");
+        flashWrapper.remove();
+      });
+    </script>
   </body>
 </html>
