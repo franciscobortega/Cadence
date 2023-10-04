@@ -58,13 +58,13 @@ input[type="password"] {
 /* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
-  /* border-radius: 10px; */
+  border-radius: 10px;
   /* box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset; */
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background-color: var(--main-color-trans);
+  background-color: var(--main-color);
   border-radius: 10px;
 }
 
@@ -217,13 +217,15 @@ input[type="password"] {
   bottom: 5%;
   height: 85%;
   width: 50%;
-  border-radius: 20px;
+  border-radius: 13px;
   border: 8px solid var(--main-color-trans);
   background-clip: padding-box;
-  /* overflow-y: scroll; */
+  overflow-y: scroll;
+  overflow-x: hidden;
   display: grid;
   grid-template-rows: 1fr 0.75fr 1fr;
   gap: 20px;
+  scrollbar-gutter: stable both-edges;
 }
 
 /* .buttons-wrapper {
@@ -240,6 +242,18 @@ input[type="password"] {
   background-color: var(--form-input-color);
   border-radius: 20px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+  position: relative;
+}
+
+.elevation-msg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+#myChart {
+  padding: 12px;
 }
 
 .distance-content,
@@ -310,7 +324,7 @@ input[type="password"] {
 .generation-wrapper {
   border-radius: 20px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   /* max-height: 100%; */
 }
 
