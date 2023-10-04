@@ -64,7 +64,14 @@
       </ul>
     </nav>
     {% endblock %} {% for msg in get_flashed_messages() %}
-    <p class="flash-msg">{{ msg }}</p>
+    <div class="flash-msg-wrapper">
+      <div class="flash-msg-content">
+        <button class="flash-msg-exit">
+          <ion-icon name="close"></ion-icon>
+        </button>
+        <div class="flash-msg">{{ msg }}</div>
+      </div>
+    </div>
     {% endfor %} {% block body %}{% endblock %}
   </body>
 </html>
