@@ -1,6 +1,3 @@
-/* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-/* Optional: Makes the sample page fill the window. */
 * {
   margin: 0;
   padding: 0;
@@ -113,21 +110,22 @@ input[type="password"] {
 /* ------- NAVIGATION -------- */
 
 .nav-wrapper {
-  background-color: var(--main-color-trans);
-  margin: 10px;
+  z-index: 2;
   border-radius: 10px;
   position: absolute;
-  width: 98%;
-  left: 50%;
-  margin-left: -49%;
-  z-index: 2;
-  /* max-height: 50px; */
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .nav-content {
   display: grid;
   grid-template-columns: 4fr 1fr 1fr 1fr;
   align-items: center;
+  width: 97%;
+  background-color: var(--main-color-trans);
+  border-radius: 10px;
+  margin: 10px;
 }
 
 .nav-content li {
