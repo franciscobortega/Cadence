@@ -195,7 +195,7 @@ input[type="password"] {
   opacity: 0;
   position: absolute;
   border-radius: 10px;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.35);
   transition: pointer-events 0.2s, opacity 0.2s, top 0.2s;
 }
 
@@ -419,7 +419,7 @@ input[type="password"] {
 .checkbox-field {
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.35);
   padding: 8px 0;
 }
 
@@ -507,7 +507,7 @@ form input {
   border-radius: 20px;
   display: flex;
   overflow: hidden;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.35);
 }
 
 .route-control-btns ion-icon {
@@ -555,7 +555,7 @@ form input {
 .playlist-control-btns div {
   height: 50px;
 
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.35);
 }
 
 .playlist-control-btns div:hover {
@@ -734,7 +734,7 @@ form input {
   justify-content: center;
   width: 180px;
   height: 60px;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.35);
 }
 
 .route-card-load:hover {
