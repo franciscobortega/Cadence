@@ -19,6 +19,7 @@
   --main-gray-color: #d1d1d1;
   --main-green-color: #5fad56;
   --main-red-color: #a72608;
+  --main-blue-color: #007ef5;
 }
 
 html {
@@ -452,15 +453,17 @@ input[type="password"] {
 }
 
 .first-marker {
-  /* replace with properly designed image
-  background-image: url("/static/images/waypoint.png"); */
-  background-color: var(--main-white-text);
+  width: 16px;
+  height: 16px;
+  background-color: var(--main-green-color);
+  border: 2.5px solid white;
 }
 
 .last-marker {
-  /* replace with properly designed image
-  background-image: url("/static/images/waypoint.png"); */
-  background-color: var(--main-white-text);
+  width: 16px;
+  height: 16px;
+  background-color: var(--main-red-color);
+  border: 2.5px solid white;
 }
 
 #save-route-form,
