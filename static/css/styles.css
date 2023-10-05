@@ -10,15 +10,15 @@
 :root {
   --main-color: #320070;
   --main-color-trans: rgba(50, 0, 115, 0.6);
-  --secondary-color: #b188e5;
+  --secondary-color: #7439bd;
   --main-white: #f3f3f3;
   --secondary-white: #c0c0c0;
   --main-white-text: white;
   --secondary-white-text: #c0c0c0;
   --form-input-color: #d9d9d9;
-  --main-gray-color: #757575;
-  --main-green-color: #6fbd77;
-  --main-red-color: #c04545;
+  --main-gray-color: #d1d1d1;
+  --main-green-color: #5fad56;
+  --main-red-color: #a72608;
 }
 
 html {
@@ -52,19 +52,17 @@ input[type="password"] {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
   border-radius: 10px;
-  /* box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset; */
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background-color: var(--main-color);
+  background-color: var(--secondary-color);
   border-radius: 10px;
 }
 
@@ -624,6 +622,11 @@ form input {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: linear-gradient(
+    90deg,
+    var(--main-color) 0%,
+    var(--secondary-color) 100%
+  );
 }
 
 .main-wrapper {
@@ -936,7 +939,7 @@ ion-icon {
 
 .form-field {
   border: none;
-  background-color: rgb(209, 209, 209);
+  background-color: var(--main-gray-color);
   padding: 10px;
   border-radius: 10px;
   width: 100%;
