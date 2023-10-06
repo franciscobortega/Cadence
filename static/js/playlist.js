@@ -14,10 +14,10 @@ export async function initPlaylist(
   targetPace
 ) {
   const routeSegmentsDistances = data.paths[0].details.distance;
-  console.log(routeSegmentsDistances);
+  // console.log(routeSegmentsDistances);
 
   const routeSegmentsElevations = data.paths[0].details.average_slope;
-  console.log(routeSegmentsElevations);
+  // console.log(routeSegmentsElevations);
 
   const classifiedSegments = segmentClassification(
     routeSegmentsDistances,
@@ -30,9 +30,9 @@ export async function initPlaylist(
     queryParams
   );
 
-  console.log(playlistRecommendations);
+  // console.log(playlistRecommendations);
 
-  console.log(queryParams);
+  // console.log(queryParams);
 
   // Fetch from Get Tracks' Audio Features endpoint, extract array from response
   const listOfTrackDetails = (
@@ -71,7 +71,7 @@ async function fetchRecommendations(token, params) {
     url.searchParams.append(key, params[key]);
   });
 
-  console.log(url.toString());
+  // console.log(url.toString());
   // console.log(token);
 
   const result = await fetch(url.toString(), {
@@ -92,7 +92,7 @@ async function fetchAudioFeatures(token, recommendations) {
   // Add the track IDs as a query parameter to the URL
   const url = `${baseUrl}?ids=${trackIds}`;
 
-  console.log(url);
+  // console.log(url);
 
   const result = await fetch(url, {
     method: "GET",
@@ -151,7 +151,7 @@ function displayPlaylist(playlist, recommendations) {
   const playlistContainer = document.querySelector(".playlist-container");
 
   console.log(recommendations);
-  const playlistHTML = playlist.map((track) => {
+  const playlistHTML = playlist.map((track, index) => {
     const song = recommendations.tracks.find(
       (recommendation) => recommendation.id === track.id
     );
@@ -162,11 +162,18 @@ function displayPlaylist(playlist, recommendations) {
     const playlistItem = document.createElement("div");
     playlistItem.classList.add("playlist-item");
     playlistItem.innerHTML = `
-       <img src="${song["album"]["images"][0]["url"]}" alt="Album cover" class="track-img"/>
+    <p class="playlist-track-number">${index + 1}</p>
+    <div class="playlist-track-details">
+       <img src="${
+         song["album"]["images"][0]["url"]
+       }" alt="Album cover" class="track-img">
        <div class="track-info">
         <p class="track-name">${song["name"]}</p>
         <p class="track-artist">${song["artists"][0]["name"]}</p>
-       </div>`;
+       </div>
+    </div>
+    <p class="track-album">Album name</p>
+    <p class="track-duration">2:49</p>`;
 
     // console.log(playlistItem);
     return playlistItem.outerHTML;
@@ -309,6 +316,7 @@ function generatePlaylistByElevation(
   let j = 0;
 
   while (totalDistance > 0 && j < segmentDistances.length) {
+    console.log("This is the distance at the start:", totalDistance / 1000);
     let firstItemInSegments = segmentDistances[j];
     let [start, end, segmentDistance] = firstItemInSegments;
 
@@ -360,6 +368,8 @@ function generatePlaylistByElevation(
         }
       }
     } else {
+      console.log("Tracks for this intensity have run out maybe...");
+      console.log(tracksByTempo[segmentIntensity]);
       // TODO: Currently when there are no more tracks in a category it just skips to the next iteration. Need to add logic to check if there are any tracks left in the other categories
       j++;
     }

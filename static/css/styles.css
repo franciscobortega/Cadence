@@ -591,8 +591,8 @@ form input {
 
 .playlist-wrapper {
   padding: 12px;
-  /* max-height: ; */
   /* overflow-y: scroll; */
+  background-color: var(--main-color);
 }
 
 #generated-playlist {
@@ -641,42 +641,48 @@ form input {
   padding: 10px 0;
   /* overflow-y: scroll; */
 }
+
 .playlist-item {
+  display: grid;
+  grid-template-columns: 1fr 4fr 2fr 2fr;
+  align-items: center;
+  width: 100%;
+  /* background-color: var(--main-color); */
+  /* border-radius: 10px; */
+  /* box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset; */
+  /* margin: 6px 0; */
+  padding: 6px;
+}
+
+.playlist-track-number,
+.track-album,
+.track-duration {
+  color: var(--main-white);
+  text-align: center;
+}
+
+.playlist-track-details {
   display: grid;
   grid-template-columns: 1fr 2fr;
   align-items: center;
-  width: 80%;
-  background-color: var(--main-color);
-  border-radius: 10px;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-  margin: 6px 0;
 }
 
 .playlist-item img {
-  width: 120px;
-  height: 120px;
+  width: 60px;
+  height: 60px;
   justify-self: center;
-  background-color: var(--main-white-text);
-  margin: 20px 0;
 }
 
 .playlist-item .track-name {
-  font-size: 28px;
-  font-weight: bold;
+  font-size: 22px;
+  font-weight: 500;
   color: var(--main-white);
-  letter-spacing: 2.8px;
-  margin-bottom: 20px;
 }
 
 .playlist-item .track-artist {
-  font-size: 20px;
-  color: #c3c3c3;
-  font-style: italic;
+  font-size: 16px;
+  color: var(--secondary-white);
 }
-
-/* .track-img {
-  width: 120px;
-} */
 
 /* ------- USER PROFILE -------- */
 .body-wrapper {
