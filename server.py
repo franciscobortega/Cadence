@@ -130,26 +130,34 @@ def register_user():
     first_name = request.form.get("first_name")
     last_name = request.form.get("last_name")
     new_image = request.files['user-img-file']
-
-    result = cloudinary.uploader.upload(new_image, 
-                                            api_key=CLOUDINARY_KEY, api_secret=CLOUDINARY_SECRET,
-                                            cloud_name=CLOUD_NAME)
     
     img_url = None
 
-    if 'secure_url' in result:
-        img_url = result['secure_url']
+    if new_image:
+        result = cloudinary.uploader.upload(new_image, 
+                                                api_key=CLOUDINARY_KEY, api_secret=CLOUDINARY_SECRET,
+                                                cloud_name=CLOUD_NAME)
+        
+
+        if 'secure_url' in result:
+            img_url = result['secure_url']
 
     user = crud.get_user_by_email(email)
     if user:
         flash("Cannot create an account with that email. Try again.")
+        return redirect("/auth")
     else:
         new_user = crud.create_user(username, email, password, first_name, last_name, img_url)
         db.session.add(new_user)
         db.session.commit()
-        flash("Account created! Please log in.")
+        
+        session['user_id'] = new_user.user_id
+        session['username'] = new_user.username
+        
+        user_id = new_user.user_id
+        flash("Account created!")
+        return redirect(f"/users/{user_id}")
 
-    return redirect("/auth")
 
 @app.route('/login', methods=["POST"])
 def display_login():
