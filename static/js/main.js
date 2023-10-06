@@ -83,7 +83,13 @@ optionsForm.addEventListener("submit", (e) => {
   console.log(expectedFinishTime);
   console.log(distance / 1000); // this is the distance in km
   console.log(`You will finish in ${expectedFinishTime / 60} minutes!`); // this is the expected finish time in minutes
-  initPlaylist(storedAccessToken, queryParams, distance, targetPace);
+  initPlaylist(
+    storedAccessToken,
+    queryParams,
+    distance,
+    targetPace,
+    expectedFinishTime
+  );
 });
 
 const exportPlaylistButton = document.querySelector(".export-playlist");
