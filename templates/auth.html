@@ -22,7 +22,12 @@
     <div class="form-wrapper">
       <div class="form-content">
         <h2>Create Account</h2>
-        <form action="/users" method="POST" class="form-signup">
+        <form
+          action="/users"
+          method="POST"
+          class="form-signup"
+          enctype="multipart/form-data"
+        >
           <div class="form-field-name">
             <input
               type="text"
@@ -60,6 +65,7 @@
             class="form-field"
             required
           />
+          <input type="file" name="user-img-file" class="forn-field" />
           <input type="submit" value="Sign Up" class="signup-btn" />
         </form>
       </div>

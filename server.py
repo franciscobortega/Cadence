@@ -129,12 +129,22 @@ def register_user():
     password = request.form.get("password")
     first_name = request.form.get("first_name")
     last_name = request.form.get("last_name")
+    new_image = request.files['user-img-file']
+
+    result = cloudinary.uploader.upload(new_image, 
+                                            api_key=CLOUDINARY_KEY, api_secret=CLOUDINARY_SECRET,
+                                            cloud_name=CLOUD_NAME)
+    
+    img_url = None
+
+    if 'secure_url' in result:
+        img_url = result['secure_url']
 
     user = crud.get_user_by_email(email)
     if user:
         flash("Cannot create an account with that email. Try again.")
     else:
-        new_user = crud.create_user(username, email, password, first_name, last_name)
+        new_user = crud.create_user(username, email, password, first_name, last_name, img_url)
         db.session.add(new_user)
         db.session.commit()
         flash("Account created! Please log in.")
