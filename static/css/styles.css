@@ -644,8 +644,9 @@ form input {
 
 .playlist-item {
   display: grid;
-  grid-template-columns: 1fr 4fr 2fr 2fr;
+  grid-template-columns: 0.5fr 6fr 3fr 1fr;
   align-items: center;
+  gap: 24px;
   width: 100%;
   /* background-color: var(--main-color); */
   /* border-radius: 10px; */
@@ -674,14 +675,30 @@ form input {
 }
 
 .playlist-item .track-name {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 500;
   color: var(--main-white);
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 }
 
 .playlist-item .track-artist {
-  font-size: 16px;
+  font-size: 15px;
   color: var(--secondary-white);
+}
+
+.track-album,
+.track-duration {
+  color: var(--secondary-white);
+  text-align: center;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 }
 
 /* ------- USER PROFILE -------- */

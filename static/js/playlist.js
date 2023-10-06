@@ -162,6 +162,9 @@ function displayPlaylist(playlist, recommendations) {
     console.log(song);
     console.log(`${song["name"]} by ${song["artists"][0]["name"]}`);
 
+    let songMinutes = Math.floor(song["duration_ms"] / 1000 / 60);
+    let songSeconds = Math.floor((song["duration_ms"] / 1000) % 60);
+
     const playlistItem = document.createElement("div");
     playlistItem.classList.add("playlist-item");
     playlistItem.innerHTML = `
@@ -175,8 +178,8 @@ function displayPlaylist(playlist, recommendations) {
         <p class="track-artist">${song["artists"][0]["name"]}</p>
        </div>
     </div>
-    <p class="track-album">Album name</p>
-    <p class="track-duration">2:49</p>`;
+    <p class="track-album">${song["album"]["name"]}</p>
+    <p class="track-duration">${songMinutes}:${songSeconds}</p>`;
 
     // console.log(playlistItem);
     return playlistItem.outerHTML;
