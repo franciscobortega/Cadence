@@ -680,6 +680,9 @@ form input {
 
 /* ------- USER PROFILE -------- */
 .body-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -706,12 +709,30 @@ form input {
   letter-spacing: 6px;
   margin: 20px 40px;
   color: var(--main-color);
+  place-self: flex-start;
 }
 
 .saved-wrapper {
   border-radius: 20px 0 0 20px;
   box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25) inset;
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* flex-wrap: wrap; */
+}
+
+.routeless-wrapper {
+  background-color: var(--main-gray-color);
+  border-radius: 10px;
+  width: 90%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 36px;
 }
 
 .route-card {

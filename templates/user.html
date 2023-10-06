@@ -5,6 +5,19 @@
   <main class="main-wrapper">
     <div class="saved-wrapper">
       <h1 class="saved-title">Saved Routes</h1>
+      {% if not user_routes %}
+      <div class="routeless-wrapper">
+        <p class="routeless-msg">
+          Looks like you haven't logged a route yet! Click the button to start
+          saving new routes!
+        </p>
+        <div class="rounded-btn">
+          <a href="{{ url_for('display_home') }}" class="rounded-btn"
+            ><span>Go to map</span></a
+          >
+        </div>
+      </div>
+      {% else %}
       <ul>
         {% for route in user_routes %}
         <li class="route-card" data-route-id="{{ route.route_id }}">
@@ -75,6 +88,7 @@
         </li>
         {% endfor %}
       </ul>
+      {% endif %}
     </div>
     <div class="user-wrapper">
       <div class="user-card-content">

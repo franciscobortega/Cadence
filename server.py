@@ -202,6 +202,7 @@ def display_user(user_id):
         return redirect('/')
 
     user_routes = crud.get_routes_by_user_id(user_id)
+    print(user_routes)
 
     return render_template('user.html', user=user, user_routes=user_routes, access_token=MAPBOX_ACCESS_TOKEN)
 
