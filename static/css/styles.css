@@ -216,9 +216,16 @@ input[type="password"] {
 .mainpage-wrapper {
   display: flex;
   flex-direction: column;
+  /* align-items: center; */
+  justify-content: space-around;
   height: 100vh;
   position: relative;
   padding: 10px;
+  background: linear-gradient(
+    90deg,
+    var(--main-color) 0%,
+    var(--secondary-color) 100%
+  );
 }
 
 .map-container {
@@ -704,27 +711,29 @@ form input {
 
 /* ------- USER PROFILE -------- */
 .body-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
+  /* position: absolute; */
+  /* top: 0; */
+  /* left: 0; */
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
-  background: linear-gradient(
-    90deg,
-    var(--main-color) 0%,
-    var(--secondary-color) 100%
-  );
+  /* background: linear-gradient(
+  90deg,
+  var(--main-color) 0%,
+  var(--secondary-color) 100%
+); */
 }
 
 .main-wrapper {
-  margin: 100px 0;
+  /* margin: 100px 0; */
   display: grid;
   grid-template-columns: 1.5fr 1fr;
-  height: 85vh;
+  /* height: 85vh; */
+  max-height: 80vh;
   /* background-color: var(--main-white); */
-  width: 90%;
+  /* width: 90%; */
   border-radius: 20px;
+  /* overflow-y: scroll; */
 }
 
 .saved-title {
@@ -739,12 +748,15 @@ form input {
 .saved-wrapper {
   border-radius: 20px 0 0 20px;
   box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25) inset;
+  /* overflow-y: scroll; */
+  /* display: flex; */
   overflow-y: scroll;
-  display: flex;
+  /* overflow: hidden; */
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
   /* flex-wrap: wrap; */
+  background-color: var(--main-white);
 }
 
 .routeless-wrapper {
@@ -901,9 +913,12 @@ ion-icon {
   background-color: var(--main-color);
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   flex-direction: column;
   gap: 20px;
+  overflow-y: scroll;
+  padding: 70px 0;
+  /* overflow: hidden; */
 }
 
 .user-card-content {
@@ -919,8 +934,8 @@ ion-icon {
 }
 
 .user-card-details .user-img {
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
 }
 
 .update-user-form {
