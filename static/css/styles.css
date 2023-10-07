@@ -477,7 +477,7 @@ button.data-opener {
 }
 
 #options-form label {
-  margin-left: 20px;
+  /* margin-left: 20px; */
 }
 
 #options-form input[type="number"] {

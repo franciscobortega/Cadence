@@ -84,6 +84,17 @@
       <p class="elevation-msg">Plot a route to see elevation data!</p>
       <canvas id="myChart"></canvas>
     </div>
+    {% if user == None %}
+    <form id="options-form">
+      <label>
+        <input
+          disabled
+          type="text"
+          placeholder="Log in to generate a playlist"
+        />
+      </label>
+    </form>
+    {%else%}
     <div class="generation-wrapper">
       <div class="options-wrapper">
         <form id="options-form">
@@ -170,39 +181,40 @@
           <button type="submit" class="rounded-btn">Generate Playlist</button>
         </form>
       </div>
-      <div class="playlist-wrapper hidden">
-        <div class="playlist-control">
-          <form id="generated-playlist">
-            <label for="playlist-title">
-              <input
-                required
-                type="text"
-                name="title"
-                id="playlist-title"
-                placeholder="Playlist Title"
-              />
-            </label>
-            <div class="playlist-control-btns">
-              <div class="regenerate-playlist rounded-btn square-btn">
-                <ion-icon name="refresh"></ion-icon>
-              </div>
-              <button
-                type="submit"
-                class="export-playlist rounded-btn square-btn"
-              >
-                <!-- <ion-icon name="download"></ion-icon> -->
-                <ion-icon name="open"></ion-icon>
-                <!-- <ion-icon name="arrow-round-up"></ion-icon> -->
-                <!-- <ion-icon name="cloud-upload"></ion-icon> -->
-                <!-- <ion-icon name="musical-notes"></ion-icon> -->
-              </button>
-              <div class="return-options rounded-btn">Back to Options</div>
-            </div>
-          </form>
-        </div>
-        <div class="playlist-container"></div>
-      </div>
     </div>
+    <div class="playlist-wrapper hidden">
+      <div class="playlist-control">
+        <form id="generated-playlist">
+          <label for="playlist-title">
+            <input
+              required
+              type="text"
+              name="title"
+              id="playlist-title"
+              placeholder="Playlist Title"
+            />
+          </label>
+          <div class="playlist-control-btns">
+            <div class="regenerate-playlist rounded-btn square-btn">
+              <ion-icon name="refresh"></ion-icon>
+            </div>
+            <button
+              type="submit"
+              class="export-playlist rounded-btn square-btn"
+            >
+              <!-- <ion-icon name="download"></ion-icon> -->
+              <ion-icon name="open"></ion-icon>
+              <!-- <ion-icon name="arrow-round-up"></ion-icon> -->
+              <!-- <ion-icon name="cloud-upload"></ion-icon> -->
+              <!-- <ion-icon name="musical-notes"></ion-icon> -->
+            </button>
+            <div class="return-options rounded-btn">Back to Options</div>
+          </div>
+        </form>
+      </div>
+      <div class="playlist-container"></div>
+    </div>
+    {% endif %}
   </div>
 </div>
 <script>
