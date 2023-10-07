@@ -48,8 +48,8 @@
           {% endif %}
           <li class="nav-user-wrapper">
             <div class="nav-user">
+              {% if 'user_id' in session %}
               <div class="nav-user-msg">
-                {% if 'user_id' in session %}
                 <p>Welcome,</p>
                 <p>{{ user.first_name }} &#8628;</p>
                 <div class="logout-button">
@@ -57,9 +57,6 @@
                     ><span>Logout</span></a
                   >
                 </div>
-                {% else %}
-                <p>Hello, log in to save and generate routes!</p>
-                {% endif %}
               </div>
               <div class="nav-user-img">
                 <div class="user-img">
@@ -73,6 +70,16 @@
                   {% endif %}
                 </div>
               </div>
+              {% else %}
+              <div class="nav-user-msg">
+                <!-- <p>Hello, log in to save and generate routes!</p> -->
+                <div class="rounded-btn">
+                  <a href="{{ url_for('display_auth') }}" class="login"
+                    ><span>Login</span></a
+                  >
+                </div>
+              </div>
+              {% endif %}
             </div>
           </li>
         </ul>
