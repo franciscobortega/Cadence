@@ -11,7 +11,7 @@
   --main-white: #f3f3f3;
   --secondary-white: #c0c0c0;
   --main-white-text: white;
-  --secondary-white-text: #c0c0c0;
+  --secondary-gray-text: #999;
   --form-input-color: #d9d9d9;
   --main-gray-color: #d1d1d1;
   --main-green-color: #5fad56;
@@ -473,6 +473,7 @@ button.data-opener {
   overflow: hidden;
   box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.35);
   padding: 8px 0;
+  transition: box-shadow 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
 .checkbox-field input {
@@ -481,12 +482,20 @@ button.data-opener {
   z-index: -1;
 }
 
+.checkbox-field:has(> .checked) {
+  box-shadow: none;
+}
+
 .form-label {
   padding: 10px 20px;
-  color: #666;
+  color: var(--secondary-gray-text);
   background-color: var(--form-input-color);
   font-size: 14px;
   font-weight: 700;
+}
+
+.form-label:hover {
+  cursor: pointer;
 }
 
 .checked {
@@ -565,7 +574,7 @@ form input {
 }
 
 .route-control-btns ion-icon {
-  color: var(--main-gray-color);
+  color: var(--secondary-gray-text);
 }
 
 .route-control-btns .rounded-btn {
@@ -574,8 +583,7 @@ form input {
 }
 
 .route-control-btns .rounded-btn:hover {
-  background-color: var(--main-gray-color);
-  color: var(--main-white);
+  background-color: var(--main-color);
   cursor: pointer;
 }
 .route-control-btns .rounded-btn:hover ion-icon {
