@@ -61,13 +61,13 @@ ion-icon {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background-color: var(--secondary-color);
+  background-color: var(--main-color-trans);
   border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: var(--main-color);
 }
 
 @keyframes flash-in-out {
@@ -347,7 +347,8 @@ button.data-opener {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%);
+  transform: translate(-50%, -50%);
+  color: var(--main-gray);
 }
 
 #myChart {
@@ -431,12 +432,15 @@ button.data-opener {
 #options-form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   padding: 10px;
 }
 
 #options-form > label {
   margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 #options-form input[type="number"] {
@@ -453,8 +457,12 @@ button.data-opener {
 #form-genres-wrapper {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
-  max-width: 500px;
+  justify-content: space-evenly;
+  /* justify-items: unset; */
+  align-items: center;
+  /* margin: 0 20px; */
+  gap: 12px;
+  /* max-width: 500px; */
 }
 
 .checkbox-field {
@@ -476,7 +484,7 @@ button.data-opener {
 }
 
 .form-label {
-  padding: 10px 20px;
+  padding: 12px 32px;
   color: var(--main-gray);
   background-color: var(--form-input-color);
   font-size: 14px;
@@ -752,11 +760,11 @@ p.playlist-info-details {
 }
 
 .route-card {
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.35);
   border-radius: 20px;
   padding: 20px;
   margin: 20px;
   height: 250px;
-  background-color: var(--main-color);
   position: relative;
   overflow: hidden;
 }
