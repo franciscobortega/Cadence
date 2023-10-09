@@ -19,7 +19,7 @@
       </div>
       {% else %}
       <ul>
-        {% for route in user_routes %}
+        {% for route in user_routes[::-1] %}
         <li class="route-card" data-route-id="{{ route.route_id }}">
           <div class="route-card-background">
             {% if route.image_url == '/images/default-map.jpg' %}
