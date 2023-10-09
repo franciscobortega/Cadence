@@ -4,23 +4,32 @@
 
 <div class="body-wrapper">
   <main class="main-wrapper mw-right">
+    <div class="mw-nav-logo">
+      <a href="/">
+        <img
+          class="nav-logo"
+          src="/static/images/cadence-logo.png"
+          alt="Cadence Logo"
+        />
+      </a>
+    </div>
     <div class="alt-wrapper">
-      <div class="alt-content">
+      <div class="alt-content sign-in-text hidden">
         <h2 class="alt-title">Welcome 👋</h2>
         <p class="alt-text">
           Login with your personal details to map a new route
         </p>
       </div>
-      <div class="alt-content hidden">
+      <div class="alt-content sign-up-text">
         <h2 class="alt-title">Hey You!</h2>
         <p class="alt-text">
-          Enter your personal details to start your journey with us
+          New here? Enter your personal details to start your journey with us
         </p>
       </div>
-      <button class="auth-btn alt-btn">Sign In</button>
+      <button class="auth-btn alt-btn">Sign Up</button>
     </div>
     <div class="form-wrapper">
-      <div class="form-content">
+      <div class="form-content sign-up-form hidden">
         <h2>Create Account</h2>
         <form
           action="/users"
@@ -69,7 +78,7 @@
           <input type="submit" value="Sign Up" class="signup-btn" />
         </form>
       </div>
-      <div class="form-content hidden">
+      <div class="form-content sign-in-form">
         <h2>Sign In to Cadence</h2>
         <form action="/login" method="POST" class="form-signup">
           <input
@@ -96,14 +105,14 @@
 </div>
 <script>
   const authBtn = document.querySelector(".auth-btn");
-  const signInText = document.querySelector(".alt-content");
-  const signUpText = document.querySelector(".alt-content.hidden");
-  const signupContent = document.querySelector(".form-content");
-  const signinContent = document.querySelector(".form-content.hidden");
+  const signInText = document.querySelector(".sign-in-text.hidden");
+  const signUpText = document.querySelector(".sign-up-text");
+  const signinContent = document.querySelector(".sign-in-form");
+  const signupContent = document.querySelector(".sign-up-form.hidden");
 
   authBtn.addEventListener("click", (el) => {
-    signupContent.classList.toggle("hidden");
     signinContent.classList.toggle("hidden");
+    signupContent.classList.toggle("hidden");
     signInText.classList.toggle("hidden");
     signUpText.classList.toggle("hidden");
 

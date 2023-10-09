@@ -944,6 +944,13 @@ form input {
 .mw-right {
   grid-template-columns: 1fr 2fr;
   overflow: hidden;
+  height: 75vh;
+  position: relative;
+}
+
+.mw-nav-logo {
+  position: absolute;
+  margin: 20px;
 }
 
 .alt-wrapper {
