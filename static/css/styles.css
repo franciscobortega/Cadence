@@ -44,6 +44,11 @@ input[type="password"] {
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
 }
 
+ion-icon {
+  font-size: 30px;
+  color: var(--main-white-text);
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 8px;
@@ -577,6 +582,7 @@ form input {
 .playlist-wrapper {
   padding: 12px;
   background-color: var(--main-color);
+  border-radius: 20px;
 }
 
 #generated-playlist {
@@ -622,11 +628,12 @@ form input {
   align-items: center;
   flex-direction: column;
   padding: 10px 0;
+  border-top: 1px solid var(--secondary-white);
 }
 
 .playlist-item {
   display: grid;
-  grid-template-columns: 0.5fr 6fr 3fr 1fr;
+  grid-template-columns: 0.5fr 4fr 3fr 1fr;
   align-items: center;
   gap: 24px;
   width: 100%;
@@ -636,20 +643,24 @@ form input {
 .playlist-track-number,
 .track-album,
 .track-duration {
-  color: var(--main-white);
+  color: var(--secondary-white);
+  font-size: 15px;
+}
+
+.playlist-track-number {
   text-align: center;
 }
 
 .playlist-track-details {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 3fr;
   align-items: center;
+  gap: 10px;
 }
 
 .playlist-item img {
   width: 60px;
   height: 60px;
-  justify-self: center;
 }
 
 .playlist-item .track-name {
@@ -671,7 +682,7 @@ form input {
 .track-album,
 .track-duration {
   color: var(--secondary-white);
-  text-align: center;
+  justify-self: flex-start;
   display: -webkit-box;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -777,6 +788,12 @@ form input {
   outline: none;
   box-shadow: none !important;
   text-align: start;
+
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 }
 
 .route-card-description {
@@ -844,10 +861,6 @@ form input {
   align-items: center;
 }
 
-ion-icon {
-  font-size: 30px;
-  color: var(--main-white-text);
-}
 .route-card-delete-btn ion-icon:hover {
   color: var(--main-red-color);
   transition: all 0.2s ease-in-out;
