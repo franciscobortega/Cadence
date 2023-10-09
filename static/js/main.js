@@ -54,6 +54,8 @@ optionsForm.addEventListener("submit", (e) => {
   optionsWrapper.classList.toggle("hidden");
   playlistWrapper.classList.toggle("hidden");
 
+  playlistWrapper.scrollIntoView({ behavior: "smooth" });
+
   // Get all the selected genre checkboxes
   const selectedGenres = Array.from(
     document.querySelectorAll('input[name="genre"]:checked')
