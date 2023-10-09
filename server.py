@@ -65,11 +65,13 @@ def redirect_user():
 
         print(session)
 
+        flash("Your Spotify account is connected! Happy routing!")
+
         # Redirect to the user's page
         user_id = session.get('user_id')
         return redirect(f'/users/{user_id}')
     else:
-        # TODO: implement error handling
+        flash("There was an error connecting with Spotify!")
         return redirect('/auth')
 
 def request_access_token(auth_code):
