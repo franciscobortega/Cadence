@@ -919,13 +919,10 @@ form input {
 }
 
 .user-card-buttons .logout-button {
-  display: block;
   position: initial;
   width: 50%;
-  border-radius: 10px;
-  text-decoration: none;
-  border: 1px solid var(--main-white-text);
-  color: var(--main-white-text);
+  opacity: 1;
+  pointer-events: all;
 }
 
 .user-card-buttons .logout {
