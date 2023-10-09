@@ -116,6 +116,9 @@ async function createRoute() {
 
       // Display the route polyline on the map
       routePolyline(routeCoordinates);
+
+      elevationMsg.classList.add("hidden");
+      drawChart(elevationData);
     } catch (error) {
       console.error("Error fetching route:", error);
     }
@@ -136,12 +139,9 @@ async function createRoute() {
 
     // Display the distance of the route as 0 km
     distanceText.textContent = "0 km";
-    elevationMsg.classList.add("hidden");
   } else {
     clearRoute();
   }
-
-  drawChart(elevationData);
 
   return data;
 }
