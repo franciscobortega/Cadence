@@ -10,10 +10,10 @@
   --secondary-color: #7439bd;
   --main-white: #f3f3f3;
   --secondary-white: #c0c0c0;
+  --main-gray: #999;
+  --secondary-gray: #d1d1d1;
   --main-white-text: white;
-  --secondary-gray-text: #999;
   --form-input-color: #d9d9d9;
-  --main-gray-color: #d1d1d1;
   --main-green-color: #5fad56;
   --main-red-color: #a72608;
   --main-blue-color: #007ef5;
@@ -383,7 +383,7 @@ button.data-opener {
   font-size: 16px;
   font-weight: 500;
   letter-spacing: 2px;
-  color: var(--main-gray-color);
+  color: var(--main-gray);
 }
 
 .target-popularity-container {
@@ -391,12 +391,10 @@ button.data-opener {
 }
 
 #target-popularity {
+  padding: 0;
   appearance: none;
-  width: 100%;
-  height: 15px;
-  border-radius: 5px;
+  max-height: 12px;
   background: #d3d3d3;
-  outline: none;
   opacity: 0.7;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
   -webkit-transition: 0.2s;
@@ -437,8 +435,8 @@ button.data-opener {
   padding: 10px;
 }
 
-#options-form label {
-  /* margin-left: 20px; */
+#options-form > label {
+  margin-left: 20px;
 }
 
 #options-form input[type="number"] {
@@ -479,7 +477,7 @@ button.data-opener {
 
 .form-label {
   padding: 10px 20px;
-  color: var(--secondary-gray-text);
+  color: var(--main-gray);
   background-color: var(--form-input-color);
   font-size: 14px;
   font-weight: 700;
@@ -563,7 +561,7 @@ form input {
 }
 
 .route-control-btns ion-icon {
-  color: var(--secondary-gray-text);
+  color: var(--main-gray);
 }
 
 .route-control-btns .rounded-btn {
@@ -619,9 +617,9 @@ p.playlist-info-details {
   justify-items: center;
 }
 
-.playlist-control-btns div {
+.playlist-control-btns div,
+.playlist-control-btns button {
   height: 50px;
-
   box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.35);
 }
 
@@ -742,7 +740,7 @@ p.playlist-info-details {
 }
 
 .routeless-wrapper {
-  background-color: var(--main-gray-color);
+  background-color: var(--secondary-gray);
   border-radius: 10px;
   width: 90%;
   height: 90%;
@@ -950,6 +948,7 @@ p.playlist-info-details {
   background-color: var(--main-green-color);
   border-radius: 10px;
   width: 50%;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.35);
 }
 
 /* ------- LOGIN -------- */
@@ -1037,7 +1036,7 @@ p.playlist-info-details {
 
 .form-field {
   border: none;
-  background-color: var(--main-gray-color);
+  background-color: var(--secondary-gray);
   padding: 10px;
   border-radius: 10px;
   width: 100%;
