@@ -142,6 +142,8 @@ async function createRoute() {
   }
 
   drawChart(elevationData);
+
+  return data;
 }
 
 map.on("click", async (e) => {
@@ -294,7 +296,7 @@ const loadedWaypoints =
   document.querySelector(".loaded-waypoints").dataset.waypoints;
 
 if (loadedRoute && loadedRoute != "None") {
-  const parsedRoute = JSON.parse(loadedRoute);
+  // const parsedRoute = JSON.parse(loadedRoute);
   const parsedWaypoints = JSON.parse(loadedWaypoints);
 
   parsedWaypoints.forEach((waypoint) => {
@@ -302,15 +304,24 @@ if (loadedRoute && loadedRoute != "None") {
     waypoints.push([latitude, longitude]);
   });
 
-  map.on("load", () => {
-    // TODO: Currently centers the map to the first waypoint, but should center to show the full route instead
-    map.flyTo({
-      center: [waypoints[0][1], waypoints[0][0]],
-      zoom: 13,
+  map.on("load", async () => {
+    const data = await createRoute();
+
+    // Extract the bounding box from the loadedRoute
+    const [west, south, east, north] = data.paths[0].bbox;
+
+    const boundingBox = [
+      [west, south],
+      [east, north],
+    ];
+
+    map.fitBounds(boundingBox, {
+      padding: { top: 100, bottom: 100, left: 0, right: 200 },
+      offset: [-100, 0],
+      maxZoom: 13,
     });
 
-    createRoute();
-    console.log(loadedRoute.distance);
+    elevationMsg.classList.add("hidden");
     drawChart(elevationData);
   });
 }
