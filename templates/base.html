@@ -33,15 +33,21 @@
               />
             </a>
           </li>
-          <li><a href="{{ url_for('display_home') }}">Explore</a></li>
+          <li>
+            <a href="{{ url_for('display_home') }}" class="line-ani">Explore</a>
+          </li>
           {% if 'user_id' in session %}
           <li>
-            <a href="{{ url_for('display_user', user_id=session['user_id']) }}"
+            <a
+              href="{{ url_for('display_user', user_id=session['user_id']) }}"
+              class="line-ani"
               >Profile</a
             >
           </li>
           {% else %}
-          <li><a href="{{ url_for('display_auth') }}">Profile</a></li>
+          <li>
+            <a href="{{ url_for('display_auth') }}" class="line-ani">Profile</a>
+          </li>
           {% endif %}
           <li class="nav-user-wrapper">
             <div class="nav-user">
