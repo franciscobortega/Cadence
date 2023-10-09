@@ -175,7 +175,7 @@ def display_login():
         print(user.user_id)
         print(session)
         print(session['user_id']) 
-        return redirect('/')
+        return redirect(f'/users/{user.user_id}')
     else:
         flash('Wrong email or password!')
     
