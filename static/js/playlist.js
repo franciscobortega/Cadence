@@ -150,8 +150,31 @@ function generatePlaylist(remainingTime, tracks) {
 }
 
 function displayPlaylist(playlist, recommendations) {
+  let totalDurationSeconds = 0;
+  playlist.forEach((track) => {
+    totalDurationSeconds += track.duration_ms / 1000;
+  });
+
+  // console.log(totalDurationSeconds);
+
+  let totalDurationHrs = Math.floor(totalDurationSeconds / 60 / 60);
+  let totalDurationMins = Math.floor(totalDurationSeconds / 60) % 60;
+  let totalDurationSecs = Math.floor(totalDurationSeconds) % 60;
+
+  let songsAndTime = `${playlist.length} songs, `;
+
+  if (totalDurationHrs > 0) {
+    songsAndTime += `${totalDurationHrs} hrs ${totalDurationMins} mins`;
+  } else {
+    songsAndTime += `${totalDurationMins} mins ${totalDurationSecs} secs`;
+  }
+
   // Find the song title and artist name for each track in the playlist based on the ID
   const playlistContainer = document.querySelector(".playlist-container");
+  const playlistInfo = document.querySelector(".playlist-info-details");
+
+  playlistInfo.textContent = songsAndTime;
+
   console.log(playlist);
   console.log(recommendations);
   const playlistHTML = playlist.map((track, index) => {
