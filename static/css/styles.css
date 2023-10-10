@@ -255,7 +255,6 @@ ion-icon {
 
 .data-wrapper {
   position: absolute;
-
   background-color: var(--main-color-trans);
   padding: 20px;
   right: 20px;
@@ -284,7 +283,7 @@ ion-icon {
 button.data-opener {
   background-color: var(--main-color);
   border-radius: 10px;
-  border: honeydew;
+  border: none;
   padding: 10px;
   display: flex;
   transform: rotate(180deg);
@@ -308,12 +307,17 @@ button.data-opener {
   border-radius: 13px;
   border: 8px solid var(--main-color-trans);
   background-clip: padding-box;
+  overflow-y: scroll;
   overflow-x: hidden;
-  display: grid;
-  gap: 20px;
   scrollbar-gutter: stable both-edges;
   transition: all 1s;
   pointer-events: all;
+}
+
+.data-container-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .closed-data > div {
@@ -321,13 +325,13 @@ button.data-opener {
 }
 
 .closed-data {
-  width: 10% !important;
+  width: 5% !important;
   background-color: var(--main-color-trans) !important;
 }
 
 .closed-data-button {
   transform: rotate(0) !important;
-  left: 85% !important;
+  left: 94.5% !important;
   transition: all 1s;
 }
 
