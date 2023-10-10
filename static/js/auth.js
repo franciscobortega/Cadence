@@ -29,6 +29,8 @@ function redirectToAuthCodeFlow(clientId) {
 const userRoutes = document.querySelectorAll(".route-card");
 userRoutes.forEach((route) => {
   const routeForm = route.querySelector(".route-card-info");
+
+  console.log(routeForm);
   const deleteButton = route.querySelector(".route-card-delete-btn");
 
   routeForm.addEventListener("submit", async (e) => {
@@ -74,7 +76,7 @@ userRoutes.forEach((route) => {
   deleteButton?.addEventListener("click", async (e) => {
     e.preventDefault();
     const routeId = route.getAttribute("data-route-id");
-    const formData = new FormData(routeForm);
+    const formData = new FormData();
     formData.append("route_id", routeId);
 
     try {
