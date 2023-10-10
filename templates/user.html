@@ -37,54 +37,62 @@
             {% endif %}
             <div class="route-card-gradient"></div>
           </div>
+          <div class="route-card-info">
+            <h2 class="route-card-title">{{ route.title }}</h2>
+            <p class="route-card-description">
+              {% if route.description != None %} {{ route.description }} {% else
+              %} Add a description {% endif %}
+            </p>
+            <button type="submit" class="route-card-update">
+              <ion-icon name="create"></ion-icon>
+            </button>
+          </div>
           <form
             action="{{ url_for('update_route')}}"
             method="POST"
-            class="route-card-info"
+            class="route-card-info hidden"
           >
+            <input type="hidden" name="route_id" value="{{ route.route_id }}" />
             <input
               required
-              onClick="this.select();"
               type="text"
               name="route-title"
-              class="route-card-title"
-              value="{{ route.title}}"
+              class="route-card-title in-edit"
+              placeholder="{{ route.title }}"
             />
             <input
               required
-              onClick="this.select();"
               type="text"
               name="route-description"
-              class="route-card-description"
-              value="{% if route.description == None %}Click to add a description{%
-              else %}{{ route.description }}{% endif %}"
+              class="route-card-description in-edit"
+              placeholder="{% if route.description %}{{ route.description }}{% else %}Add a description{% endif %}"
             />
-            <div class="route-card-buttons">
-              <div class="route-card-load">
-                <a
-                  href="{{ url_for('load_route', route_id=route.route_id) }}"
-                  class="route-card-link"
-                  >Load on Map</a
-                >
-              </div>
-              <div class="route-card-delete">
-                <input
-                  type="hidden"
-                  name="route_id"
-                  value="{{ route.route_id }}"
-                />
-                <button
-                  formaction="{{ url_for('delete_route')}}"
-                  class="route-card-delete-btn"
-                >
-                  <ion-icon name="trash"></ion-icon>
-                </button>
-              </div>
-              <button type="submit" class="route-card-update">
-                <ion-icon name="checkmark"></ion-icon>
+            <button type="submit" class="route-card-update">
+              <ion-icon name="checkmark"></ion-icon>
+            </button>
+          </form>
+          <div class="route-card-buttons">
+            <div class="route-card-load">
+              <a
+                href="{{ url_for('load_route', route_id=route.route_id) }}"
+                class="route-card-link"
+                >Load on Map</a
+              >
+            </div>
+            <div class="route-card-delete">
+              <input
+                type="hidden"
+                name="route_id"
+                value="{{ route.route_id }}"
+              />
+              <button
+                formaction="{{ url_for('delete_route')}}"
+                class="route-card-delete-btn"
+              >
+                <ion-icon name="trash"></ion-icon>
               </button>
             </div>
-          </form>
+          </div>
         </li>
         {% endfor %}
       </ul>

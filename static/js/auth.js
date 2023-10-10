@@ -96,3 +96,19 @@ userRoutes.forEach((route) => {
     }
   });
 });
+
+const updateRouteInfoBtns = document.querySelectorAll(".route-card-update");
+
+updateRouteInfoBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    console.log(btn.parentElement.parentElement);
+    const routeInfoDiv =
+      btn.parentElement.parentElement.querySelector(".route-card-info");
+    const routeInfoForm = btn.parentElement.parentElement.querySelector(
+      ".route-card-info.hidden"
+    );
+
+    routeInfoDiv.classList.toggle("hidden");
+    routeInfoForm.classList.toggle("hidden");
+  });
+});

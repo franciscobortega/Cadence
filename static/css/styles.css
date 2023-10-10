@@ -800,11 +800,14 @@ p.playlist-info-details {
 .route-card-info {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  /* justify-content: flex-start; */
+  gap: 20px;
   height: 100%;
   width: 60%;
   position: relative;
   z-index: 1;
+  pointer-events: none;
+  margin-top: 16px;
 }
 
 .route-card-title {
@@ -816,12 +819,17 @@ p.playlist-info-details {
   outline: none;
   box-shadow: none !important;
   text-align: start;
-
   display: -webkit-box;
   text-overflow: ellipsis;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
+  padding: 0;
+}
+
+input.route-card-title.in-edit {
+  outline: var(--main-color);
+  pointer-events: all;
 }
 
 .route-card-description {
@@ -829,16 +837,26 @@ p.playlist-info-details {
   font-size: 16px;
   font-weight: 400;
   letter-spacing: 2px;
-
   background-color: transparent;
   outline: none;
   box-shadow: none !important;
   text-align: start;
+  font-style: italic;
+  padding-left: 20px;
+}
+
+input.route-card-description.in-edit {
+  outline: var(--main-color);
+  pointer-events: all;
 }
 
 .route-card-buttons {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
+  align-items: end;
+  justify-items: center;
+  position: absolute;
+  bottom: 36px;
 }
 
 .route-card-load {
@@ -889,8 +907,21 @@ p.playlist-info-details {
   align-items: center;
 }
 
-.route-card-delete-btn ion-icon:hover {
+.route-card-update {
+  align-self: end;
+  margin-right: 40%;
+  pointer-events: all;
+  position: absolute;
+  bottom: 32px;
+}
+
+.route-card-delete-btn:hover ion-icon {
   color: var(--main-red-color);
+  transition: all 0.2s ease-in-out;
+}
+
+.route-card-update:hover ion-icon {
+  color: var(--main-blue-color);
   transition: all 0.2s ease-in-out;
 }
 

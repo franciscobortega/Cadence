@@ -280,17 +280,25 @@ def delete_route():
     
 @app.route('/update-route', methods=['POST'])
 def update_route():
+    """Update saved route title and description."""
+    
+    user_id = session.get('user_id')
+
     try:
         route_id = request.form.get('route_id')
         new_title = request.form.get('route-title')
         new_description = request.form.get('route-description')
-
+        print(route_id)
         crud.update_route(route_id, new_title, new_description)
 
-        return jsonify({'success': True, 'message': 'Route updated successfully'}), 200
+        flash("Route updated successfully!")
+        # return jsonify({'success': True, 'message': 'Route updated successfully'}), 200
     except Exception as e:
         print(e)
-        return jsonify({'success': False, 'error': str(e)}), 500    
+        flash("Error updating route!")
+        # return jsonify({'success': False, 'error': str(e)}), 500    
+
+    return redirect(f"/users/{user_id}")
     
 @app.route('/load-route')
 def load_route():
