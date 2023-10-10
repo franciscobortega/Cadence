@@ -894,7 +894,6 @@ input.route-card-description.in-edit {
   padding: 10px 20px;
   font-size: 16px;
   font-weight: 700;
-
   letter-spacing: 1.4px;
 }
 
@@ -946,7 +945,9 @@ input.route-card-description.in-edit {
 
 .user-card-details {
   padding: 20px;
-  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .user-card-details .user-img {
@@ -962,7 +963,7 @@ input.route-card-description.in-edit {
   background-color: var(--main-color);
   width: 50px;
   height: 50px;
-  border-radius: 100%;
+  border-radius: 10px;
   position: absolute;
   bottom: 0;
   left: 150px;
