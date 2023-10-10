@@ -186,7 +186,7 @@ function removeLastWaypoint() {
 
 // Event listener for the undo button click
 const undoBtn = document.querySelector(".undo-route");
-undoBtn.addEventListener("click", removeLastWaypoint);
+undoBtn?.addEventListener("click", removeLastWaypoint);
 
 // Event listener for the 'Ctrl+Z' keystroke
 addEventListener("keydown", (e) => {
@@ -210,7 +210,7 @@ function reAddLastWaypoint() {
 
 // Event listener for the undo button click
 const redoBtn = document.querySelector(".redo-route");
-redoBtn.addEventListener("click", reAddLastWaypoint);
+redoBtn?.addEventListener("click", reAddLastWaypoint);
 
 // Event listener for the 'Ctrl+Z' keystroke
 addEventListener("keydown", (e) => {
@@ -355,7 +355,7 @@ if (loadedRoute && loadedRoute != "None") {
 
 const geolocationButton = document.querySelector(".locate-user");
 
-geolocationButton.addEventListener("click", () => {
+geolocationButton?.addEventListener("click", () => {
   console.log("Locating the user...");
   navigator.geolocation.getCurrentPosition((position) => {
     console.log(position.coords.latitude, position.coords.longitude);

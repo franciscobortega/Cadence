@@ -101,7 +101,7 @@ optionsForm.addEventListener("submit", (e) => {
 
 const exportPlaylistButton = document.querySelector(".export-playlist");
 
-exportPlaylistButton.addEventListener("click", async () => {
+exportPlaylistButton?.addEventListener("click", async () => {
   // TODO: Update playlistName from input field
   const playlistName = "Cadence Playlist";
 
@@ -159,7 +159,7 @@ exportPlaylistButton.addEventListener("click", async () => {
 const returnBtn = document.querySelector(".return-options");
 const playlistWrapper = document.querySelector(".playlist-wrapper");
 
-returnBtn.addEventListener("click", () => {
+returnBtn?.addEventListener("click", () => {
   optionsWrapper.classList.toggle("hidden");
   playlistWrapper.classList.toggle("hidden");
 });
