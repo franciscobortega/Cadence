@@ -50,6 +50,11 @@ const optionsWrapper = document.querySelector(".options-wrapper");
 optionsForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
+  if (distance === 0) {
+    alert("Route missing! Please plot a route!");
+    return;
+  }
+
   // Toggle visibility of playlist and preferences
   optionsWrapper.classList.toggle("hidden");
   playlistWrapper.classList.toggle("hidden");

@@ -71,6 +71,8 @@ function clearRoute() {
   // Clear the polyline from the map
   routePolyline([]);
 
+  distance = 0;
+
   // Reset total distance text
   distanceText.textContent = "0 km";
 
@@ -137,8 +139,10 @@ async function createRoute() {
     const marker = new mapboxgl.Marker(el).setLngLat([lng, lat]).addTo(map);
     markers.push(marker);
 
+    distance = 0;
     // Display the distance of the route as 0 km
     distanceText.textContent = "0 km";
+    elevationText.textContent = "0 m";
   } else {
     clearRoute();
   }
@@ -161,12 +165,16 @@ let lastPoppedWaypoint = [];
 // Remove last waypoint from route
 function removeLastWaypoint() {
   if (waypoints.length == 0) {
-    elevationMsg.classList.remove("hidden");
     console.log("Nothing left to undo!");
+    distance = 0;
 
-    elevationData = [];
-    drawChart(elevationData);
     return;
+  } else if (waypoints.length == 1) {
+    elevationMsg.classList.remove("hidden");
+    distance = 0;
+    elevationData = [];
+
+    drawChart(elevationData);
   }
   let removedWaypoint = waypoints.pop();
   lastPoppedWaypoint.push(removedWaypoint);
