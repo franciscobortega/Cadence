@@ -101,9 +101,10 @@ optionsForm.addEventListener("submit", (e) => {
 
 const exportPlaylistButton = document.querySelector(".export-playlist");
 
-exportPlaylistButton?.addEventListener("click", async () => {
-  // TODO: Update playlistName from input field
-  const playlistName = "Cadence Playlist";
+exportPlaylistButton?.addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  const playlistName = document.querySelector("#playlist-title").value;
 
   try {
     // TODO: Consider getting the user's ID from the auth flow
